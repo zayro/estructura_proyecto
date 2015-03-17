@@ -1,0 +1,35 @@
+<Files ~ "^\.(htaccess|htpasswd)$">
+deny from all
+</Files>
+
+AuthUserFile /.htpasswd
+AuthName RAYCO
+AuthType Basic
+AuthGroupFile /dev/null
+
+
+
+
+<Files "/areas/administracion/administrar_categoria/index.html">
+ require user administrador
+</Files>
+
+#BLOQUE LA NAVEGACION POR CARPETAS
+
+ Options -Indexes
+ 
+#PERSONALIZAR LOS ERRORES 
+
+ErrorDocument 403 /403.html
+ErrorDocument 404 /404.html
+
+order deny,allow
+
+#REMOVER LA EXTENSIONES DEL NAVEGADOR URL
+RewriteRule ^(([^/]+/)*[^.]+)$ /$1.php [L]
+RewriteRule ^(([^/]+/)*[^.]+)$ /$1.html [L]
+
+#ELIMINAR  EL WWW
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.dominio\.com$ [NC]
+RewriteRule ^(.*)$ http://dominio.com/$1 [L,R=301]
