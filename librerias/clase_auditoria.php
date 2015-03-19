@@ -1,7 +1,7 @@
 <?php
 
 
-include('clase_conexion.php');
+include 'clase_conexion.php';
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,7 +16,7 @@ include('clase_conexion.php');
  */
 
 
-class auditoria_proyecto extends principal{
+class auditoria_proyecto extends conexion{
     
     
     

@@ -9,9 +9,9 @@ include('clase_conexion.php');
 * En esta parte nos encargamos de crear los tipos de conexion del proyecto 
 * para poder asi administrar los tipos de permisos de acceso
 * 
-* @method procesos_bd() se realiza la conexion
-* @method usuario() se realiza la auditoria usuario
-* @method privada() se realiza la auditoria privada
+* @method procesos_bd () se realiza la conexion
+* @method usuarios() se realiza la auditoria usuario
+* @method privada () se realiza la auditoria privada
 * @author MARLON ZAYRO ARIAS VARGAS
 * @version 1.0
 * @package clase\procesos
@@ -28,13 +28,13 @@ return conexion::conectar();
 
 }	
 
-function usuario($mensaje){
+public function auditoria_usuario($mensaje){
 
 if (!isset($_SESSION['usuario']))
 {
 
 $this->mysqli->query("
-INSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`)	
+INSERT INTO `auditoria_usuario` (`ip`, `tiempo`, `usuario`, `proceso`)	
 VALUES('".$_SERVER['REMOTE_ADDR']."',  NOW(), USER(),  '$mensaje');
 ") ;
 
@@ -48,7 +48,7 @@ VALUES ( '".$_SERVER['REMOTE_ADDR']."',  NOW(),  '".$_SESSION['usuario']."', '$m
 
 }
 
-function privada($sql){
+public function auditoria_privada($sql){
 $buscar = stristr($sql, 'select');
 $buscar_mayus = stristr($sql, 'SELECT');
 if($buscar === FALSE or $buscar_mayus === FALSE) {
@@ -102,7 +102,8 @@ $this->mysqli->close();
 *
 */
 
-function json_bd($sql){
+function json_bd($sql)
+{
 
 /**
 * MOSTRAR EL MENSAJE EN JSON
@@ -148,7 +149,8 @@ return $datos;
 *
 */
 
-function alterar_bd($sql, $mensaje){
+function alterar_bd($sql, $mensaje)
+{
 
 /**
 * MOSTRAR EL MENSAJE EN JSON
@@ -175,16 +177,17 @@ if(!$this->mysqli->query($sql)){
 throw new Exception("ERROR: $sql"); 
 }
 
+$afectaciones = $this->mysqli->affected_rows;
 #array_push($query_sql, $sql);
 #array_push($mensaje_auditoria, $mensaje); 
 
-$this->usuario($mensaje);
-$this->privada($sql);
+$this->auditoria_usuario($mensaje);
+$this->auditoria_privada($sql);
 
 $datos['suceso'] = "CONSULTA EXITOSA";
 $datos['success'] = true;
 $datos['sql'] = $sql;
-$datos['afectaciones'] = $this->mysqli->affected_rows;
+$datos['afectaciones'] = $afectaciones;
 $datos['auditoria'] = $mensaje;
 
 
@@ -211,7 +214,8 @@ return $datos;
 *
 */
 
-function transaccion($sql, $mensaje){
+function transaccion($sql, $mensaje)
+{
 
 $datos = array();
 
@@ -219,6 +223,9 @@ if(!$this->mysqli->query($sql)){
 $error = $this->mysqli->error;
 throw new Exception("ERROR: $sql :: $error "); 
 }
+
+$this->auditoria_usuario($mensaje);
+$this->auditoria_privada($sql);
 
 $datos['suceso'] = "CONSULTA EXITOSA";
 $datos['success'] = true;
@@ -236,12 +243,8 @@ echo json_encode($array, JSON_PRETTY_PRINT);
 
 
 
-
-
-
-
-
-function consulta_unida($sql){
+function consulta_unida($sql)
+{
 
 $resultado = $this->mysqli->query($sql);
 
@@ -290,23 +293,11 @@ $row->$key = $valor;
 array_push($items, $row);
 }
 
-
-
-
 $result["registros"] = $items;
-
-
-
 echo json_encode($result);
 
 
 }
-
-
-
-
-
-
 
 
 
