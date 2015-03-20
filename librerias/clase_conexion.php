@@ -71,5 +71,9 @@ class conexion {
         $this->claves = 'zayro2014';
         $this->bdd = 'transito';
     }
+    
+      function imprime_json($array) {
+    echo json_encode($array, JSON_PRETTY_PRINT);
+  }
 
 }
