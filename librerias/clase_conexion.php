@@ -26,54 +26,172 @@ include ('clase_interfas.php');
 
 class conexion {
 
-    const VERSION = '1.0';
-    const FECHA_DE_APROBACION = '2015-05-02';
+  const VERSION = '1.0';
+  const FECHA_DE_APROBACION = '2015-05-02';
 
-    protected $mysqli;
+  protected $mysqli;
 
-    /**
-     * METODO CONECTAR
-     *
-     * esperamos los  parametro de conexion
-     *
-     */
-    protected function conectar() {
+  /**
+   * METODO CONECTAR
+   *
+   * esperamos los  parametro de conexion
+   *
+   */
+  protected function conectar() {
 
-        $this->mysqli = new mysqli($this->servidores, $this->usuarios, $this->claves, $this->bdd);
+    $this->mysqli = new mysqli($this->servidores, $this->usuarios, $this->claves, $this->bdd);
 
-        if (!$this->mysqli) {
-            return ('No se pudo conectar: ' . $this->mysqli->connect_error);
-        } else {
+    if (!$this->mysqli) {
+      return ('No se pudo conectar: ' . $this->mysqli->connect_error);
+    } else {
 
-            $this->mysqli->query("SET NAMES 'utf8'");
+      $this->mysqli->query("SET NAMES 'utf8'");
 
-            return "conecto exitosamente: <br>";
-        }
+      return "conecto exitosamente: <br>";
     }
+  }
 
-    protected function local() {
-        $this->servidores = 'localhost:3308';
-        $this->usuarios = 'root';
-        $this->claves = 'zayro2014';
-        $this->bdd = 'transito';
-    }
+  protected function local() {
+    $this->servidores = 'localhost:3308';
+    $this->usuarios = 'root';
+    $this->claves = 'zayro2014';
+    $this->bdd = 'estructura_proyecto';
+  }
 
-    protected function local_casa() {
-        $this->servidores = 'localhost';
-        $this->usuarios = 'root';
-        $this->claves = 'zayro';
-        $this->bdd = 'transito';
-    }
+  protected function local_casa() {
+    $this->servidores = 'localhost';
+    $this->usuarios = 'root';
+    $this->claves = 'zayro';
+    $this->bdd = 'transito';
+  }
 
-    protected function local_rayco() {
-        $this->servidores = 'localhost:3308';
-        $this->usuarios = 'zayro';
-        $this->claves = 'zayro2014';
-        $this->bdd = 'transito';
-    }
-    
-      function imprime_json($array) {
+  protected function local_rayco() {
+    $this->servidores = 'localhost:3308';
+    $this->usuarios = 'zayro';
+    $this->claves = 'zayro2014';
+    $this->bdd = 'transito';
+  }
+
+  function imprime_json($array) {
     echo json_encode($array, JSON_PRETTY_PRINT);
+  }
+
+  function limpiar_caracteres($string) {
+    /**
+     * Reemplaza todos los acentos por sus equivalentes sin ellos
+     *
+     * @param $string
+     *  string la cadena a sanear
+     *
+     * @return $string
+     *  string saneada
+     */
+    $string = trim($string);
+
+    $string = str_replace(
+            array('á', 'à', 'ä', 'â', 'ª', 'Á', 'À', 'Â', 'Ä'), array('a', 'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A'), $string
+    );
+
+    $string = str_replace(
+            array('é', 'è', 'ë', 'ê', 'É', 'È', 'Ê', 'Ë'), array('e', 'e', 'e', 'e', 'E', 'E', 'E', 'E'), $string
+    );
+
+    $string = str_replace(
+            array('í', 'ì', 'ï', 'î', 'Í', 'Ì', 'Ï', 'Î'), array('i', 'i', 'i', 'i', 'I', 'I', 'I', 'I'), $string
+    );
+
+    $string = str_replace(
+            array('ó', 'ò', 'ö', 'ô', 'Ó', 'Ò', 'Ö', 'Ô'), array('o', 'o', 'o', 'o', 'O', 'O', 'O', 'O'), $string
+    );
+
+    $string = str_replace(
+            array('ú', 'ù', 'ü', 'û', 'Ú', 'Ù', 'Û', 'Ü'), array('u', 'u', 'u', 'u', 'U', 'U', 'U', 'U'), $string
+    );
+
+    $string = str_replace(
+            array('ñ', 'Ñ', 'ç', 'Ç'), array('n', 'N', 'c', 'C',), $string
+    );
+
+//Esta parte se encarga de eliminar cualquier caracter extraño
+    $string = str_replace(
+            array("\\", "¨", "º", "-", "~",
+        "#", "@", "|", "!", "\"",
+        "·", "$", "%", "&", "/",
+        "(", ")", "?", "'", "¡",
+        "¿", "[", "^", "`", "]",
+        "+", "}", "{", "¨", "´",
+        ">", "< ", ";", ",", ":",
+        ".", " DE", " de", "<", ">", "  "), ' ', $string
+    );
+
+
+    return $string;
+  }
+
+  function verificar_json() {
+
+
+    switch (json_last_error()) {
+      case JSON_ERROR_NONE:
+        echo ' - Sin errores';
+        break;
+      case JSON_ERROR_DEPTH:
+        echo ' - Excedido tamaño máximo de la pila';
+        break;
+      case JSON_ERROR_STATE_MISMATCH:
+        echo ' - Desbordamiento de buffer o los modos no coinciden';
+        break;
+      case JSON_ERROR_CTRL_CHAR:
+        echo ' - Encontrado carácter de control no esperado';
+        break;
+      case JSON_ERROR_SYNTAX:
+        echo ' - Error de sintaxis, JSON mal formado';
+        break;
+      case JSON_ERROR_UTF8:
+        echo ' - Caracteres UTF-8 malformados, posiblemente están mal codificados';
+        break;
+      default:
+        echo ' - Error desconocido';
+        break;
+    }
+
+    return PHP_EOL;
+  }
+
+  function validar_session() {
+    if (empty($_SESSION) or empty($_SESSION['identificacion']) or ! isset($_SESSION['identificacion'])) {
+
+      echo "sin acceso al sistema ingrese a la plataforma";
+      exit();
+    }
+  }
+
+  function enviar_email_gestion_documental($recibe, $envia, $mensaje_html, $correos) {
+
+
+
+/**
+ *     To send HTML mail, the Content-type header must be set
+ */
+    $headers = 'MIME-Version: 1.0' . "\r\n";
+    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+/**
+ *  Additional headers
+ */
+
+    $headers .= "From: $envia < $envia >" . "\r\n";
+//$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
+//$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
+// Mail it
+
+
+
+    if (mail($correos, $recibe, $mensaje_html, $headers)) {
+      return 'enviado emails';
+    } else {
+      return 'No enviado los email: ';
+    }
   }
 
 }

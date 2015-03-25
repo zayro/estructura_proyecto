@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="es" ng-app="app" >
   <head>
+    
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="componentes/materialize-v0.95.3/css/materialize.min.css"  media="screen, projection"/>
-
+    <link rel="stylesheet" href="componentes/angular/animate.css" media="screen">
+    
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <link rel="stylesheet" href="componentes/angular/animate.css">
+
+
     <style>
-
-
-
-
-
 
       body {
         display: flex;
@@ -25,28 +23,20 @@
       }  
 
     </style>
+
   </head>
 
   <body ng-controller="AppCtrl">
 
-
-
-
-    <header>
+    <header ng-show="select_session_usuario.identificacion"> 
 
       <nav class="light-blue darken-3">
 
         <!-- BARRA FRONTAL DERECHA -->
         <ul class="left hide-on-med-and-down fixed">
-          <li><a href="#!">First Sidebar Link</a></li>
-          <li><a href="#!">Second Sidebar Link</a></li>
-          <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
-          <ul id='dropdown1' class='dropdown-content'>
-            <li><a href="#!">First</a></li>
-            <li><a href="#!">Second</a></li>
-            <li><a href="#!">Third</a></li>
-            <li><a href="#!">Fourth</a></li>
-          </ul>
+
+          <li><a class="dropdown-button" href="#!" >Logo</a></li>
+
         </ul>
 
         <!-- BARRA FRONTAL IZQUIERDA -->
@@ -55,18 +45,13 @@
           <li><a href="mobile.html"><i class="small mdi-navigation-more-vert"></i></a></li>
           <li><a href="components.html"><i class="small mdi-action-view-module"></i></a></li>
           <li><a href="javascript.html"><i class="small mdi-navigation-refresh"></i></a></li>
-          <li><a href="#" class="abrir menu"><i class="small mdi-navigation-menu"></i></a></li>
+          <li><a href="#" class="abrir menu " ng-click="mostrar_menu();"><i class="small mdi-navigation-menu"></i></a></li>
         </ul>
-
-
-
-
 
         <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
 
-
         <!-- BARRA LATERAL -->
-        <ul id="slide-out" class="side-nav " ng-swipe-left="showActions = true">
+        <ul id="slide-out" class="side-nav " >
 
           <li class=" grey  darken-3 center-align "  style="padding:20px;">
             <p><h5>Menu</h5></p>
@@ -74,25 +59,8 @@
             <p><h6>imagen</h6></p>
           </li>
 
-          <li><a href="#!">First Sidebar Link</a></li>
-          <div class="divider"></div>
-          <li><a href="#!">Second Sidebar Link</a></li>
-          <div class="divider"></div>
-
-          <li class="no-padding">
-            <ul class="collapsible collapsible-accordion">
-              <li><a class="collapsible-header">Dropdown<i class="mdi-navigation-arrow-drop-down"></i></a>
-                <div class="collapsible-body">
-                  <ul>
-                    <li><a href="#!">First</a></li>
-                    <li><a href="#!">Second</a></li>
-                    <li><a href="#!">Third</a></li>
-                    <li><a href="#!">Fourth</a></li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </li>
+          <li ng-repeat="valor in menu_logueo"> <a href="#!">{{valor.menu}}</a> <div class="divider"></div></li>
+          
         </ul>
 
       </nav>
@@ -105,7 +73,7 @@
     <main ng-swipe-right="mostrar_menu();" ng-swipe-left="ocultar_menu();">
 
       <div class="container">
-        <!-- Page Content goes here -->
+        <!-- contenido de la pagina -->
         <ng-view></ng-view>
 
       </div>
@@ -113,7 +81,7 @@
     </main>    
 
 
-    <footer class="page-footer light-blue darken-3">
+    <footer class="page-footer light-blue darken-3" style="display:none;">
       <div class="container">
         <div class="row">
           <div class="col l6 s12">
@@ -131,16 +99,12 @@
       </div>
       <div class="footer-copyright">
         <div class="container">
-          © 2014 Copyright Text
+          © 2015 Copyright Text
           <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
         </div>
       </div>
     </footer>    
 
-
-    <!--Import jQuery before materialize.js-->
-    <script  src="componentes/jquery/jquery-1.11.1.min.js"></script>
-    <script  src="componentes/materialize-v0.95.3/js/materialize.min.js"></script>
 
 
 
@@ -158,32 +122,46 @@
 
 
     <!-- Angular Configuracion -->
-    <script src="configuracion/app.js"></script>
-    <script src="configuracion/rutas.js"></script>
+    <script src="configuracion/app.js" ></script>
+    <script src="configuracion/rutas.js" ></script>
     <script src="configuracion/filtros.js"></script>
     <script src="configuracion/directivas.js"></script>
     <script src="configuracion/servicios.js"></script>
     <script src="configuracion/controlador.js"></script>
 
-
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="componentes/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="componentes/materialize-v0.95.3/js/materialize.js"></script>
     <script>
-          $('.button-collapse').sideNav({
-            menuWidth: 240, // Default is 240
-            edge: 'left', // Choose the horizontal origin
-            closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-          }
-          );
+                $(document).ready(function () {
+
+                  console.log("cargo jquery");
 
 
-          $('.abrir.menu').click(function () {
-            console.log('abrir consola');
-            $('.button-collapse').sideNav('show');
+
+                  $('.button-collapse').sideNav({
+                    menuWidth: 240, // Default is 240
+                    edge: 'left' // Choose the horizontal origin
+                            //  closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                  });
 
 
-          });
+                  $('.dropdown-button').dropdown({
+                    inDuration: 300,
+                    outDuration: 225,
+                    constrain_width: false, // Does not change width of dropdown to that of the activator
+                    hover: false, // Activate on click
+                    alignment: 'center', // Aligns dropdown to left or right edge (works with constrain_width)
+                    gutter: 0, // Spacing from edge
+                    belowOrigin: true // Displays dropdown below the button
+                  }
+                  );
 
 
+                });
 
     </script>
+
+
   </body>
 </html>     

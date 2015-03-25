@@ -1,5 +1,6 @@
 <?php
 
+include('clase_conexion.php');
 /**
  * CLASE DE PROCESOS A LA BASE DE DATOS
  *
@@ -13,7 +14,7 @@
  * @version 1.0
  * @package clase\consulta
  */
-class consulta_bd{
+class consulta_bd extends conexion{
   
    public $guardar_registros = array();
    

@@ -1,4 +1,4 @@
-<?php include 'librerias/clase_procesos_bd.php';
+<?php include 'librerias/clase_consulta_bd.php';
 
 $conexion = new procesos_bd();
 

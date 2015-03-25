@@ -7,19 +7,23 @@ INICIA RUTAS
 app.config(['$routeProvider',
 function($routeProvider) {
 $routeProvider.
-when('/listado/', {
-templateUrl: 'modulos/listados/index.html',
+when('/login/', {
+templateUrl: 'modulos/logueo/login.html',
+controller: 'login'
+}).
+when('/entrada/', {
+templateUrl: 'modulos/entrada/entrada.html',
 controller: ''
 }).
-when('/formulario/', {
-templateUrl: 'modulos/formularios/index.html',
-controller: ''
-}).
+when('/ingreso/', {
+templateUrl: 'modulos/ingreso/ingreso.html',
+controller: 'ingreso'
+}).        
 
 
 // ruta por defecto
 otherwise({
-redirectTo: '/'
+redirectTo: '/login/'
 });
 }]);
 
