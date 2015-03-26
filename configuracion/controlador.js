@@ -1,19 +1,76 @@
 /*
  ###############################################
+ INICIA EL CONTROLADOR APLICACIONES
+ ###############################################
+ */
+
+app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, $http, cargar_servicios) {
+  
+  $scope.$on("update_parent_controller", function (event, message) {
+    $scope.message = message;
+    $scope.verificar_session();
+     console.log('ingreso update_parent_controller AppCtrl');
+  });
+
+  $scope.verificar_session = function () {
+
+    cargar_servicios.select_session().success(function (data) {
+
+      $log.log(data.identificacion);
+      
+      $scope.select_session_usuario = data;
+      
+      if ($scope.select_session_usuario.identificacion == "" || $scope.select_session_usuario.identificacion == undefined) {
+
+        $location.path('/login/');
+
+      } else {
+
+        cargar_servicios.select_menu().success(function (data) {
+          $scope.menu_logueo = data.registros;
+        });
+
+        cargar_servicios.select_menu_principal().success(function (data) {
+          $scope.select_menu_principal = data.registros;
+        });
+
+      }
+
+    });
+  
+  };
+  
+  $scope.verificar_session();
+
+  $scope.ocultar_menu = function () {
+    $('.button-collapse').sideNav('hide');
+  };
+
+  $scope.mostrar_menu = function () {
+    $('.button-collapse').sideNav('show');
+  };
+
+
+
+
+
+});
+/*
+ ###############################################
  INICIA EL CONTROLADOR INGRESO
  ###############################################
  */
 app.controller('ingreso', function ($scope, $timeout, $location, $log, cargar_servicios) {
 
-  cargar_servicios.select_session().success(function (data) {
-    
-    $log.log(data.identificacion);
+  cargar_servicios.select_session().success(function (data) {    
+   
     if (data.identificacion == "" || data.identificacion == undefined) {
       
       $location.path('/login/');
 
     } else {
-          console.log('ingreso correctamente');    
+          console.log('ingreso correctamente');  
+          $scope.$emit('update_parent_controller', 'ingreso');
 
     }
     
@@ -51,60 +108,13 @@ app.controller('login', function ($scope, $timeout, $log, $location, cargar_serv
 
             //$('#'+id_formulario).trigger("reset");
 
-
-
             })
 
             .error(function (data, status, headers, config) {
               console.error(data);
             });
 
-  }
-
-
-});
-
-/*
- ###############################################
- INICIA EL CONTROLADOR APLICACIONES
- ###############################################
- */
-
-app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, $http, cargar_servicios) {
-  
-   cargar_servicios.select_session().success(function (data) {
-    
-    $log.log(data.identificacion);
-    if (data.identificacion == "" || data.identificacion == undefined) {
-      
-      $location.path('/login/');
-
-    } else {
-      $scope.select_session_usuario = data;
-      console.log('ingreso correctamente');    
-
-    }
-    
-  });
-  cargar_servicios.select_menu().success(function (data) {
-    $scope.menu_logueo = data.registros;
-  });
-
-  cargar_servicios.select_menu_principal().success(function (data) {
-    $scope.select_menu_principal = data.registros;
-  });
-
-
-  $scope.ocultar_menu = function () {
-    $('.button-collapse').sideNav('hide');
   };
-
-  $scope.mostrar_menu = function () {
-    $('.button-collapse').sideNav('show');
-  };
-
-
-
 
 
 });
@@ -116,14 +126,6 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
  */
 
 app.controller('demo', function ($scope, $http, cargar_servicios) {
-
-  $scope.prueba = "texto";
-
-  $scope.mostrar_consulta =
-          cargar_registros.traer_consultas()
-          .success(function (data) {
-            $scope.resultados = data.registros;
-          });
 
   $scope.jquery = function () {
 
@@ -138,29 +140,6 @@ app.controller('demo', function ($scope, $http, cargar_servicios) {
             .fail(function (jqXHR, textStatus) {
               alert("Request failed: " + textStatus);
             });
-
   }
-
-  $scope.formularios = function () {
-    var valor_url = url_formulario;
-    var valor_metodo = metodo_formulario;
-    var valor_datos = $('#' + id_formulario).serialize();
-
-    cargar_registros.respuesta_registros(valor_url, valor_metodo, valor_datos)
-
-            .success(function (data) {
-
-        //$('#'+id_formulario).trigger("reset");
-
-
-
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-            });
-
-  }
-
 
 });
