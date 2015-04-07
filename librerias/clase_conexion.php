@@ -39,15 +39,18 @@ class conexion {
    */
   protected function conectar() {
 
-    $this->mysqli = new mysqli($this->servidores, $this->usuarios, $this->claves, $this->bdd);
+    $this->mysqli = @new mysqli($this->servidores, $this->usuarios, $this->claves, $this->bdd);
 
-    if (!$this->mysqli) {
-      return ('No se pudo conectar: ' . $this->mysqli->connect_error);
+
+    if ($this->mysqli->connect_error) {       
+      
+      return utf8_encode($this->mysqli->connect_error);
+      
     } else {
-
+      $this->mysqli->set_charset("utf8");
       $this->mysqli->query("SET NAMES 'utf8'");
 
-      return "conecto exitosamente: <br>";
+      return 'conectado';
     }
   }
 
@@ -67,15 +70,46 @@ class conexion {
 
   protected function local_rayco() {
     $this->servidores = 'localhost:3308';
-    $this->usuarios = 'zayro';
+    $this->usuarios = 'root';
     $this->claves = 'zayro2014';
-    $this->bdd = 'transito';
+    $this->bdd = 'estructura_proyecto';
   }
 
   function imprime_json($array) {
     echo json_encode($array, JSON_PRETTY_PRINT);
+    
   }
 
+  function verificar_json() {
+
+
+    switch (json_last_error()) {
+      case JSON_ERROR_NONE:
+        echo ' - Sin errores';
+        break;
+      case JSON_ERROR_DEPTH:
+        echo ' - Excedido tamaño máximo de la pila';
+        break;
+      case JSON_ERROR_STATE_MISMATCH:
+        echo ' - Desbordamiento de buffer o los modos no coinciden';
+        break;
+      case JSON_ERROR_CTRL_CHAR:
+        echo ' - Encontrado carácter de control no esperado';
+        break;
+      case JSON_ERROR_SYNTAX:
+        echo ' - Error de sintaxis, JSON mal formado';
+        break;
+      case JSON_ERROR_UTF8:
+        echo ' - Caracteres UTF-8 malformados, posiblemente están mal codificados';
+        break;
+      default:
+        echo ' - Error desconocido';
+        break;
+    }
+
+    return PHP_EOL;
+  }
+  
   function limpiar_caracteres($string) {
     /**
      * Reemplaza todos los acentos por sus equivalentes sin ellos
@@ -126,36 +160,6 @@ class conexion {
 
 
     return $string;
-  }
-
-  function verificar_json() {
-
-
-    switch (json_last_error()) {
-      case JSON_ERROR_NONE:
-        echo ' - Sin errores';
-        break;
-      case JSON_ERROR_DEPTH:
-        echo ' - Excedido tamaño máximo de la pila';
-        break;
-      case JSON_ERROR_STATE_MISMATCH:
-        echo ' - Desbordamiento de buffer o los modos no coinciden';
-        break;
-      case JSON_ERROR_CTRL_CHAR:
-        echo ' - Encontrado carácter de control no esperado';
-        break;
-      case JSON_ERROR_SYNTAX:
-        echo ' - Error de sintaxis, JSON mal formado';
-        break;
-      case JSON_ERROR_UTF8:
-        echo ' - Caracteres UTF-8 malformados, posiblemente están mal codificados';
-        break;
-      default:
-        echo ' - Error desconocido';
-        break;
-    }
-
-    return PHP_EOL;
   }
 
   function validar_session() {

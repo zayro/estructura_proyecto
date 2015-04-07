@@ -1,6 +1,7 @@
 <?php
 
 include('clase_conexion.php');
+
 /**
  * CLASE DE PROCESOS A LA BASE DE DATOS
  *
@@ -14,17 +15,52 @@ include('clase_conexion.php');
  * @version 1.0
  * @package clase\consulta
  */
-class consulta_bd extends conexion{
-  
-   public $guardar_registros = array();
-   
+class consulta_bd extends conexion {
+
+  public $guardar_registros = array();
+  public $resultado_conexion = array();
+
   function consulta_bd() {
+
+    $validar_conexion = "";
     conexion::local();
-    return conexion::conectar();
+    if (conexion::conectar() == 'conectado') {
+      array_push($this->resultado_conexion, conexion::conectar() . ' Local');
+
+      $validar_conexion = true;
+    } else {
+
+      array_push($this->resultado_conexion, conexion::conectar() . ' Local');
+    }
+
+
+    conexion::local_casa();
+    if (conexion::conectar() == 'conectado') {
+      array_push($this->resultado_conexion, conexion::conectar() . ' CASA');
+
+      $validar_conexion = true;
+    } else {
+
+      array_push($this->resultado_conexion, conexion::conectar() . ' CASA');
+    }
+
+
+    conexion::local_rayco();
+    if (conexion::conectar() == 'conectado') {
+      array_push($this->resultado_conexion, conexion::conectar() . ' RAYCO');
+
+      $validar_conexion = true;
+    } else {
+
+      array_push($this->resultado_conexion, conexion::conectar() . ' RAYCO');
+    }
+
+    if (!$validar_conexion) {
+      exit('<br> <strong> servidores desconectados </strong> <br>');
+    }
   }
-  
-  
-    /**
+
+  /**
    * LAS CONSULTAS SERAN DEVUELTAS EN FORMATOS JSON
    *
    * @return $datos retorna los mensajes despues de ejecutar la consulta y la auditoria
@@ -65,15 +101,13 @@ class consulta_bd extends conexion{
     return $datos;
   }
 
-    
-    function consulta_unida($sql) {
+  function consulta_unida($sql) {
 
     $resultado = $this->mysqli->query($sql);
 
     while ($registros = $resultado->fetch_object()) {
 
       array_push($this->guardar_registros, $registros);
-
     }
   }
 
@@ -89,11 +123,11 @@ class consulta_bd extends conexion{
       $imagenes = array();
       while ($row_documentos = $resultado_documentos->fetch_object()) {
         foreach ($row_documentos as $key => $valor) {
-         
-          
+
+
           # agrega dentro de un objeto un array
-          $imagenes[] =  $valor;
-          
+          $imagenes[] = $valor;
+
           $row->$key = $imagenes;
         }
       }
@@ -106,7 +140,5 @@ class consulta_bd extends conexion{
     $result["registros"] = $items;
     echo json_encode($result);
   }
-  
-  
-  
+
 }
