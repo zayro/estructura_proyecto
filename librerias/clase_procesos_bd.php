@@ -13,50 +13,14 @@ include('clase_conexion.php');
  * @method privada () se realiza la auditoria privada
  * @author MARLON ZAYRO ARIAS VARGAS
  * @version 1.0
- * @package clase\procesos
+ * @package clase\procesos 
  */
+include ('clase_interfas.php');
 
 class procesos_bd extends conexion implements auditoria {
 
- 
-
   function procesos_bd() {
-    $validar_conexion = "";
-    conexion::local();
-    if (conexion::conectar() == 'conectado') {
-      array_push($this->resultado_conexion, conexion::conectar() . ' Local');
-
-      $validar_conexion = true;
-    } else {
-
-      array_push($this->resultado_conexion, conexion::conectar() . ' Local');
-    }
-
-
-    conexion::local_casa();
-    if (conexion::conectar() == 'conectado') {
-      array_push($this->resultado_conexion, conexion::conectar() . ' CASA');
-
-      $validar_conexion = true;
-    } else {
-
-      array_push($this->resultado_conexion, conexion::conectar() . ' CASA');
-    }
-
-
-    conexion::local_rayco();
-    if (conexion::conectar() == 'conectado') {
-      array_push($this->resultado_conexion, conexion::conectar() . ' RAYCO');
-
-      $validar_conexion = true;
-    } else {
-
-      array_push($this->resultado_conexion, conexion::conectar() . ' RAYCO');
-    }
-
-    if (!$validar_conexion) {
-      exit('<br> <strong> servidores desconectados </strong> <br>');
-    }
+    conexion::conexiones();
   }
 
   public function auditoria_usuario($mensaje) {
@@ -112,7 +76,6 @@ VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "'
 
     $this->mysqli->close();
   }
-
 
   /**
    * CUALQUIER CAMBIO DIRECTO A LA BASE DE DATOS TIENE QUE PASAR POR AQUI
@@ -201,7 +164,6 @@ VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "'
 
     return $datos;
   }
-
 
 #CIERRA LA CLASE
 }
