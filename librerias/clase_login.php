@@ -8,11 +8,16 @@ class login extends conexion {
 * se crea una consulta preparada para motivos de seguridad
 *
 */	
-	
+
+function login(){
+  
+conexion::conexiones();  
+}
+       
 function logueo($usuario, $clave){
 	
-conexion::local();
-conexion::conectar();	
+
+
 
 $stmt = "";	
 /* crear una sentencia preparada */
@@ -46,19 +51,11 @@ return  'error';
 }
 
 
-
-
-
-
-}
-	
-
-
-
 }
 
 
 
+}
 
 
 ?>

@@ -22,14 +22,15 @@ session_start();
  * @package clase\conexion
  * @copyright 2015 
  */
-include ('clase_interfas.php');
+include ('clase_abstracta.php');
 
-class conexion {
+class conexion extends datos {
 
   const VERSION = '1.0';
   const FECHA_DE_APROBACION = '2015-05-02';
 
   protected $mysqli;
+
 
   /**
    * METODO CONECTAR
@@ -42,10 +43,9 @@ class conexion {
     $this->mysqli = @new mysqli($this->servidores, $this->usuarios, $this->claves, $this->bdd);
 
 
-    if ($this->mysqli->connect_error) {       
-      
+    if ($this->mysqli->connect_error) {
+
       return utf8_encode($this->mysqli->connect_error);
-      
     } else {
       $this->mysqli->set_charset("utf8");
       $this->mysqli->query("SET NAMES 'utf8'");
@@ -54,30 +54,43 @@ class conexion {
     }
   }
 
-  protected function local() {
-    $this->servidores = 'localhost:3308';
-    $this->usuarios = 'root';
-    $this->claves = 'zayro2014';
-    $this->bdd = 'estructura_proyecto';
-  }
+    protected function conexiones() {
+      
+    $validar_conexion = "";
+    
+    $this->local();
+    if ($this->conectar() == 'conectado') {
+      array_push($this->resultado_conexion, $this->conectar() . ' Local');
+      $validar_conexion = true;
+    } else {
+      array_push($this->resultado_conexion, $this->conectar() . ' Local');
+    }
 
-  protected function local_casa() {
-    $this->servidores = 'localhost';
-    $this->usuarios = 'root';
-    $this->claves = 'zayro';
-    $this->bdd = 'transito';
-  }
 
-  protected function local_rayco() {
-    $this->servidores = 'localhost:3308';
-    $this->usuarios = 'root';
-    $this->claves = 'zayro2014';
-    $this->bdd = 'estructura_proyecto';
+    $this->local_casa();
+    if ($this->conectar() == 'conectado') {
+      array_push($this->resultado_conexion, $this->conectar() . ' CASA');
+      $validar_conexion = true;
+      } else {
+      array_push($this->resultado_conexion, $this->conectar() . ' CASA');
+    }
+
+
+    $this->local_rayco();
+    if ($this->conectar() == 'conectado') {
+      array_push($this->resultado_conexion, $this->conectar() . ' RAYCO');
+      $validar_conexion = true;
+      } else {
+      array_push($this->resultado_conexion, $this->conectar() . ' RAYCO');
+    }
+
+    if (!$validar_conexion) {
+      exit('<br> <strong> servidores desconectados </strong> <br>');
+    }
   }
 
   function imprime_json($array) {
     echo json_encode($array, JSON_PRETTY_PRINT);
-    
   }
 
   function verificar_json() {
@@ -109,7 +122,7 @@ class conexion {
 
     return PHP_EOL;
   }
-  
+
   function limpiar_caracteres($string) {
     /**
      * Reemplaza todos los acentos por sus equivalentes sin ellos
@@ -171,20 +184,17 @@ class conexion {
   }
 
   function enviar_email_gestion_documental($recibe, $envia, $mensaje_html, $correos) {
-
-
-
-/**
- *     To send HTML mail, the Content-type header must be set
- */
+    /**
+     *     To send HTML mail, the Content-type header must be set
+     */
     $headers = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
-/**
- *  Additional headers
- */
-
+    /**
+     *  Additional headers
+     */
     $headers .= "From: $envia < $envia >" . "\r\n";
+    
 //$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
 //$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
 // Mail it
@@ -196,6 +206,25 @@ class conexion {
     } else {
       return 'No enviado los email: ';
     }
+  }
+
+  /*
+   * Obtener la direccion ip del cliente
+   * 
+   */
+
+  function obtener_ip() {
+    if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
+      $ip = getenv("HTTP_CLIENT_IP");
+    else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
+      $ip = getenv("HTTP_X_FORWARDED_FOR");
+    else if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
+      $ip = getenv("REMOTE_ADDR");
+    else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
+      $ip = $_SERVER['REMOTE_ADDR'];
+    else
+      $ip = "IP desconocida";
+    return($ip);
   }
 
 }

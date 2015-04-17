@@ -2,6 +2,7 @@
 componentes/
 phpmyadmin/
 db/
+logs/
 
 # -- Symfony2 -----------------------------------------
 app/bootstrap.php.cache

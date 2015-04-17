@@ -22,42 +22,7 @@ class consulta_bd extends conexion {
 
   function consulta_bd() {
 
-    $validar_conexion = "";
-    conexion::local();
-    if (conexion::conectar() == 'conectado') {
-      array_push($this->resultado_conexion, conexion::conectar() . ' Local');
-
-      $validar_conexion = true;
-    } else {
-
-      array_push($this->resultado_conexion, conexion::conectar() . ' Local');
-    }
-
-
-    conexion::local_casa();
-    if (conexion::conectar() == 'conectado') {
-      array_push($this->resultado_conexion, conexion::conectar() . ' CASA');
-
-      $validar_conexion = true;
-    } else {
-
-      array_push($this->resultado_conexion, conexion::conectar() . ' CASA');
-    }
-
-
-    conexion::local_rayco();
-    if (conexion::conectar() == 'conectado') {
-      array_push($this->resultado_conexion, conexion::conectar() . ' RAYCO');
-
-      $validar_conexion = true;
-    } else {
-
-      array_push($this->resultado_conexion, conexion::conectar() . ' RAYCO');
-    }
-
-    if (!$validar_conexion) {
-      exit('<br> <strong> servidores desconectados </strong> <br>');
-    }
+conexion::conexiones();
   }
 
   /**
