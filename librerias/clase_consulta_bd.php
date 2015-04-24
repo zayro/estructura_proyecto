@@ -18,7 +18,7 @@ include('clase_conexion.php');
 class consulta_bd extends conexion {
 
   public $guardar_registros = array();
-  public $resultado_conexion = array();
+  
 
   function consulta_bd() {
 
@@ -39,7 +39,7 @@ conexion::conexiones();
      * MOSTRAR EL MENSAJE EN JSON
      * @var array|null
      */
-    $datos = array();
+    $datos_json = array();
 
     /**
      * GUARDA TEMPORALMENTE LOS RESULTADOS
@@ -47,23 +47,26 @@ conexion::conexiones();
      */
     $items = array();
 
-    $resultado = $this->mysqli->query($sql);
+    $resultado_json = $this->mysqli->query($sql);
 
 
-    if (!$resultado) {
+    if (!$resultado_json) {
 
       throw new Exception("ERROR: $sql");
     }
 
 
-    while ($row = $resultado->fetch_object()) {
+    while ($row = $resultado_json->fetch_object()) {
 
       array_push($items, $row);
     }
+    
+     /* liberar el conjunto de resultados */
+    $resultado_json->close();
 
-    $datos["registros"] = $items;
+    $datos_json["registros"] = $items;
 
-    return $datos;
+    return $datos_json;
   }
 
   function consulta_unida($sql) {
@@ -73,6 +76,25 @@ conexion::conexiones();
     while ($registros = $resultado->fetch_object()) {
 
       array_push($this->guardar_registros, $registros);
+    }
+  }
+  
+    function multi_consulta($query) {
+    /* ejecutar multi consulta */
+    if ($this->mysqli->multi_query($query)) {
+      do {
+        /* almacenar primer juego de resultados */
+        if ($result = $this->mysqli->store_result()) {
+          while ($row = $result->fetch_row()) {
+            printf("%s\n", $row[0]);
+          }
+          $result->free();
+        }
+        /* mostrar divisor */
+        if ($this->mysqli->more_results()) {
+          printf("-----------------\n");
+        }
+      } while (@$this->mysqli->next_result());
     }
   }
 
@@ -105,5 +127,7 @@ conexion::conexiones();
     $result["registros"] = $items;
     echo json_encode($result);
   }
+  
+
 
 }

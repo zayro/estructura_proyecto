@@ -30,6 +30,7 @@ class conexion extends datos {
   const FECHA_DE_APROBACION = '2015-05-02';
 
   protected $mysqli;
+  public  $resultado_conexion = array();
 
 
   /**
@@ -56,12 +57,13 @@ class conexion extends datos {
 
     protected function conexiones() {
       
-    $validar_conexion = "";
+    $validar_conexion = false;
     
     $this->local();
-    if ($this->conectar() == 'conectado') {
+      if ($this->conectar() == 'conectado') {
       array_push($this->resultado_conexion, $this->conectar() . ' Local');
       $validar_conexion = true;
+       return true;
     } else {
       array_push($this->resultado_conexion, $this->conectar() . ' Local');
     }
@@ -71,6 +73,7 @@ class conexion extends datos {
     if ($this->conectar() == 'conectado') {
       array_push($this->resultado_conexion, $this->conectar() . ' CASA');
       $validar_conexion = true;
+      return true;
       } else {
       array_push($this->resultado_conexion, $this->conectar() . ' CASA');
     }
@@ -80,6 +83,7 @@ class conexion extends datos {
     if ($this->conectar() == 'conectado') {
       array_push($this->resultado_conexion, $this->conectar() . ' RAYCO');
       $validar_conexion = true;
+      return true;
       } else {
       array_push($this->resultado_conexion, $this->conectar() . ' RAYCO');
     }
@@ -87,6 +91,9 @@ class conexion extends datos {
     if (!$validar_conexion) {
       exit('<br> <strong> servidores desconectados </strong> <br>');
     }
+    
+    return false;
+    
   }
 
   function imprime_json($array) {

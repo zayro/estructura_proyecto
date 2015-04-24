@@ -22,7 +22,15 @@ app.service('cargar_servicios', function ($http) {
     });
 
   };
+  this.set_validar_session = function (valor) {
+    this.datos_ingreso = valor;
+    console.info("session activa");
+  };
 
+
+  this.validar_session = function () {
+    return this.datos_ingreso;
+  };
 
   this.select_session = function () {
     return $http.get('librerias/session_usuario.php');

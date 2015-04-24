@@ -5,24 +5,29 @@
  */
 
 app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, $http, cargar_servicios) {
-  
-  $scope.$on("update_parent_controller", function (event, message) {
-    $scope.message = message;
-    $scope.verificar_session();
-     console.log('ingreso update_parent_controller AppCtrl');
-  });
 
+
+// funcion se ejecuta cada vez que ingreso algun modulo
   $scope.verificar_session = function () {
 
-    cargar_servicios.select_session().success(function (data) {
+    var request = $.ajax({
+      url: "librerias/session_usuario.php",
+      method: "get",
+      dataType: "json"
+    });
 
-      $log.log(data.identificacion);
-      
-      $scope.select_session_usuario = data;
-      
-      if ($scope.select_session_usuario.identificacion == "" || $scope.select_session_usuario.identificacion == undefined) {
+    request.done(function (data) {
+      cargar_servicios.set_validar_session(data);
 
-        $location.path('/login/');
+      $scope.select_session_usuario = cargar_servicios.validar_session();
+
+      var identificacion = $scope.select_session_usuario.identificacion;
+
+
+      if (identificacion == "" || typeof identificacion === 'undefined' || !identificacion) {
+
+
+        window.location = "#/login/";
 
       } else {
 
@@ -35,20 +40,30 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
         });
 
       }
-
     });
-  
-  };
-  
-  $scope.verificar_session();
 
-  $scope.ocultar_menu = function () {
-    $('.button-collapse').sideNav('hide');
+    request.fail(function (jqXHR, textStatus) {
+      alert("Request failed: " + textStatus);
+      cargar_servicios.set_validar_session(jqXHR);
+    });
+
+    $scope.ocultar_menu = function () {
+      $('.button-collapse').sideNav('hide');
+    };
+
+    $scope.mostrar_menu = function () {
+      $('.button-collapse').sideNav('show');
+    };
+
   };
 
-  $scope.mostrar_menu = function () {
-    $('.button-collapse').sideNav('show');
-  };
+
+
+  $scope.$on("update_parent_controller", function (event, message) {
+    $scope.mensaje = message;
+    $scope.verificar_session();
+    console.log('ingreso update_parent_controller AppCtrl');
+  });
 
 
 
@@ -60,23 +75,13 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
  INICIA EL CONTROLADOR INGRESO
  ###############################################
  */
-app.controller('ingreso', function ($scope, $timeout, $location, $log, cargar_servicios) {
+app.controller('ingreso', function ($scope) {
 
-  cargar_servicios.select_session().success(function (data) {    
-   
-    if (data.identificacion == "" || data.identificacion == undefined) {
-      
-      $location.path('/login/');
+// al controlador principal le digo que revice  si existe una session vigente
+  $scope.$emit('update_parent_controller', 'ingreso');
 
-    } else {
-          console.log('ingreso correctamente');  
-          $scope.$emit('update_parent_controller', 'ingreso');
 
-    }
-    
-  });
-  
-  
+
 });
 
 
@@ -106,7 +111,7 @@ app.controller('login', function ($scope, $timeout, $log, $location, cargar_serv
                 toast("Verificar los datos" + "<a class='btn-flat red-text' href='#login'>X<a>", 4000);
               }
 
-            //$('#'+id_formulario).trigger("reset");
+              //$('#'+id_formulario).trigger("reset");
 
             })
 
@@ -119,27 +124,3 @@ app.controller('login', function ($scope, $timeout, $log, $location, cargar_serv
 
 });
 
-/*
- ###############################################
- DEMO
- ###############################################
- */
-
-app.controller('demo', function ($scope, $http, cargar_servicios) {
-
-  $scope.jquery = function () {
-
-    $.ajax({
-      type: "POST",
-      url: "some.php",
-      data: {name: "John", location: "Boston"}
-    })
-            .done(function (msg) {
-              alert("Data Saved: " + msg);
-            })
-            .fail(function (jqXHR, textStatus) {
-              alert("Request failed: " + textStatus);
-            });
-  }
-
-});

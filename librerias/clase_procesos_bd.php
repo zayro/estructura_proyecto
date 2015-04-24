@@ -1,6 +1,6 @@
 <?php
 
-include('clase_conexion.php');
+include('clase_consulta_bd.php');
 
 /**
  * CLASE DE PROCESOS A LA BASE DE DATOS
@@ -17,10 +17,11 @@ include('clase_conexion.php');
  */
 include ('clase_interfas.php');
 
-class procesos_bd extends conexion implements auditoria {
+class procesos_bd extends consulta_bd implements auditoria {
 
   function procesos_bd() {
     conexion::conexiones();
+   
   }
 
   public function auditoria_usuario($mensaje) {
@@ -41,18 +42,20 @@ VALUES ( '" . $_SERVER['REMOTE_ADDR'] . "',  NOW(),  '" . $_SESSION['usuario'] .
   }
 
   public function auditoria_privada($sql) {
+    
     $buscar = stristr($sql, 'select');
     $buscar_mayus = stristr($sql, 'SELECT');
+    
     if ($buscar === FALSE or $buscar_mayus === FALSE) {
       $convertir = array("'" => "|", '"' => "|");
       $accion = strtr($sql, $convertir);
 
       if (!isset($_SESSION['usuario'])) {
         $this->mysqli->query("INSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`)	
-VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), USER(), '$accion');");
+VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), USER(), '$sql');");
       } else {
         $this->mysqli->query("INSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`)	
-VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "', '$accion');");
+VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "', '$sql');");
       }
     }
   }
@@ -72,7 +75,7 @@ VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "'
     $this->mysqli->rollback();
   }
 
-  function cerrar_consulta() {
+  function cerrar_conexion() {
 
     $this->mysqli->close();
   }
@@ -148,11 +151,14 @@ VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "'
   function transaccion($sql, $mensaje) {
 
     $datos = array();
-
-    if (!$this->mysqli->query($sql)) {
+    $consulta = $this->mysqli->query($sql);
+   
+    if (!$consulta) {
       $error = $this->mysqli->error;
-      throw new Exception("ERROR: $sql :: $error ");
+      throw new Exception("ERROR: $sql :: $error :: ");
     }
+    
+    
 
     $this->auditoria_usuario($mensaje);
     $this->auditoria_privada($sql);
