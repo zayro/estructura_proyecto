@@ -5,6 +5,6 @@ session_start();
 
 session_destroy();
 
-header('Location: ../index.html');
+header('Location: ../public_html/index.html');
 
 ?>

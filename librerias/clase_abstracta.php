@@ -1,9 +1,15 @@
 <?php
-
-/*
+/**
+ * CLASE ABSTRACTA DE DATOS
+ * 
  * NOS PROTEGE LOS METODOS PARA NO SER UTILIZADOS EN LA SUBCLASE
  *
- *
+ * metodos abstractos solo son para ser utilizados en clases
+ * 
+ * @author MARLON ZAYRO ARIAS VARGAS
+ * @version 1.0
+ * @package abstracion
+ * @category datos
  */
 
 abstract class datos {
@@ -13,7 +19,7 @@ abstract class datos {
     $this->servidores = 'localhost:3308';
     $this->usuarios = 'root';
     $this->claves = 'zayro2014';
-    $this->bdd = 'zayro2014';
+    $this->bdd = 'estructura_proyecto';
   }
 
   protected function local_casa() {
@@ -27,7 +33,7 @@ abstract class datos {
     $this->servidores = 'localhost:3308';
     $this->usuarios = 'root';
     $this->claves = 'zayro2014';
-    $this->bdd = 'estructura_proyecto';
+    $this->bdd = 'parqueadero';
   }
   
 

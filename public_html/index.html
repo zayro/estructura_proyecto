@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="app" >
+
+  <head>
+
+    <title>Sistema</title>
+
+
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="shortcut icon" href="img/parqueadero.png">
+
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../componentes/materialize-v0.95.3/css/materialize.css"  media="screen, projection"/>
+    <link type="text/css" rel="stylesheet"  href="../componentes/angular-ui/animate.css" media="screen, projection" /> 
+
+
+    <style>
+
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1 0 auto;
+      }
+      .overflow_auto{overflow:auto;}
+
+      .contenedor{ width: 99%; margin: 0  auto; }
+
+      .brand-logo{ margin: 0px 3px 0px 3px;}
+
+      @media print {
+        header, footer{ display:none;}
+      }
+      
+   
+    </style>
+
+
+  </head>
+
+  <body ng-controller="AppCtrl">
+
+    <header ng-show="select_session_usuario.identificacion">
+
+      <nav class="light-blue darken-3">
+
+        <div class="nav-wrapper">
+
+          <a href="#" class="brand-logo"> <i class="small mdi-action-android"></i> SISTEMA DE INFORMACION </a>
+
+
+          <!-- BARRA FRONTAL DERECHA -->
+          <ul class="right hide-on-med-and-down">
+
+            <!--  
+            <li><a href="sass.html"><i class="small mdi-action-search"></i></a></li>
+              <li><a href="mobile.html"><i class="small mdi-navigation-more-vert"></i></a></li>
+              <li><a href="components.html"><i class="small mdi-action-view-module"></i></a></li>
+              <li><a href="javascript.html"><i class="small mdi-navigation-refresh"></i></a></li>
+            -->
+
+            <!-- <li><a class="abrir menu " onclick=" $('#modal1').openModal();"><i class="small mdi-navigation-menu waves-effect waves-light"></i></a></li> -->
+            <li>{{select_session_usuario.usuario| uppercase }}</li>
+            <li><a class="abrir menu " ng-click="mostrar_menu();"><i class="small mdi-action-account-box"></i></a></li>
+            <li><a class="abrir menu " href="../librerias/session_salir.php"><i class="small mdi-action-settings-power"></i></a></li>
+
+
+          </ul>
+
+          <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+
+
+          <!-- BARRA LATERAL -->
+          <ul id="slide-out" class="side-nav">
+
+
+            <!-- CABECERA -->
+
+            <li class=" grey  darken-3 center-align "  style="padding:20px;">
+              <h5>{{select_session_usuario.usuario| uppercase }}</h5>
+              <p><img class="activator" src="img/user.svg" width="100" height="100"></p>
+              <h6>{{select_session_usuario.nombre_grupo| uppercase }}</h6>
+            </li>
+
+
+
+            <li class="no-padding">
+              <ul class="collapsible collapsible-accordion">
+                <li class="bold"><a class="collapsible-header  waves-effect waves-teal"><i class="mdi-image-filter-drama"></i>OPCIONES</a>
+                  <div class="collapsible-body" >
+                    <ul>
+                      <li><a href="color.html">Color</a></li>
+                      <li><a href="grid.html">Grid</a></li>
+                      <li><a href="helpers.html">Helpers</a></li>                      
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </li>
+
+            <li class="no-padding" onclick=" $('#modal1').openModal();" >
+              <a  class="collapsible-header waves-effect waves-teal"><i class="mdi-action-view-headline"></i>MENU</a>
+            </li>
+
+
+
+
+
+
+
+          </ul>
+
+
+
+        </div>
+      </nav>
+
+
+
+
+    </header>
+
+
+    <main ng-swipe-right="mostrar_menu();" ng-swipe-left="ocultar_menu();">
+
+      <div class="contenedor">
+
+        <!-- contenido de la pagina -->
+        <ng-view></ng-view>
+
+        <!-- Modal Structure menu  -->
+        <div id="modal1" class="modal">
+          <div class="modal-content">
+            <h4 class="center-align card-panel light-blue darken-3 white-text"><i class="small mdi-navigation-menu"></i>  MENU  </h4>
+
+
+            <div class="row z-depth-1">
+              <div ng-repeat="cargar_menu_principal in menu_logueo"  >
+
+                <div ng-repeat="cargar_menu  in cargar_menu_principal.privilegio" class="col s12 m6 l4 ">
+                  <ul>
+
+                    <li class="center-align " >                      
+                      <i class="tyni mdi-navigation-arrow-drop-down"></i>{{cargar_menu.menu}}
+                    </li>
+
+                    <ul ng-repeat="cargar_submenu1 in cargar_menu.submenu1">
+
+                      <li style="margin-left:30px;"> 
+                        <a href="{{  cargar_submenu1.modulo}}" class=" waves-effect waves-teal blue-text"> 
+                          <i class="tyni mdi-action-label black-text"></i> {{ ' ' + cargar_submenu1.submenu}}</a>
+                      </li>
+
+                      <ul ng-repeat="cargar_submenu2 in cargar_submenu1.submenu2">
+                        <li style="margin-left:60px;"> 
+                          <a href="{{  cargar_submenu2.modulo}}" class=" waves-effect waves-teal black-text">
+                            <i class="tyni mdi-action-label-outline  grey-text"></i> {{' ' + cargar_submenu2.submenu}}</a> 
+                        </li>
+                      </ul>
+
+                    </ul>
+
+                  </ul>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </main>
+
+
+    <footer class="page-footer light-blue darken-3" style="display:none;">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Footer Content</h5>
+            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Links</h5>
+            <ul>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2015 Copyright Text
+          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+      </div>
+    </footer>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="../componentes/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../componentes/materialize-v0.96.1/js/materialize.js"></script>
+
+    <!-- Angular  Dependencies -->
+    <script src="../componentes/angular-1.3.14/angular.min.js"></script>
+    <script src="../componentes/angular-1.3.14/angular-animate.min.js"></script>
+    <script src="../componentes/angular-1.3.14/angular-sanitize.min.js"></script>
+    <script src="../componentes/angular-1.3.14/angular-touch.min.js"></script>
+    <script src="../componentes/angular-1.3.14/angular-route.min.js"></script>
+    <script src="../componentes/angular-1.3.14/angular-messages.min.js"></script>
+
+    <!-- Angular  Modulos  -->
+    <script src="../componentes/angular-ui/angular-locale_es-es.js"></script>
+    <script src="../componentes/angular-ui/angular-filter.js"></script>
+    <script src="../componentes/angular-ui/paginacion_angular.js"></script>
+    <script src="../componentes/ng-table-master/ng-table.js"></script>
+
+
+
+
+
+
+    <!-- Angular Configuracion -->
+    <script src="configuracion/app.js" ></script>
+    <script src="configuracion/rutas.js" ></script>
+    <script src="configuracion/filtros.js"></script>
+    <script src="configuracion/directivas.js"></script>
+    <script src="configuracion/servicios.js"></script>
+    <script src="configuracion/factoria.js"></script>
+    <script src="configuracion/controlador.js"></script>
+
+
+    <!--  JavaScript -->
+
+    <script>
+
+                                  function lateral() {
+
+                                    $('.button-collapse').sideNav({
+                                      menuWidth: 340, // Default is 240
+                                      edge: 'right' // Choose the horizontal origin
+                                              //  closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                                    });
+
+                                    $('.collapsible').collapsible({
+                                      accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+                                    });
+
+                                    $('select').material_select();
+                                  }
+
+
+                                  $(document).ready(function () {
+
+                                    console.log("cargo jquery");
+
+
+
+
+                                    $('.button-collapse').sideNav({
+                                      menuWidth: 250, // Default is 240
+                                      edge: 'left', // Choose the horizontal origin
+                                      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                                    }
+                                    );
+
+                                  });
+
+
+    </script>
+
+
+  </body>
+
+</html>

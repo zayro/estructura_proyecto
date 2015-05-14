@@ -14,7 +14,9 @@ if($numero > 0){
 
 for($i=0;$i<$numero;$i++){
 
-$datos[$tags[$i]] =  utf8_encode($valores[$i]);
+$valor_session = (!empty($valores[$i]) and isset($valores[$i]) and !is_null($valores[$i])  and  !is_array($valores[$i])) ? utf8_encode($valores[$i]) : $valores[$i];
+
+$datos[$tags[$i]] =  $valor_session;
 
 }
 

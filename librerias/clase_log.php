@@ -1,15 +1,15 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of clase_log
+ * CLASE CREAR LOS INFORMATIVOS
  *
- * @author Usuario
+ * Escribe lo que le pasen a un archivo de logs
+ * para poder asi administrar los tipos de permisos de acceso
+ * 
+ * @author MARLON ZAYRO ARIAS VARGAS
+ * @version 1.0
+ * @package clase
+ * @category log
  */
 class log {
 
@@ -17,7 +17,6 @@ class log {
    * Escribe lo que le pasen a un archivo de logs
    * @param string $cadena texto a escribir en el log
    * @param string $tipo texto que indica el tipo de mensaje. Los valores normales son Info, Error,  
-   *                                       Warn Debug, Critical
    */
   function escribir_log($cadena, $tipo) {
 

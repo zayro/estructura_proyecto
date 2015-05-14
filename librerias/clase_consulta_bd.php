@@ -8,43 +8,43 @@ include('clase_conexion.php');
  * En esta parte nos encargamos de crear los tipos de conexion del proyecto 
  * para poder asi administrar los tipos de permisos de acceso
  * 
- * @method procesos_bd () se realiza la conexion
- * @method usuarios() se realiza la auditoria usuario
- * @method privada () se realiza la auditoria privada
+ * @method consulta_bd () se realiza la conexion es el constructor
  * @author MARLON ZAYRO ARIAS VARGAS
  * @version 1.0
- * @package clase\consulta
+ * @package clase
+ * @category consulta
  */
 class consulta_bd extends conexion {
 
+  /**
+   *
+   * @var type $guardar_registros guarda los resultados de consulta unida
+   */
   public $guardar_registros = array();
-  
 
   function consulta_bd() {
-
-conexion::conexiones();
+    conexion::conexiones();
   }
 
   /**
    * LAS CONSULTAS SERAN DEVUELTAS EN FORMATOS JSON
    *
-   * @return $datos retorna los mensajes despues de ejecutar la consulta y la auditoria
-   * @throws dispara la consulta que se encuentre mal generada
-   * @param string $sql se le envia la consulta a la base de datos
+   * 
+   * @param type $sql se le envia la consulta a la base de datos
+   * @return $sql retorna los mensajes despues de ejecutar la consulta y la auditoria
+   * @throws Exception dispara la consulta que se encuentre mal generada
    *
    */
   function json_bd($sql) {
 
-    /**
-     * MOSTRAR EL MENSAJE EN JSON
-     * @var array|null
-     */
+   
+    #MOSTRAR EL MENSAJE EN JSON
+     
     $datos_json = array();
 
-    /**
-     * GUARDA TEMPORALMENTE LOS RESULTADOS
-     * @var array|null
-     */
+    
+    #GUARDA TEMPORALMENTE LOS RESULTADOS
+    
     $items = array();
 
     $resultado_json = $this->mysqli->query($sql);
@@ -60,15 +60,19 @@ conexion::conexiones();
 
       array_push($items, $row);
     }
-    
-     /* liberar el conjunto de resultados */
+
+    # iberar el conjunto de resultados
     $resultado_json->close();
 
-    $datos_json["registros"] = $items;
 
-    return $datos_json;
+
+    return $items;
   }
 
+  /**
+   * 
+   * @param type $sql se van guardando las consultas en $guarda_registros
+   */
   function consulta_unida($sql) {
 
     $resultado = $this->mysqli->query($sql);
@@ -78,8 +82,27 @@ conexion::conexiones();
       array_push($this->guardar_registros, $registros);
     }
   }
+
+   /**
+   * SE EJECUTA CONSULTAS SOLO SELECT
+   * 
+   * @param type $sql se recibe la consulta para ejecutar solo select
+   * @return type
+   */
+  function consulta($sql) {
+    
+    $buscar = stristr($sql, 'select');
+       
+    if ($buscar) {
+     return $this->mysqli->query($sql);      
+    }else{
+      return "NO CUMPLE LA CONDICION SELECT";
+    }
+   
+    return false;
+  }
   
-    function multi_consulta($query) {
+  private function multi_consulta($query) {
     /* ejecutar multi consulta */
     if ($this->mysqli->multi_query($query)) {
       do {
@@ -127,7 +150,5 @@ conexion::conexiones();
     $result["registros"] = $items;
     echo json_encode($result);
   }
-  
-
 
 }

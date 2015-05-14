@@ -1,13 +1,21 @@
 <?php
 
-session_start();
+# 2 HORAS DE TIEMPO DE SESSION
+ini_set("session.cookie_lifetime", "3600");
+ini_set("session.gc_maxlifetime", "3600");
+
+# zona horaria
+date_default_timezone_set('America/Bogota');
+
+# activar o desactivar mensajes de error
 /*
-  ini_set("session.cookie_lifetime","7200");
-  ini_set("session.gc_maxlifetime","7200");
-  date_default_timezone_set( 'America/Bogota' );
   ini_set ('display_errors', 1);
   set_time_limit (0);
  */
+
+session_start();
+
+include ('clase_abstracta.php');
 
 /**
  * CLASE DE CONEXION PRINCIPAL
@@ -15,23 +23,29 @@ session_start();
  * En esta parte nos encargamos de crear los tipos de conexion del proyecto 
  * para poder asi administrar los tipos de permisos de acceso
  *
- * @author MARLON ZAYRO ARIAS VARGAS
- * @param string $mysqli Se empleara la conexion mysqli que es orientada a objetos
- * @return returna si la conexion fue exitosa
+ * @author MARLON ZAYRO ARIAS VARGAS <zayro8905@gmail.com>
  * @version 1.0
- * @package clase\conexion
+ * @since 2015-05-02
  * @copyright 2015 
+ * @package clase
+ * @category conexion
  */
-include ('clase_abstracta.php');
-
 class conexion extends datos {
 
   const VERSION = '1.0';
   const FECHA_DE_APROBACION = '2015-05-02';
-
+  
+  /**
+   * CONTIENE LAS PROPIEDADES DE MYSQL
+   * @var type objecto mysqli protegido
+   */
   protected $mysqli;
-  public  $resultado_conexion = array();
-
+  
+  /**
+   *
+   * @var type retorna los mensajes de conexion
+   */
+  public $resultado_conexion = array();
 
   /**
    * METODO CONECTAR
@@ -55,15 +69,20 @@ class conexion extends datos {
     }
   }
 
-    protected function conexiones() {
-      
+  /**
+   * DATOS DE LAS CONEXIONES 
+   * 
+   * @return boolean
+   */
+  protected function conexiones() {
+
     $validar_conexion = false;
-    
+
     $this->local();
-      if ($this->conectar() == 'conectado') {
+    if ($this->conectar() == 'conectado') {
       array_push($this->resultado_conexion, $this->conectar() . ' Local');
       $validar_conexion = true;
-       return true;
+      return true;
     } else {
       array_push($this->resultado_conexion, $this->conectar() . ' Local');
     }
@@ -74,7 +93,7 @@ class conexion extends datos {
       array_push($this->resultado_conexion, $this->conectar() . ' CASA');
       $validar_conexion = true;
       return true;
-      } else {
+    } else {
       array_push($this->resultado_conexion, $this->conectar() . ' CASA');
     }
 
@@ -84,22 +103,31 @@ class conexion extends datos {
       array_push($this->resultado_conexion, $this->conectar() . ' RAYCO');
       $validar_conexion = true;
       return true;
-      } else {
+    } else {
       array_push($this->resultado_conexion, $this->conectar() . ' RAYCO');
     }
 
     if (!$validar_conexion) {
       exit('<br> <strong> servidores desconectados </strong> <br>');
     }
-    
+
     return false;
-    
   }
 
+  /**
+   * SOLO IMPRIME JSON
+   * 
+   * @param type $array
+   */
   function imprime_json($array) {
     echo json_encode($array, JSON_PRETTY_PRINT);
   }
 
+  /**
+   * VERIFICA E IMPRIMER ERRORES DE IMPRESION DE JSON
+   * 
+   * @return type PHP_EOL
+   */
   function verificar_json() {
 
 
@@ -130,16 +158,18 @@ class conexion extends datos {
     return PHP_EOL;
   }
 
+  /**
+   * Reemplaza todos los acentos por sus equivalentes sin ellos
+   * 
+   * 
+   * @param type $string
+   * string la cadena a sanear
+   * 
+   * @return type $string
+   * string saneada
+   */
   function limpiar_caracteres($string) {
-    /**
-     * Reemplaza todos los acentos por sus equivalentes sin ellos
-     *
-     * @param $string
-     *  string la cadena a sanear
-     *
-     * @return $string
-     *  string saneada
-     */
+
     $string = trim($string);
 
     $string = str_replace(
@@ -182,6 +212,10 @@ class conexion extends datos {
     return $string;
   }
 
+  /**
+   * VALIDA SI EXISTE SESSION
+   * 
+   */
   function validar_session() {
     if (empty($_SESSION) or empty($_SESSION['identificacion']) or ! isset($_SESSION['identificacion'])) {
 
@@ -190,24 +224,25 @@ class conexion extends datos {
     }
   }
 
-  function enviar_email_gestion_documental($recibe, $envia, $mensaje_html, $correos) {
-    /**
-     *     To send HTML mail, the Content-type header must be set
-     */
+  /**
+   * ENVIO DE CORREOS
+   * 
+   * @param type $recibe recibe correos
+   * @param type $envia envio correos
+   * @param type $mensaje_html contenido html del correo
+   * @param type $correos correos al enviar
+   * @return string mensaje exitoso o no
+   */
+  function enviar_email($recibe, $envia, $mensaje_html, $correos) {
+
+    #cabeceras del correo
     $headers = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
-    /**
-     *  Additional headers
-     */
     $headers .= "From: $envia < $envia >" . "\r\n";
-    
-//$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
-//$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
-// Mail it
 
-
-
+    //$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
+    //$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
+    #enviando correos
     if (mail($correos, $recibe, $mensaje_html, $headers)) {
       return 'enviado emails';
     } else {
@@ -215,11 +250,11 @@ class conexion extends datos {
     }
   }
 
-  /*
-   * Obtener la direccion ip del cliente
+  /**
+   * OBTENER IP DE UN EQUIPO
    * 
+   * @return string retorna ip
    */
-
   function obtener_ip() {
     if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
       $ip = getenv("HTTP_CLIENT_IP");
@@ -233,5 +268,6 @@ class conexion extends datos {
       $ip = "IP desconocida";
     return($ip);
   }
-
+  
+ 
 }

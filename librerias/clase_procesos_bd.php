@@ -1,6 +1,8 @@
 <?php
 
 include('clase_consulta_bd.php');
+include ('clase_interfas.php');
+
 
 /**
  * CLASE DE PROCESOS A LA BASE DE DATOS
@@ -8,22 +10,21 @@ include('clase_consulta_bd.php');
  * En esta parte nos encargamos de crear los tipos de conexion del proyecto 
  * para poder asi administrar los tipos de permisos de acceso
  * 
- * @method procesos_bd () se realiza la conexion
- * @method usuarios() se realiza la auditoria usuario
- * @method privada () se realiza la auditoria privada
  * @author MARLON ZAYRO ARIAS VARGAS
  * @version 1.0
- * @package clase\procesos 
+ * @package clase
+ * @category procesos
  */
-include ('clase_interfas.php');
-
 class procesos_bd extends consulta_bd implements auditoria {
 
   function procesos_bd() {
-    conexion::conexiones();
-   
+    conexion::conexiones();   
   }
 
+  /**
+   * MENSAJE DE AUDITORIA PARA EL USUARIO
+   * @param string $mensaje
+   */
   public function auditoria_usuario($mensaje) {
 
     if (!isset($_SESSION['usuario'])) {
@@ -41,6 +42,10 @@ VALUES ( '" . $_SERVER['REMOTE_ADDR'] . "',  NOW(),  '" . $_SESSION['usuario'] .
     }
   }
 
+  /**
+   * MENSAJE DE AUDITORIA PARA EL SISTEMA
+   * @param string $sql
+   */
   public function auditoria_privada($sql) {
     
     $buscar = stristr($sql, 'select');
@@ -60,6 +65,11 @@ VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "'
     }
   }
 
+  function preparar_consulta ($sql){
+ return  $this->mysqli->prepare($sql);
+  }
+  
+  
   function inicia_transaccion() {
 
     $this->mysqli->autocommit(false);
@@ -79,6 +89,11 @@ VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "'
 
     $this->mysqli->close();
   }
+  
+  function ultimo_insert() {
+
+    $this->mysqli->insert_id;
+  }
 
   /**
    * CUALQUIER CAMBIO DIRECTO A LA BASE DE DATOS TIENE QUE PASAR POR AQUI
@@ -89,6 +104,7 @@ VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "'
    * @param string $mensaje se le envia un mensaje de auditoria 
    *
    */
+
   function alterar_bd($sql, $mensaje) {
 
     /**
@@ -117,6 +133,11 @@ VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "'
       }
 
       $afectaciones = $this->mysqli->affected_rows;
+      
+      
+      if($afectaciones == '0'){
+        throw new Exception("NO SE ENCUENTRAS COINCIDENCIAS: $sql");
+      }
 #array_push($query_sql, $sql);
 #array_push($mensaje_auditoria, $mensaje); 
 
@@ -141,12 +162,13 @@ VALUES ('" . $_SERVER['REMOTE_ADDR'] . "', NOW(), '" . $_SESSION['usuario'] . "'
 
   /**
    * CUALQUIER CAMBIO POR TRANSACCION A LA BASE DE DATOS 
-   *
-   * @return $datos retorna los mensajes despues de ejecutar la consulta y la auditoria
-   * @throws dispara la consulta que se encuentre mal generada
-   * @param string $sql se le envia la consulta a la base de datos
-   * @param string $mensaje se le envia un mensaje de auditoria 
-   *
+   * 
+   * con este metodo podemos realizar transacciones
+   * 
+   * @param string $sql parametro de sql
+   * @param string $mensaje parametro mensaje de auditoria
+   * @return array $datos retorna arreglos de datos
+   * @throws Exception disparar un error si la consulta no fue exitosa
    */
   function transaccion($sql, $mensaje) {
 
