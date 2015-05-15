@@ -6,8 +6,8 @@ class login extends procesos_bd {
 
 /**
  * 
- * @param type $usuario
- * @param type $clave
+ * @param string $usuario
+ * @param string $clave
  * @return string
  */
 function logueo($usuario, $clave){
@@ -54,40 +54,50 @@ return  'Revisar datos ingresados.'.$encontrado;
 /**
  * RECUPERAR CLAVE
  * 
- * @param type $correo
+ * @param string $correo
  */
-function recuperar_clave($correo){
+function recuperar_clave($usuario){
 
-$stmt = "";	
-
-  /* crear una sentencia preparada */
-$stmt = $this->mysqli->prepare("
-  SELECT identificacion 
-  FROM usuarios  
-  WHERE correo = ?  and estado = '1' 
-  ");
-
-/* ligar parámetros para marcadores */
-$stmt->bind_param("s", $correo);
-
-/* ejecutar la consulta */
-$stmt->execute();
-
-/* ligar variables de resultado */
-$stmt->bind_result($encontrado, $usuario, $grupo, $nombre_grupo, $identificacion);
-
-/* obtener valor */
-$stmt->fetch();
-
+  $sql = "
+    SELECT
+    decode('$correo','clave') as clave
+    FROM
+    usuarios       
+    WHERE
+    usuario = '$usuario'
+    and
+    estado  = '1'
+     " ;
 
 }
 
 /**
  * AUTENTICAR CORREO
  * 
- * @param type $correo
+ * @param string $correo
  */
-function autenticar_correo($correo){}
+function autenticar_correo($usuario, $clave){
+  
+  $usuario_decode = base64_decode($usuario);
+  $clave_decode = base64_decode($clave);
+  
+    $sql = "
+    UPDATE
+    usuarios
+    SET
+    estado = '1'
+    WHERE
+    usuario = '$usuario_decode'
+    and
+    clave = encode('$clave_decode', 'clave') 
+     " ;
+
+    $mensaje = "usuario autenticado";
+  
+  return procesos_bd::alterar_bd($sql, $mensaje);
+  
+  
+}
 
 /**
  * CAMBIO DE CLAVE
@@ -120,9 +130,17 @@ function cambio_clave($usuario, $clave, $nueva){
 /**
  * CREACION DE USUARIOS
  * 
- * @param type $usuario
+ * @param string $usuario
+ * @param string $clave
+ * @param string $correo
+ * @param string $grupo
+ * @param string $identificacion
  */
-function usuario_nuevo($usuario){}
+function usuario_nuevo($usuario, $clave, $correo, $grupo, $identificacion){
+
+  
+  
+}
 
 #CIERRA CLASE
 }

@@ -3,7 +3,7 @@
 /**
  * INTERFAZ AUDITORIA
  * 
- * OBLIGA A UTILIZAR ESTOS 2 METODOS DENTRO DE LA SUBCLASE
+ * OBLIGA A UTILIZAR ESTOS 1 METODOS DENTRO DE LA SUBCLASE
  *
  * se utiliza para la auditoria
  * 
@@ -12,11 +12,11 @@
  * @package interfaz
  * @category auditoria
  */
-interface auditoria {
+interface auditar {
 
-    function auditoria_usuario($mensaje);
+    function auditoria($sql, $mensaje);
 
-    function auditoria_privada($sql);
+    
 }
 
 ?>

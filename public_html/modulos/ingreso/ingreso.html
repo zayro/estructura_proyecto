@@ -1,22 +1,44 @@
+<!--
+    ###########################################################
+    INICIA EL CONTROLADOR Y CONTENIDO
+    ###########################################################
+-->
 <div class="row" id="controlador_ingreso">
 
+  <!--
+     ###########################################################
+     AJUSTE DEL PANEL PARA SU RESPECTIVO TAMAÑO
+     ###########################################################
+  -->
   <div class="col s12 m12 l12">
 
-    <div class="col s12  m12  l12 ">
+
       <div class="card ">
 
+        <!--
+        ###########################################################
+        TITULO PRINCIPAL DEL PANEL
+        ###########################################################
+        -->
 
-
-        <div class=" center-align   ">
-          <h4 class="card-panel  grey lighten-3   grey-text"> INGRESO </h4>
-
-        </div>
-
+        <!--
+                <div class=" center-align   ">
+                  <h4 class="card-panel  grey lighten-3   grey-text"> INGRESO </h4>
+                </div>
+        -->
 
 
         <div class="card-content ">
 
-          <span class="card-title activator grey-text text-darken-4">TIEMPO DE ENTRADA <i class="mdi-navigation-more-vert right"></i></span>
+          <div class="section">
+            <span class="card-title activator grey-text text-darken-4"><strong>TITULO</strong> <i class="mdi-navigation-more-vert right"></i></span>
+            <div class="divider"></div>
+          </div>
+          <!--
+          ###########################################################
+          CONTENIDO DEL PANEL
+          ###########################################################
+          -->
           <form name="formulario_entrada" id="formulario_entrada" class="col s12" ng-submit="enviar_formulario('formulario_entrada', 'modulos/ingreso/insertar_vehiculo.php');">
             <div class="row">
 
@@ -38,6 +60,12 @@
 
             </div>
 
+            <!--
+          ###########################################################
+          FOOTER DEL PANEL
+          ###########################################################
+            -->
+
             <div class="card-action">             
               <button type="submit" class="btn waves-effect waves-light green white-text col s12 l12 ">Aceptar</button>
             </div>
@@ -47,21 +75,23 @@
         </div>
 
 
+        <!--
+        ###########################################################
+        CONTENIDO DE AYUDA DEL PANEL
+        ###########################################################
+        -->
 
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">Ayuda <i class="mdi-navigation-close right"></i></span>
           <p>Colocamos la informacion de ayuda para el formulario.</p>
         </div>
 
-
-
-
       </div>
     </div>
 
 
 
-  </div>
+
 
 </div>
 
