@@ -269,5 +269,20 @@ class conexion extends datos {
     return($ip);
   }
   
- 
+   /**
+   * OBTENER RUTA ACTUAL DE UN ARCHIVO
+   * 
+   * @return string retorna ruta
+   */
+  
+  function ruta_actual(){
+    $ruta = getcwd() ; 
+    $raiz = $_SERVER['DOCUMENT_ROOT'];
+    $script_nombre = $_SERVER['SCRIPT_FILENAME']; 
+    
+    
+    return $script_nombre;
+    
+  }
+  
 }

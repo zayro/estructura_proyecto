@@ -76,10 +76,10 @@ function recuperar_clave($usuario){
  * 
  * @param string $correo
  */
-function autenticar_correo($usuario, $clave){
+function autenticar_correo($usuario, $correo){
   
   $usuario_decode = base64_decode($usuario);
-  $clave_decode = base64_decode($clave);
+  $correo_decode = base64_decode($correo);
   
     $sql = "
     UPDATE
@@ -89,10 +89,10 @@ function autenticar_correo($usuario, $clave){
     WHERE
     usuario = '$usuario_decode'
     and
-    clave = encode('$clave_decode', 'clave') 
+    correo = '$correo_decode'
      " ;
 
-    $mensaje = "usuario autenticado";
+    $mensaje = "CORREO AUTENTICADO";
   
   return procesos_bd::alterar_bd($sql, $mensaje);
   
@@ -121,7 +121,34 @@ function cambio_clave($usuario, $clave, $nueva){
     estado  = '1'
      " ;
   
-  $mensaje = "cambio de clave de usuario";
+  $mensaje = "CAMBIO CLAVE DE USUARIO";
+  
+  return procesos_bd::alterar_bd($sql, $mensaje);
+  
+}
+
+/**
+ * DESACTIVAR USUARIO
+ * 
+ * @param string $usuario
+ * @param string $clave
+  */
+function desactivar_usuario($usuario, $clave){
+  
+  $sql = "
+    UPDATE
+    usuarios
+    SET
+    estado  = '0'
+    WHERE
+    usuario = '$usuario'
+    and
+    clave = encode('$clave', 'clave')
+    and
+    estado  = '1'
+     " ;
+  
+  $mensaje = "DAR DE BAJA AL USUARIO";
   
   return procesos_bd::alterar_bd($sql, $mensaje);
   
@@ -138,7 +165,17 @@ function cambio_clave($usuario, $clave, $nueva){
  */
 function usuario_nuevo($usuario, $clave, $correo, $grupo, $identificacion){
 
+    $sql = "
+    INSERT INTO
+    usuarios
+    (usuario, clave, correo, grupo, identificacion)
+    VALUES
+    ($usuario, $clave, $correo, $grupo, $identificacion)
+     " ;
   
+  $mensaje = "INSERTO UN NUEVO USUARIO";
+  
+  return procesos_bd::alterar_bd($sql, $mensaje);
   
 }
 

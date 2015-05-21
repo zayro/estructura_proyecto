@@ -48,14 +48,13 @@ class procesos_bd extends consulta_bd implements auditar {
 
     $this->mysqli->insert_id;
   }
-  
-    /**
+
+  /**
    * MENSAJE DE AUDITORIA PARA EL USUARIO Y PARA EL SISTEMA
    * @param string $mensaje
    * @param string $sql
    */
   function auditoria($sql, $mensaje) {
-
 
     #MENSAJE DE AUDITORIA PARA EL USUARIO
 
@@ -63,58 +62,39 @@ class procesos_bd extends consulta_bd implements auditar {
     $buscar_mayus = stristr($sql, 'SELECT');
 
     if ($buscar === FALSE or $buscar_mayus === FALSE) {
-      
+
       $convertir = array("'" => "|", '"' => "|");
       $accion = strtr($sql, $convertir);
 
 
       if (!isset($_SESSION['identificacion'])) {
 
-       $auditoria_sistema =  $this->mysqli->query("
-          INSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`)	
-          VALUES ('" . conexion::obtener_ip() . "', NOW(), USER(), '$accion');
+        $auditoria_sistema = $this->mysqli->query("
+          INSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`, `mensaje`, `archivo`)	
+          VALUES ('" . conexion::obtener_ip() . "', NOW(), USER(), '$accion' , '$mensaje', '".conexion::ruta_actual()."');
          ");
-       
-       if($auditoria_sistema){
 
-        $consecutivo = $this->mysqli->insert_id;
+        if (!$auditoria_sistema) {
 
-        $auditoria_usuario = $this->mysqli->query("
-        INSERT INTO `auditoria_usuario` (`ip`, `tiempo`, `identificacion`, `proceso`, `id_auditoria`)	
-        VALUES('" . conexion::obtener_ip() . "',  NOW(), USER(),  '$mensaje', '$consecutivo');
-        ");
-        
-        return $this->mysqli->error;
-       }
-        
+          return $this->mysqli->error;
+        }
+
         return "exitosa";
-        
       } else {
 
         $auditoria_sistema = $this->mysqli->query("
-          INSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`)	
-          VALUES ('" . conexion::obtener_ip() . "', NOW(), '" . $_SESSION['identificacion'] . "', '$accion');");
+          IINSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`, `mensaje`, `archivo`)	
+          VALUES ('" . conexion::obtener_ip() . "', NOW(), '" . $_SESSION['identificacion'] . "', '$accion', '$mensaje', '".conexion::ruta_actual()."');");
 
-        if($auditoria_sistema){
-          
-        $consecutivo = $this->mysqli->insert_id;
-        
-        $auditoria_usuario = $this->mysqli->query("
-        INSERT INTO `auditoria_usuario` (`ip`, `tiempo`, `identificacion`, `proceso`, `id_auditoria`) 
-        VALUES ( '" . conexion::obtener_ip() . "',  NOW(),  '" . $_SESSION['identificacion'] . "', '$mensaje', '$consecutivo');
-        ");
-        return $this->mysqli->error;
-        
+        if (!$auditoria_sistema) {
+
+          return $this->mysqli->error;
         }
-        
+
         return "exitosa";
-        
       }
-      
-      
     }
     return "ESTA ENVIANDO UN SELECT";
-    
   }
 
   /**
@@ -159,15 +139,14 @@ class procesos_bd extends consulta_bd implements auditar {
       if ($afectaciones == '0') {
         throw new Exception("NO SE ENCUENTRAS COINCIDENCIAS: $sql");
       }
-     
-      
+
+
 
       $datos['suceso'] = "CONSULTA EXITOSA";
       $datos['success'] = true;
       $datos['sql'] = $sql;
       $datos['afectaciones'] = $afectaciones;
       $datos['auditoria'] = $this->auditoria($sql, $mensaje);
-      
     } catch (Exception $e) {
 
       $datos['suceso'] = $this->mysqli->error;
@@ -178,8 +157,8 @@ class procesos_bd extends consulta_bd implements auditar {
 
     return $datos;
   }
-  
-   /**
+
+  /**
    * CUALQUIER CAMBIO DIRECTO A LA BASE DE DATOS TIENE QUE PASAR POR AQUI Y TIENE QUE ESTAR REGISTRADO
    *
    * @return $datos retorna los mensajes despues de ejecutar la consulta y la auditoria
@@ -189,8 +168,8 @@ class procesos_bd extends consulta_bd implements auditar {
    *
    */
   function alterar_bd_seguro($sql, $mensaje) {
-     
-     conexion::validar_session();
+
+    conexion::validar_session();
 
     /**
      * MOSTRAR EL MENSAJE EN JSON
@@ -226,8 +205,8 @@ class procesos_bd extends consulta_bd implements auditar {
 #array_push($query_sql, $sql);
 #array_push($mensaje_auditoria, $mensaje); 
 
-      
-      
+
+
 
       $datos['suceso'] = "CONSULTA EXITOSA";
       $datos['success'] = true;
@@ -244,6 +223,7 @@ class procesos_bd extends consulta_bd implements auditar {
 
     return $datos;
   }
+
   /**
    * CUALQUIER CAMBIO POR TRANSACCION A LA BASE DE DATOS 
    * 
@@ -256,8 +236,8 @@ class procesos_bd extends consulta_bd implements auditar {
    */
   function transaccion($sql, $mensaje) {
 
-     conexion::validar_session();
-     
+    conexion::validar_session();
+
     $datos = array();
     $consulta = $this->mysqli->query($sql);
 
@@ -267,7 +247,7 @@ class procesos_bd extends consulta_bd implements auditar {
     }
 
     $this->auditoria($sql, $mensaje);
-    
+
 
     $datos['suceso'] = "CONSULTA EXITOSA";
     $datos['success'] = true;
