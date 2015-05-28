@@ -33,18 +33,26 @@
       .contenedor{ width: 99%; margin: 0  auto; }
 
       .brand-logo{ margin: 0px 3px 0px 3px;}
-      
+
       .titulo_encabezado{
-          font-family: 'Open Sans 300';
-          
-                  
+        font-family: 'Open Sans 300';
+
+
       }
 
       @media print {
         header, footer{ display:none;}
       }
-      
-   
+
+
+
+      .online {
+        color: green;
+      }
+
+      .offline {
+        color: red;
+      }
     </style>
 
 
@@ -280,6 +288,47 @@
                                     );
 
                                   });
+
+
+
+
+
+                                  function isOnline() {
+                                    console.info("en Linea");
+                                  }
+
+                                  function isOffline() {
+                                    console.info("Fuera de Linea");
+                                  }
+
+
+                                  if (navigator.onLine) {
+                                    console.log('ONLINE!');
+                                  } else {
+                                    console.log('Connection flaky');
+                                  }
+
+                                  if (window.addEventListener) {
+                                    /*
+                                     Works well in Firefox and Opera with the 
+                                     Work Offline option in the File menu.
+                                     Pulling the ethernet cable doesn't seem to trigger it.
+                                     Later Google Chrome and Safari seem to trigger it well
+                                     */
+                                    window.addEventListener("online", isOnline, false);
+                                    window.addEventListener("offline", isOffline, false);
+                                    console.info("nuevos navegadores");
+                                  }
+                                  else {
+                                    /*
+                                     Works in IE with the Work Offline option in the 
+                                     File menu and pulling the ethernet cable
+                                     */
+                                    document.body.ononline = isOnline;
+                                    document.body.onoffline = isOffline;
+                                    console.info("antiguo navegadores");
+                                  }
+
 
 
     </script>
