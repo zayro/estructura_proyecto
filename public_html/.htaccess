@@ -1,0 +1,13 @@
+#BLOQUE LA NAVEGACION POR CARPETAS
+
+Options -Indexes
+ 
+#PERSONALIZAR LOS ERRORES 
+ErrorDocument 403 /estructura_proyecto/public_html/error/403.html
+ErrorDocument 404 /estructura_proyecto/public_html/error/404.html
+
+#REMOVER LA EXTENSIONES DEL NAVEGADOR URL
+#RewriteRule ^(([^/]+/)*[^.]+)$ /$1.php [L]
+#RewriteRule ^(([^/]+/)*[^.]+)$ /$1.html [L]
+
+
