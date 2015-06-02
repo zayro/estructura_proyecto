@@ -3,7 +3,7 @@
   html{
     /* background-color: #3B3E40;  */
     /* background-color: #eeeee;  */
-    background: #e1f5fe;
+    background: #fafafa;
   }
 
 
@@ -60,17 +60,17 @@
 
 
             <div class="center-align col s12 m12 l12">
-              <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text">Acceder</button>
+              <button type="submit" class=" col s12 l12 waves-effect waves-light btn  green darken-3 white-text">Acceder</button>
             </div>
 
             <div class="center-align col s6 m6 l16">
               <a class="col s12 l12 waves-effect waves-light btn-flat  black-text text-darken-4 " onclick="$('#olvido_clave').openModal();">
-                <i class="small mdi-communication-email blue-text"></i> ¿ olvido su clave ?</a>
+                <i class="small mdi-communication-email  blue-grey-text"></i> ¿ olvido su clave ?</a>
             </div>
 
             <div class="center-align col s6 m6 l6">
               <a class="col s12 l12 waves-effect waves-light btn-flat black-text text-darken-4 modal-trigger" onclick="$('#cambio_clave').openModal();">
-                <i class="small mdi-communication-vpn-key blue-text"></i> cambio de clave </a>
+                <i class="small mdi-communication-vpn-key  blue-grey-text"></i> cambio de clave </a>
             </div>
 
 
@@ -119,22 +119,25 @@
   </div>
 
 
-    <div id="olvido_clave" class="modal">
+  <div id="olvido_clave" class="modal">
     <div class="modal-content">
       <h4>Olvido de Clave</h4>
       <p>complete los datos para poder cambiar su clave</p>
       <form name="formulario_olvido_clave" id="formulario_olvido_clave" ng-submit="formulario_olvido_clave();" ng-hide="select_session_usuario.identificacion" >
-        
+
 
 
 
         <div class="row">
 
-          <div class="input-field col s12">
+          <div class="input-field col s8">
             <input name="usuario" id="usuario" type="email" class="validate" required>
-            <label for="usuario">Usuario o Correo</label>
+            <label for="usuario">Correo</label>
           </div>
 
+          <div class="input-field col s4">
+            <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text ">Actualizar</button>
+             </div>
 
         </div>
 
@@ -143,9 +146,7 @@
 
       </form> 
     </div>
-    <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Actualizar</a>
-    </div>
+
   </div>
 
   <div id="cambio_clave" class="modal">
@@ -173,13 +174,13 @@
 
         </div>
 
-           <div class="center-align col s12 m12 l12">
-              <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text">Cambiar</button>
-            </div>
-        
+        <div class="center-align col s12 m12 l12">
+          <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text">Cambiar</button>
+        </div>
+
       </form> 
     </div>
- 
+
   </div>
 
 </div> 

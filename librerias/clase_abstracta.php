@@ -21,18 +21,11 @@ abstract class datos {
     $this->bdd = 'estructura_proyecto';
   }
 
-  protected function local_casa() {
+  protected function externo() {
     $this->servidores = 'localhost';
     $this->usuarios = 'root';
     $this->claves = 'zayro';
     $this->bdd = 'transito';
-  }
-
-  protected function local_rayco() {
-    $this->servidores = 'localhost:3308';
-    $this->usuarios = 'root';
-    $this->claves = 'zayro2014';
-    $this->bdd = 'parqueadero';
   }
 
   protected function cabecera_cors() {

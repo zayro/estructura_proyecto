@@ -42,8 +42,8 @@ class conexion extends datos {
   protected $mysqli;
   
   /**
-   *
-   * @var type retorna los mensajes de conexion
+   * CONTIENE EL RESULTADO DE LA CONEXION: retorna los mensajes de conexion
+   * @var type $array
    */
   public $resultado_conexion = array();
 
@@ -88,24 +88,17 @@ class conexion extends datos {
     }
 
 
-    $this->local_casa();
+    $this->externo();
     if ($this->conectar() == 'conectado') {
-      array_push($this->resultado_conexion, $this->conectar() . ' CASA');
+      array_push($this->resultado_conexion, $this->conectar() . ' externo');
       $validar_conexion = true;
       return true;
     } else {
-      array_push($this->resultado_conexion, $this->conectar() . ' CASA');
+      array_push($this->resultado_conexion, $this->conectar() . ' externo');
     }
 
 
-    $this->local_rayco();
-    if ($this->conectar() == 'conectado') {
-      array_push($this->resultado_conexion, $this->conectar() . ' RAYCO');
-      $validar_conexion = true;
-      return true;
-    } else {
-      array_push($this->resultado_conexion, $this->conectar() . ' RAYCO');
-    }
+
 
     if (!$validar_conexion) {
       exit('<br> <strong> servidores desconectados </strong> <br>');
@@ -159,8 +152,7 @@ class conexion extends datos {
   }
 
   /**
-   * Reemplaza todos los acentos por sus equivalentes sin ellos
-   * 
+   * Reemplaza todos los acentos por sus equivalentes sin ellos 
    * 
    * @param type $string
    * string la cadena a sanear

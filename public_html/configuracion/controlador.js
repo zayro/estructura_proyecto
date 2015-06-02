@@ -6,6 +6,15 @@
 
 app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, $http, cargar_servicios) {
 
+console.info("ingreso al controlador principal AppCtrl");
+  /*
+   $scope.$on('$locationChangeStart', function( event ) {
+   var answer = confirm("Are you sure you want to leave this page?")
+   if (!answer) {
+   event.preventDefault();
+   }
+   });
+   */
 
 // funcion se ejecuta cada vez que ingreso algun modulo
   $scope.verificar_session = function () {
@@ -33,9 +42,10 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
 
         cargar_servicios.select_menu().success(function (data) {
           $scope.menu_logueo = data.registros;
+          console.log(data.registros);
         });
 
-      
+
 
       }
     });
@@ -66,141 +76,56 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
   });
 
 
-
-
-
 });
+
 /*
- ###############################################
- CONTROLADOR INGRESO
- ###############################################
+ ##################################################
+ INICIA EL CONTROLADOR QUE VALIDA SI EXISTE SESSION
+ ###################################################
  */
-app.controller('ingreso', function ($scope, cargar_servicios) {
+
+app.controller('valida_usuario', function ($scope, cargar_servicios) {
+  console.info("ingreso al controlador valida usuario");
 
 // al controlador principal le digo que revice  si existe una session vigente
   $scope.$emit('update_parent_controller', 'ingreso');
 
+  function isOnline() {
+    console.info("en Linea");
+    Materialize.toast("Se establecio conexion a internet" + "<span class='btn-flat green-text' >X</span>", 40000);
+  }
 
-  $scope.enviar_formulario = function (datos, valor_url) {
-
-
-    var valor_metodo = "POST";
-    var valor_datos = $('#' + datos).serialize();
-
-    cargar_servicios.http_respuesta(valor_url, valor_metodo, valor_datos)
-
-            .success(function (msg) {
-
-              if (msg.success) {
-
-                Materialize.toast("Exitoso" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
-
-                //setTimeout("window.print()" , 5000);
+  function isOffline() {
+    console.info("Fuera de Linea");
+    Materialize.toast("se perdio conexion a internet" + "<a class='btn-flat red-text' href='#login'>X<a>", 40000);
+  }
 
 
-                cargar_servicios.http_respuesta('modulos/ingreso/consultar_pago.php', 'post', $.param({'placa': msg.placa})).success(function (data) {
+  if (navigator.onLine) {
+    console.log('ONLINE!');
+  } else {
+    console.log('OFFLINE');
+  }
 
-                  $scope.placa = data.registros[0].placa;
-                  $scope.tiempo_entrada = data.registros[0].tiempo_entrada;
-                  $scope.factura = data.registros[0].factura;
-                  $scope.tiempo_salida = data.registros[0].tiempo_salida;
-                  $scope.valor = Number(data.registros[0].valor);
-
-                });
-
-
-              } else {
-                Materialize.toast("Error" + "<a class='btn-flat red-text' href='#login'>X<a>", 5000);
-                Materialize.toast(msg.suceso + "<a class='btn-flat red-text' href='#login'>X<a>", 5000);
-              }
-
-              //$('#'+id_formulario).trigger("reset");
-
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-            });
-
-  };
-
+  if (window.addEventListener) {
+    /*
+     Works well in Firefox and Opera with the 
+     Work Offline option in the File menu.
+     Pulling the ethernet cable doesn't seem to trigger it.
+     Later Google Chrome and Safari seem to trigger it well
+     */
+    window.addEventListener("online", isOnline, false);
+    window.addEventListener("offline", isOffline, false);
+    console.info("nuevos navegadores");
+  }
+  else {
+    /*
+     Works in IE with the Work Offline option in the 
+     File menu and pulling the ethernet cable
+     */
+    document.body.ononline = isOnline;
+    document.body.onoffline = isOffline;
+    console.info("antiguo navegadores");
+  }
 
 });
-
-
-/*
- ###############################################
- CONTROLADOR LOGIN
- ###############################################
- */
-
-app.controller('login', function ($scope, $timeout, $log, $location, cargar_servicios) {
-
-  $scope.enviar_formulario_login = function () {
-    var valor_url = "modulos/logueo/login.php";
-    var valor_metodo = "POST";
-    var valor_datos = $('#formulario_logueo').serialize();
-
-    cargar_servicios.http_respuesta(valor_url, valor_metodo, valor_datos)
-
-            .success(function (msg) {
-
-              if (msg == 'exitoso') {
-
-                $location.path('/ingreso/');
-                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg + "</span>", 4000);
-
-              } else {
-                Materialize.toast("Verificar los datos" + "<a class='btn-flat red-text' href='#login'>X<a>", 4000);
-              }
-
-              //$('#'+id_formulario).trigger("reset");
-
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-              console.error(status);
-              console.error(headers);
-              console.error(config);
-            });
-
-  };
-  
-  
-  $scope.enviar_formulario_cambio_clave = function (modal) {
-    var valor_url = "modulos/logueo/cambio_clave.php";
-    var valor_metodo = "POST";
-    var valor_datos = $('#formulario_cambio_clave').serialize();
-
-    cargar_servicios.http_respuesta(valor_url, valor_metodo, valor_datos)
-
-            .success(function (msg) {
-
-              if (msg.success) {
-
-                $location.path('/ingreso/');
-                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
-                $('#'+modal).closeModal();
-
-              } else {
-                Materialize.toast("Verificar los datos" + "<a class='btn-flat red-text' href='#login'>X<a>", 4000);
-                
-              }
-
-              //$('#'+id_formulario).trigger("reset");
-
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-              console.error(status);
-              console.error(headers);
-              console.error(config);
-            });
-
-  };
-
-
-});
-

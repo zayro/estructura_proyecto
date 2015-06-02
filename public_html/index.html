@@ -19,24 +19,25 @@
 
     <style>
 
-      body {
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
-      }
+      @media screen{
+        body {
+          display: flex;
+          min-height: 100vh;
+          flex-direction: column;
+        }
 
-      main {
-        flex: 1 0 auto;
-      }
-      .overflow_auto{overflow:auto;}
+        main {
+          flex: 1 0 auto;
+        }
+        .overflow_auto{overflow:auto;}
 
-      .contenedor{ width: 99%; margin: 0  auto; }
+        .contenedor{ width: 99%; margin: 0  auto; }
 
-      .brand-logo{ margin: 0px 3px 0px 3px;}
+        .brand-logo{ margin: 0px 3px 0px 3px;}
 
-      .titulo_encabezado{
-        font-family: 'Open Sans 300';
-
+        .titulo_encabezado{
+          font-family: 'Open Sans 300';
+        }
 
       }
 
@@ -46,19 +47,12 @@
 
 
 
-      .online {
-        color: green;
-      }
-
-      .offline {
-        color: red;
-      }
     </style>
 
 
   </head>
 
-  <body ng-controller="AppCtrl">
+  <body ng-controller="AppCtrl" >
 
     <header ng-show="select_session_usuario.identificacion">
 
@@ -79,7 +73,8 @@
               <li><a href="javascript.html"><i class="small mdi-navigation-refresh"></i></a></li>
             -->
 
-            <!-- <li><a class="abrir menu " onclick=" $('#modal1').openModal();"><i class="small mdi-navigation-menu waves-effect waves-light"></i></a></li> -->
+            <!-- <li><a class="abrir menu " onclick=" $('#modal1').openModal();"><i class="small mdi-navigation-menu waves-effect waves-light"></i></a></li> 
+            -->
             <li>{{select_session_usuario.usuario| uppercase }}</li>
             <li><a class="abrir menu " ng-click="mostrar_menu();"><i class="small mdi-action-account-box"></i></a></li>
             <li><a class="abrir menu " href="../librerias/session_salir.php"><i class="small mdi-action-settings-power"></i></a></li>
@@ -104,30 +99,31 @@
             </li>
 
 
-
-            <li class="no-padding">
-              <ul class="collapsible collapsible-accordion">
-                <li class="bold"><a class="collapsible-header  waves-effect waves-teal"><i class="mdi-image-filter-drama"></i>OPCIONES</a>
-                  <div class="collapsible-body" >
-                    <ul>
-                      <li><a href="color.html">Color</a></li>
-                      <li><a href="grid.html">Grid</a></li>
-                      <li><a href="helpers.html">Helpers</a></li>                      
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            </li>
+            <!--
+                        <li class="no-padding">
+                          <ul class="collapsible collapsible-accordion">
+                            <li class="bold"><a class="collapsible-header  waves-effect waves-teal"><i class="medium mdi-image-filter-drama"></i>OPCIONES</a>
+                              <div class="collapsible-body" >
+                                <ul>
+            
+                                  <li><a class="abrir menu " href="../librerias/session_salir.php"><i class="tiny mdi-action-settings-power"></i> SALIR</a></li>
+            
+                                  <li class="no-padding" onclick=" $('#modal1').openModal();" >
+                                    <a  class="collapsible-header waves-effect waves-teal"><i class="tiny mdi-action-view-headline"></i>MENU</a>
+                                  </li>                     
+                                </ul>
+                              </div>
+                            </li>
+                          </ul>
+                        </li>
+            -->
 
             <li class="no-padding" onclick=" $('#modal1').openModal();" >
-              <a  class="collapsible-header waves-effect waves-teal"><i class="mdi-action-view-headline"></i>MENU</a>
+              <a  class="collapsible-header waves-effect waves-teal"><i class=" tiny mdi-action-view-headline"></i>MENU</a>
             </li>
 
 
-
-
-
-
+            <li><a class="abrir menu " href="../librerias/session_salir.php"><i class="tiny mdi-action-settings-power"></i> SALIR</a></li>
 
           </ul>
 
@@ -246,11 +242,13 @@
     <!-- Angular Configuracion -->
     <script src="configuracion/app.js" ></script>
     <script src="configuracion/rutas.js" ></script>
-    <script src="configuracion/filtros.js"></script>
-    <script src="configuracion/directivas.js"></script>
-    <script src="configuracion/servicios.js"></script>
-    <script src="configuracion/factoria.js"></script>
+    <script src="configuracion/filtros.js"></script>    
+    <script src="configuracion/servicios.js"></script>    
     <script src="configuracion/controlador.js"></script>
+
+    <!-- Angular modulos -->
+    <script src="modulos/logueo/controlador_login.js" ></script>
+    <script src="modulos/ingreso/controlador_ingreso.js" ></script>
 
 
     <!--  JavaScript -->
@@ -293,41 +291,7 @@
 
 
 
-                                  function isOnline() {
-                                    console.info("en Linea");
-                                  }
 
-                                  function isOffline() {
-                                    console.info("Fuera de Linea");
-                                  }
-
-
-                                  if (navigator.onLine) {
-                                    console.log('ONLINE!');
-                                  } else {
-                                    console.log('Connection flaky');
-                                  }
-
-                                  if (window.addEventListener) {
-                                    /*
-                                     Works well in Firefox and Opera with the 
-                                     Work Offline option in the File menu.
-                                     Pulling the ethernet cable doesn't seem to trigger it.
-                                     Later Google Chrome and Safari seem to trigger it well
-                                     */
-                                    window.addEventListener("online", isOnline, false);
-                                    window.addEventListener("offline", isOffline, false);
-                                    console.info("nuevos navegadores");
-                                  }
-                                  else {
-                                    /*
-                                     Works in IE with the Work Offline option in the 
-                                     File menu and pulling the ethernet cable
-                                     */
-                                    document.body.ononline = isOnline;
-                                    document.body.onoffline = isOffline;
-                                    console.info("antiguo navegadores");
-                                  }
 
 
 

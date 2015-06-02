@@ -17,8 +17,8 @@ include('clase_conexion.php');
 class consulta_bd extends conexion {
 
   /**
-   *
-   * @var type $guardar_registros guarda los resultados de consulta unida
+   * guarda los resultados de consulta unida
+   * @var type $guardar_registros 
    */
   public $guardar_registros = array();
 

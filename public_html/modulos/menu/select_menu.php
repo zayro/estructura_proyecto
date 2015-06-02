@@ -38,7 +38,7 @@ WHERE privilegio.id_grupo = '$row->id'";
   $resultado_2 = $conexion->consulta($sql2);
   $array_registros_2 = array();
 
-  
+
   while ($row_2 = $resultado_2->fetch_object()) {
 
     /*
@@ -76,7 +76,7 @@ WHERE id_menu = '$row_2->id_menu'";
 
 
       /**
-       * INCIA CICLO 2
+       * INCIA CICLO 4
        * CONSULTAMOS EL SUBMENU2
        */
       $sql4 = "SELECT
@@ -95,16 +95,15 @@ WHERE submenu_2.id_submenu_1 = '$row_3->id_submenu_1' ";
       }
 
       /*
-       * ######## cierre de ciclo 4
+       * cierre de ciclo 4
        */
     }
     /*
-     * ######## cierre de ciclo 3
+     * cierre de ciclo 3
      */
   }
-
   /*
-   * ######## cierre de ciclo 2 
+   * cierre de ciclo 2 
    */
 
   array_push($items, $row);
