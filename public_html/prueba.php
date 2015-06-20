@@ -27,11 +27,14 @@ include '../librerias/clase_procesos_bd.php';
 
 $objeto_proceso = new procesos_bd();
 
-$sql = "INSERT INTO `menu` (`nombre`) VALUES ('PRUEBA')";
+#$sql = "INSERT INTO `menu` (`nombre`) VALUES ('PRUEBA')";
+$sql = "CALL `crear usuarios` ('loco', 'loco', 'gato', '102030');";
 
 $mensaje = "PRUEBAS DE AUDITORIA";
 
-echo  json_encode($objeto_proceso->alterar_bd($sql,$mensaje));
+#echo  json_encode($objeto_proceso->alterar_bd($sql,$mensaje));
+
+echo  json_encode($objeto_proceso->procedimiento_almacenado($sql));
 
 
 

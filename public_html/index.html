@@ -235,7 +235,8 @@
     <script src="../componentes/ng-table-master/ng-table.js"></script>
 
 
-
+    <!-- Jquery Plugins -->
+    <script src="../componentes/jquery-away/jquery-away.js"></script>
 
 
 
@@ -255,43 +256,88 @@
 
     <script>
 
-                                  function lateral() {
+function lateral() {
 
-                                    $('.button-collapse').sideNav({
-                                      menuWidth: 340, // Default is 240
-                                      edge: 'right' // Choose the horizontal origin
-                                              //  closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                                    });
+  $('.button-collapse').sideNav({
+    menuWidth: 340, // Default is 240
+    edge: 'right' // Choose the horizontal origin
+            //  closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+  });
 
-                                    $('.collapsible').collapsible({
-                                      accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-                                    });
+  $('.collapsible').collapsible({
+    accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+  });
 
-                                    $('select').material_select();
-                                  }
+  $('select').material_select();
+}
 
+console.time("inicia carga jquery");
+$(document).ready(function () {
 
-                                  $(document).ready(function () {
-
-                                    console.log("cargo jquery");
-
-
+  console.info("cargo jquery");
 
 
-                                    $('.button-collapse').sideNav({
-                                      menuWidth: 250, // Default is 240
-                                      edge: 'left', // Choose the horizontal origin
-                                      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                                    }
-                                    );
-
-                                  });
+  $('.button-collapse').sideNav({
+    menuWidth: 250, // Default is 240
+    edge: 'left', // Choose the horizontal origin
+    closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+  }
+  );
 
 
 
 
+$.idle(600, function() { 
+    console.info('Llevas 10 minutos inactivo'); 
+});
+
+$.idle(900, function() { 
+    $.away('cliente ausente'); 
+});
+
+$.idle(0, function() { 
+    if ($.isAway()) { 
+        console.log("BIENVENIDO DE VUELTA ");
+       $.away(); 
+    } 
+});
 
 
+/*
+  idleTimer = null;
+  idleState = false;
+//INICIAR TIEMPO QUE CALCULE LA INACTIVIDAD
+  idleWait = 20000;
+  $('*').bind('mousemove keydown scroll', function () {
+
+    clearTimeout(idleTimer);
+
+    if (idleState == true) {
+
+      // Reactivated event
+      console.log("USUARIO ACTIVO");
+    }
+
+    idleState = false;
+
+    idleTimer = setTimeout(function () {
+
+      // Idle Event
+      console.log("Usted ha estado inactivo durante " + idleWait / 1000 + " segundos.");
+
+      idleState = true;
+    }, idleWait);
+    
+  });
+
+  $("body").trigger("mousemove");
+
+*/
+
+});
+
+
+console.timeEnd("inicia carga jquery");
 
 
 

@@ -6,7 +6,6 @@
 
 app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, $http, cargar_servicios) {
 
-console.info("ingreso al controlador principal AppCtrl");
   /*
    $scope.$on('$locationChangeStart', function( event ) {
    var answer = confirm("Are you sure you want to leave this page?")
@@ -16,17 +15,26 @@ console.info("ingreso al controlador principal AppCtrl");
    });
    */
 
-// funcion se ejecuta cada vez que ingreso algun modulo
+  // funcion se ejecuta cada vez que ingreso algun modulo
   $scope.verificar_session = function () {
+
+
 
     var request = $.ajax({
       url: "../librerias/session_usuario.php",
       method: "get",
-      dataType: "json"
+      dataType: "json",
+      beforeSend: function () {
+        console.log('se enviaran los datos para verificar la sesion');
+      }
     });
 
     request.done(function (data) {
+      
+      console.info("DATOS DE SESSION: %O",data);
+      
       cargar_servicios.set_validar_session(data);
+      
 
       $scope.select_session_usuario = cargar_servicios.validar_session();
 
@@ -42,7 +50,7 @@ console.info("ingreso al controlador principal AppCtrl");
 
         cargar_servicios.select_menu().success(function (data) {
           $scope.menu_logueo = data.registros;
-          console.log(data.registros);
+          console.info("MENU : %O ", data.registros);
         });
 
 
@@ -67,12 +75,11 @@ console.info("ingreso al controlador principal AppCtrl");
 
   };
 
-
 // se recibe la comprobacion del login
   $scope.$on("update_parent_controller", function (event, message) {
     $scope.mensaje = message;
     $scope.verificar_session();
-    console.log('ingreso update_parent_controller AppCtrl');
+    console.log('trigger update_parent_controller AppCtrl');
   });
 
 
@@ -85,28 +92,38 @@ console.info("ingreso al controlador principal AppCtrl");
  */
 
 app.controller('valida_usuario', function ($scope, cargar_servicios) {
-  console.info("ingreso al controlador valida usuario");
 
-// al controlador principal le digo que revice  si existe una session vigente
-  $scope.$emit('update_parent_controller', 'ingreso');
+  console.group("ingreso al controlador valida usuario");
 
+
+  /**
+   * MENSAJES DE RESPUESTA
+   */
   function isOnline() {
-    console.info("en Linea");
+    console.info("En Linea: INTERNET");
     Materialize.toast("Se establecio conexion a internet" + "<span class='btn-flat green-text' >X</span>", 40000);
   }
 
   function isOffline() {
-    console.info("Fuera de Linea");
+    console.error("Fuera de Linea: SIN INTERNET");
     Materialize.toast("se perdio conexion a internet" + "<a class='btn-flat red-text' href='#login'>X<a>", 40000);
   }
 
 
-  if (navigator.onLine) {
-    console.log('ONLINE!');
+  /**
+   * VERIFICAMOS SI EL NAVEGADOR ESTA CONECTADO A INTERNET AL ABRIRLO
+   */
+  if (navigator.onLine)
+  {
+    console.info('ONLINE!');
   } else {
-    console.log('OFFLINE');
+    console.error('OFFLINE');
   }
 
+
+  /**
+   * VERIFICAMOS SI EL NAVEGADOR PIERDE CONEXION A INTERNET
+   */
   if (window.addEventListener) {
     /*
      Works well in Firefox and Opera with the 
@@ -116,7 +133,7 @@ app.controller('valida_usuario', function ($scope, cargar_servicios) {
      */
     window.addEventListener("online", isOnline, false);
     window.addEventListener("offline", isOffline, false);
-    console.info("nuevos navegadores");
+    console.warn("nuevos navegadores");
   }
   else {
     /*
@@ -125,7 +142,11 @@ app.controller('valida_usuario', function ($scope, cargar_servicios) {
      */
     document.body.ononline = isOnline;
     document.body.onoffline = isOffline;
-    console.info("antiguo navegadores");
+    console.warn("antiguo navegadores");
   }
 
+  // al controlador principal le digo que revice  si existe una session vigente
+  $scope.$emit('update_parent_controller', 'ingreso');
+
+  console.groupEnd();
 });

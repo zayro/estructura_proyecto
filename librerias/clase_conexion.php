@@ -1,8 +1,12 @@
 <?php
 
-# 2 HORAS DE TIEMPO DE SESSION
-ini_set("session.cookie_lifetime", "3600");
-ini_set("session.gc_maxlifetime", "3600");
+# 1 HORA DE TIEMPO DE SESSION
+ini_set("session.cookie_lifetime", "1800");
+ini_set("session.gc_maxlifetime", "1800");
+
+
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
 
 # zona horaria
 date_default_timezone_set('America/Bogota');
@@ -39,7 +43,7 @@ class conexion extends datos {
    * CONTIENE LAS PROPIEDADES DE MYSQL
    * @var type objecto mysqli protegido
    */
-  protected $mysqli;
+  public $mysqli;
   
   /**
    * CONTIENE EL RESULTADO DE LA CONEXION: retorna los mensajes de conexion
@@ -213,6 +217,8 @@ class conexion extends datos {
 
       echo "sin acceso al sistema ingrese a la plataforma";
       exit();
+    }  else {
+    return "ok";  
     }
   }
 

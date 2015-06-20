@@ -71,7 +71,7 @@ class procesos_bd extends consulta_bd implements auditar {
 
         $auditoria_sistema = $this->mysqli->query("
           INSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`, `mensaje`, `archivo`)	
-          VALUES ('" . conexion::obtener_ip() . "', NOW(), USER(), '$accion' , '$mensaje', '".conexion::ruta_actual()."');
+          VALUES ('" . conexion::obtener_ip() . "', NOW(), USER(), '$accion' , '$mensaje', '" . conexion::ruta_actual() . "');
          ");
 
         if (!$auditoria_sistema) {
@@ -84,7 +84,7 @@ class procesos_bd extends consulta_bd implements auditar {
 
         $auditoria_sistema = $this->mysqli->query("
           IINSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`, `mensaje`, `archivo`)	
-          VALUES ('" . conexion::obtener_ip() . "', NOW(), '" . $_SESSION['identificacion'] . "', '$accion', '$mensaje', '".conexion::ruta_actual()."');");
+          VALUES ('" . conexion::obtener_ip() . "', NOW(), '" . $_SESSION['identificacion'] . "', '$accion', '$mensaje', '" . conexion::ruta_actual() . "');");
 
         if (!$auditoria_sistema) {
 
@@ -253,6 +253,92 @@ class procesos_bd extends consulta_bd implements auditar {
     $datos['success'] = true;
     $datos['sql'] = $sql;
     $datos['auditoria'] = $mensaje;
+
+    return $datos;
+  }
+
+  function multiples_consultas($query) {
+
+    conexion::validar_session();
+
+    if ($this->mysqli->multi_query($query)) {
+      do {
+        /* almacenar primer juego de resultados */
+        if ($result = $this->mysqli->store_result()) {
+          while ($row = $result->fetch_row()) {
+            printf("%s\n", $row[0]);
+          }
+          $result->free();
+        }
+        /* mostrar divisor */
+        if ($this->mysqli->more_results()) {
+          printf("------- SE EJECUTA LA SIGUIENTE CONSULTA ----------\n");
+        }
+      } while ($this->mysqli->next_result());
+    } else {
+      throw new Exception("ERROR: $query");
+    }
+
+    if ($this->mysqli->errno) {
+      throw new Exception("ERROR ESPECIFICO: $this->mysqli->error");
+    }
+
+    $this->auditoria($query, "SE EJECUTARON MULTIPLES CONSULTAS A LA BASE DE DATOS");
+  }
+
+  /**
+   * MANEJAR LLAMADOS A PROCEDIMIENTOS ALMACENADOS
+   * 
+   * devuelve la respuesta de mysql en diferentes consultas
+   * 
+   * @param string $sql
+   * @return type
+   * @throws Exception cuando sucede un error en alguna consulta
+   */
+  function procedimiento_almacenado($sql, $mensaje) {
+
+    $datos = array();
+    $respuesta = array();
+
+    $error_sql = explode(";", $sql);
+    try {
+      $numero_consulta = 0;
+      if ($this->mysqli->multi_query($sql)) {
+        do {
+          $numero_consulta++;
+          /* almacenar primer juego de resultados */
+          if ($result = $this->mysqli->store_result()) {
+            while ($row = $result->fetch_object()) {
+              array_push($respuesta, $row);
+            }
+            $result->free();
+          }
+
+          /**
+           * MUESTRA DIVISION DE LOS MENSAJES DE RESPUESTA DE LAS DIFERENTES CONSULTAS
+            if ($this->mysqli->more_results()) {
+            echo "<br>";
+            }
+           * */
+        } while (@$this->mysqli->next_result());
+      }
+
+      if ($this->mysqli->errno) {
+        throw new Exception("ERROR CONSULTA :$numero_consulta ");
+      }
+
+      $datos['suceso'] = "CONSULTA EXITOSA";
+      $datos['success'] = true;
+      $datos['sql'] = $sql;
+      $datos['respuestas'] = $respuesta;
+      $datos['auditoria'] = $this->auditoria($sql, $mensaje);
+    } catch (Exception $e) {
+
+      $datos['suceso'] = $this->mysqli->error;
+      $datos['success'] = false;
+      $datos['sql'] = $error_sql[$numero_consulta];
+      $datos['error'] = $e->getMessage();
+    }
 
     return $datos;
   }

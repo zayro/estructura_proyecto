@@ -7,6 +7,7 @@
 
 "use strict";
 
+console.time("inicia carga angularjs");
 var app = angular.module('app', ['ngRoute', 'ngSanitize', 'angular.filter', 'ngLocale', 'ngTouch', 'ngTable']);
 
 
@@ -15,11 +16,12 @@ var app = angular.module('app', ['ngRoute', 'ngSanitize', 'angular.filter', 'ngL
 
 angular.element(document).ready(function () {
 
-  console.log('cargo angular');
+  console.info('cargo angular');
+
 });
 
 
-
+console.timeEnd("inicia carga angularjs");
 
 
 

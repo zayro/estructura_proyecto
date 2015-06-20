@@ -5,13 +5,13 @@
  */
 app.controller('ingreso', function ($scope, cargar_servicios) {
 
-console.info("ingreso al controlador ingreso");
+
 
 
 
 
   $scope.enviar_formulario = function (datos, valor_url) {
-
+    console.group("ingreso al controlador ingreso");
 
     var valor_metodo = "POST";
     var valor_datos = $('#' + datos).serialize();
@@ -50,8 +50,10 @@ console.info("ingreso al controlador ingreso");
             .error(function (data, status, headers, config) {
               console.error(data);
             });
+    console.groupEnd();
 
   };
+
 
 
 });

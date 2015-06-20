@@ -42,12 +42,12 @@
 
 
               <div class="input-field col s12">
-                <input name="usuario" id="usuario" type="text" class="validate" required>
+                <input name="usuario" id="usuario" type="text" pattern=".{5,}"  class="validate" title="DIGITE SU USUARIO O CORREO" autofocus  required>
                 <label for="usuario">Email o Usuario</label>
               </div>
 
               <div class="input-field col s12">
-                <input name="clave"  id="clave" type="password"  class="validate" required>
+                <input name="clave"  id="clave" type="password" pattern=".{5,}"   class="validate" title="DIGITE SU CLAVE MINIMO 5 CARACTERES" required>
                 <label for="clave">Password</label>
               </div>
             </div>
