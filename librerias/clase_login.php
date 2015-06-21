@@ -170,7 +170,7 @@ function usuario_nuevo($usuario, $clave, $correo, $grupo, $identificacion){
     usuarios
     (usuario, clave, correo, grupo, identificacion)
     VALUES
-    ($usuario, $clave, $correo, $grupo, $identificacion)
+    ('$usuario', '$clave', '$correo', '$grupo', '$identificacion')
      " ;
   
   $mensaje = "INSERTO UN NUEVO USUARIO";

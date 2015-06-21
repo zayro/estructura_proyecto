@@ -22,10 +22,10 @@ abstract class datos {
   }
 
   protected function externo() {
-    $this->servidores = 'localhost';
-    $this->usuarios = 'root';
-    $this->claves = 'zayro';
-    $this->bdd = 'transito';
+    $this->servidores = 'localhost:3306';
+    $this->usuarios = 'zayro';
+    $this->claves = 'zayro2015';
+    $this->bdd = 'estructura_proyecto';
   }
 
   protected function cabecera_cors() {
