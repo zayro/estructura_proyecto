@@ -8,7 +8,7 @@
 "use strict";
 
 console.time("inicia carga angularjs");
-var app = angular.module('app', ['ngRoute', 'ngSanitize', 'angular.filter', 'ngLocale', 'ngTouch', 'ngTable']);
+var app = angular.module('app', ['ngRoute', 'ngSanitize', 'angular.filter', 'ngLocale', 'ngTouch', 'ngTable', 'aplicativo_billar']);
 
 
 

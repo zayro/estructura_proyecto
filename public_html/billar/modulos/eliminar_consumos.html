@@ -1,0 +1,37 @@
+<!-- Modal -->
+<div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<h4 class="modal-title" id="myModalLabel">Detallado Consumo </h4>
+</div>
+<div class="modal-body">
+<div id="agregar_contenido_servicio">
+<table class="table">
+<thead>
+<tr>
+<th>Producto</th>
+<th>Cantidad</th>
+<th>Valor</th>
+<th>Cancelar</th>
+<th>Eliminar</th>
+</tr>
+</thead>
+<tbody >
+<tr ng-repeat="contenido_consumo in registros_consumos">
+<td>{{contenido_consumo.nombre}}</td>
+<td>{{contenido_consumo.cantidad}}</td>
+<td>{{contenido_consumo.precio | currency:"$ "}}</td>
+<td>{{contenido_consumo.cantidad * contenido_consumo.precio | currency:"$ "}}</td>
+<td><a href='#' ng-click='eliminar_consumo(contenido_consumo.id);'  title='eliminar consumo'><i class='glyphicon glyphicon-remove'></i></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<!-- Cierra Modal -->

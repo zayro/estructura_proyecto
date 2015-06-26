@@ -67,6 +67,7 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
 
     $scope.ocultar_menu = function () {
       $('.button-collapse').sideNav('hide');
+      $('#modal_menu').closeModal();
     };
 
     $scope.mostrar_menu = function () {

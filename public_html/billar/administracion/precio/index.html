@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="keywords" content="jquery,ui,easy,easyui,web">
+<meta name="description" content="easyui help you build your web page easily!">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administracion</title>
+
+<!-- carga los css y javascript del proyecto. solo para chrome
+<link rel="import" href="import.html">
+-->
+
+<!--
+/*
+#########################################################
+css de administracion
+#########################################################
+*/
+-->
+
+<link rel="stylesheet"  type="text/css" href="../../../componentes/jeasyui/themes/metro-blue/easyui.css">
+<link rel="stylesheet"  type="text/css" href="../../../componentes/jeasyui/themes/icon.css">
+<link rel="stylesheet"  type="text/css" href="../../../componentes/jeasyui/themes/color.css">
+<link rel="stylesheet"  type="text/css" href="../../../componentes/notificaciones/messi.css">
+<link rel="stylesheet"  type="text/css" href="administracion.css">
+
+
+</head>
+
+<body>
+<div class="container">
+<div class="demo-info" style="margin-bottom:10px"></div>
+
+<!--
+/*
+#########################################################
+contenido de la tabla
+#########################################################
+*/
+-->
+<table id="dg" title="ADMINISTRAR PRECIOS"
+toolbar="#toolbar"  pagination="false" idfield="id"
+
+sortname="nombre" sortorder="asc"
+rownumbers="true" fitcolumns="true" singleselect="true">
+<thead>
+<tr>
+
+<th field="nombre" width="100" editor="{type:'validatebox',options:{required:true}}"  >NOMBRE</th>
+
+<th field="hora" width="100" editor="{type:'validatebox',options:{required:true}}"  >HORA</th>
+<th field="minuto" width="100" editor="{type:'validatebox',options:{required:true}}"  >MINUTO</th>
+
+
+
+
+</tr>
+</thead>
+</table>
+
+
+
+<!--
+#########################################################
+upload jquery
+#########################################################
+-->
+
+<br>
+
+
+
+<!--
+#########################################################
+los botones de la tabla
+#########################################################
+-->
+
+<div id="toolbar"> 
+<a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-add" plain="true" 
+onClick="javascript:$('#dg').edatagrid('addRow')">NUEVO</a> 
+
+<a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-remove" plain="true" 
+onClick="javascript:eliminar();">ELIMINAR</a>
+
+<a href="javascript:void(0);"class="easyui-linkbutton" iconcls="icon-save" plain="true" 
+onClick="javascript:$('#dg').edatagrid('saveRow'); actualizar();">GUARDAR</a>
+
+<a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-undo" plain="true" 
+onClick="javascript:$('#dg').edatagrid('cancelRow')">CANCELAR</a>
+
+<a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true" 
+onClick="javascript:filtro();">FILTRO</a>
+
+<a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-reload" plain="true" 
+onClick="javascript:actualizar();">ACTUALIZAR</a>
+</div>
+
+</div>
+
+<!--
+#########################################################
+javascript de administracion
+#########################################################
+-->
+
+
+<script type="text/javascript" src="../../../componentes/jeasyui/jquery.min.js"></script>
+<script type="text/javascript" src="../../../componentes/jeasyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../../componentes/jeasyui/plugins/jquery.edatagrid.js"></script>
+<script type="text/javascript" src="../../../componentes/jeasyui/plugins/datagrid-filter.js"></script>
+<script type="text/javascript" src="../../../componentes/jeasyui/locale/easyui-lang-es.js"></script>
+<script type="text/javascript" src="../../../componentes/notificaciones/messi.js"></script>
+<script type="text/javascript" src="administracion.js"></script>
+<script type="text/javascript" src="../../script_js/session.js"></script>
+<script type="text/javascript" src="permisos.js"></script>
+
+</body>
+</html>

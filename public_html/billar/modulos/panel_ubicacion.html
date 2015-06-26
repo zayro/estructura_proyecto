@@ -1,0 +1,36 @@
+<div class="row" id="asignar_mesa" ng-controller="controlador_billar">
+
+  <div class="col s12 m12 l12">
+    <div class="card ">
+
+      <div class="card-content ">
+
+        <div class="section">
+          <span class="card-title activator grey-text text-darken-4"><strong>Asignar Mesa</strong>
+            <i class="mdi-navigation-more-vert right"></i></span>
+          <div class="divider"></div>
+        </div>
+
+        <form name="enviar_ubicacion" id="enviar_ubicacion"  class="col s12"
+              ng-submit="enviar_formulario('enviar_ubicacion', 'billar/script_php/guardar_tiempo.php', 'post')">
+
+
+
+            <div class="row">
+              <div class=" col s12">
+                <label>SELECCIONAR UBICACION</label>
+                <select name="id_ubicacion" id="id_ubicacion"  class="browser-default" required>
+                  <option ng-repeat="contenido_ubicacion in registros_ubicacion" value="{{contenido_ubicacion.id}}">{{contenido_ubicacion.nombre}}</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn waves-effect waves-light green white-text col s12 l12 ">Enviar</button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Cierra Panel ubicacion -->

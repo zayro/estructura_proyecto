@@ -1,0 +1,73 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{ background-color:hsla(0,0%,91%,0.90);}
+input:focus, textarea:focus {
+color:#A84A4B;
+
+
+/*	
+background: #728eaa;
+background: -moz-linear-gradient(top, #204c5c 0%, #406c7c 20%); 
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#204c5c), color-stop(20%,#406c7c));
+/* webkit */
+}
+
+input{
+color:#A84A4B;
+}
+
+div
+{
+margin:0 auto;}
+
+
+@font-face {
+font-family: "OpenSans-CondLight";
+src:url(../../../fuentes/OpenSans-CondLight.ttf);
+font-style: normal;
+font-weight: 700;
+}@font-face {
+font-family: "OpenSans-CondBold";
+src:url(../../../fuentes/OpenSans-CondBold.ttf);
+font-style: normal;
+font-weight: 700;
+}@font-face {
+font-family: "OpenSans-CondLightItalic";
+font-style: normal;
+font-weight: 300;
+src:url(../../../fuentes/OpenSans-CondLightItalic.ttf);
+}@font-face {
+font-family: "Aclonica%20regular";
+font-style: normal;
+font-weight: 300;
+src:url(../../../fuentes/Aclonica%20regular.ttf);
+}
+@font-face {
+font-family: "Roboto-Light";
+font-style: normal;
+font-weight: 300;
+src:url(../../../fuentes/Roboto-Light.ttf);
+}
+@font-face {
+font-family: "Roboto-Medium";
+font-style: normal;
+font-weight: 300;
+src:url(../../../fuentes/Roboto-Medium.ttf);
+}
+@font-face {
+font-family: "RobotoCondensed-BoldItalic";
+font-style: normal;
+font-weight: 200;
+src:url(../../../fuentes/RobotoCondensed-BoldItalic.ttf);
+}
+@font-face {
+font-family: "Roboto-Black";
+font-style: normal;
+font-weight: 400;
+src:url(../../../fuentes/Roboto-Black.ttf);
+}
+
+body{ font-family:"Roboto-Black"; font-size:16px;}
+table{ font-family:"Roboto-Medium"; font-size:14px;}

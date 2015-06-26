@@ -38,13 +38,13 @@ class conexion extends datos {
 
   const VERSION = '1.0';
   const FECHA_DE_APROBACION = '2015-05-02';
-  
+
   /**
    * CONTIENE LAS PROPIEDADES DE MYSQL
    * @var type objecto mysqli protegido
    */
   public $mysqli;
-  
+
   /**
    * CONTIENE EL RESULTADO DE LA CONEXION: retorna los mensajes de conexion
    * @var type $array
@@ -105,6 +105,28 @@ class conexion extends datos {
 
 
     if (!$validar_conexion) {
+      exit('<br> <strong> servidores desconectados </strong> <br>');
+    }
+
+    return false;
+  }
+
+  /**
+   * SOLO SE CONECTA A UNA BASE DE DATOS
+   *  
+   * @return boolean
+   */
+   function conectar_billar() {
+     $validar_conexion = false;
+    $this->billar();
+    if ($this->conectar() == 'conectado') {
+      array_push($this->resultado_conexion, $this->conectar() . ' billar');  
+       $validar_conexion = true;
+      return true;
+    } else {
+      array_push($this->resultado_conexion, $this->conectar() . ' billar');
+    }
+     if (!$validar_conexion) {
       exit('<br> <strong> servidores desconectados </strong> <br>');
     }
 
@@ -217,8 +239,8 @@ class conexion extends datos {
 
       echo "sin acceso al sistema ingrese a la plataforma";
       exit();
-    }  else {
-    return "ok";  
+    } else {
+      return "ok";
     }
   }
 
@@ -266,21 +288,19 @@ class conexion extends datos {
       $ip = "IP desconocida";
     return($ip);
   }
-  
-   /**
+
+  /**
    * OBTENER RUTA ACTUAL DE UN ARCHIVO
    * 
    * @return string retorna ruta
    */
-  
-  function ruta_actual(){
-    $ruta = getcwd() ; 
+  function ruta_actual() {
+    $ruta = getcwd();
     $raiz = $_SERVER['DOCUMENT_ROOT'];
-    $script_nombre = $_SERVER['SCRIPT_FILENAME']; 
-    
-    
+    $script_nombre = $_SERVER['SCRIPT_FILENAME'];
+
+
     return $script_nombre;
-    
   }
-  
+
 }

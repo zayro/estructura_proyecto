@@ -34,7 +34,7 @@ $mensaje = "PRUEBAS DE AUDITORIA";
 
 #echo  json_encode($objeto_proceso->alterar_bd($sql,$mensaje));
 
-echo  json_encode($objeto_proceso->procedimiento_almacenado($sql));
+echo  json_encode($objeto_proceso->procedimiento_almacenado($sql, "se realizo proceceso de guardado"));
 
 
 

@@ -18,7 +18,11 @@
 
 <div class=" center-align  login" style="padding-top:5%;" ng-controller="login">
 
-
+  <!--
+  /**
+  * INGRESO DE SESSION
+  */
+  -->
   <form name="formulario_logueo" id="formulario_logueo" ng-submit="enviar_formulario_login();" ng-hide="select_session_usuario.identificacion" >
 
     <div class="row">
@@ -84,6 +88,11 @@
 
   </form> 
 
+    <!--
+  /**
+  * SEGUIR CONECTADO
+  */
+  -->
   <div class="row" ng-show="select_session_usuario.identificacion">
     <div class="col s12 ">
       <div class="card z-depth-2 ">
@@ -118,7 +127,11 @@
 
   </div>
 
-
+  <!--
+  /**
+  *MODAL RECUPERAR DE CLAVE
+  */
+  -->
   <div id="olvido_clave" class="modal">
     <div class="modal-content">
       <h4>Olvido de Clave</h4>
@@ -137,7 +150,7 @@
 
           <div class="input-field col s4">
             <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text ">Actualizar</button>
-             </div>
+          </div>
 
         </div>
 
@@ -149,6 +162,12 @@
 
   </div>
 
+  <!--
+  /**
+  *MODAL CAMBIO DE CLAVE
+  */
+  -->
+  
   <div id="cambio_clave" class="modal">
     <div class="modal-content">
       <h4>Cambio de Clave</h4>

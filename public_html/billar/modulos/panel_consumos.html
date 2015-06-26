@@ -1,0 +1,113 @@
+<!--
+    ###########################################################
+    INICIA EL CONTROLADOR Y CONTENIDO
+    ###########################################################
+-->
+<div class="row" id="controlador_ingreso" ng-controller="controlador_billar">
+
+  <!--
+     ###########################################################
+     AJUSTE DEL PANEL PARA SU RESPECTIVO TAMAÑO
+     ###########################################################
+  -->
+  <div class="col s12 m12 l12">
+
+
+    <div class="card ">
+
+      <!--
+      ###########################################################
+      TITULO PRINCIPAL DEL PANEL
+      ###########################################################
+      -->
+
+      <!--
+              <div class=" center-align   ">
+                <h4 class="card-panel  grey lighten-3   grey-text"> INGRESO </h4>
+              </div>
+      -->
+
+
+      <div class="card-content ">
+
+        <div class="section">
+          <span class="card-title activator grey-text text-darken-4"><strong>PANEL DE CONSUMO</strong> <i class="mdi-navigation-more-vert right"></i></span>
+          <div class="divider"></div>
+        </div>
+        <!--
+        ###########################################################
+        CONTENIDO DEL PANEL
+        ###########################################################
+        -->
+        <form name="enviar_consumo" id="enviar_consumo" class="col s12" ng-submit="enviar_formulario('enviar_consumo', 'billar/script_php/guardar_consumo.php', 'post');">
+          <div class="row">
+
+            <div class="row">
+              <div class="input-field col s12">
+                <label for="placa">ESCOGER CANTIDAD</label>
+                <input name="cantidad_consumo" id="cantidad_consumo" type="number" min="1" title="ESCOGER CANTIDAD MINIMA" required>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class=" col s12">
+                <label>SELECCIONAR PRODUCTO</label>
+                <select name="id_servicio" id="id_servicio" class="browser-default" required>
+                  <option  ng-repeat="contenido_servicios in registros_servicio" value="{{contenido_servicios.id}}">{{contenido_servicios.nombre}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class=" col s12">
+                <label>SELECCIONAR MESAS</label>
+                <select name="id_tiempo" id="id_tiempo" class="browser-default" required>
+                  <option ng-repeat="contenido_ubicacion in registros_mesas_disponibles" value="{{contenido_ubicacion.id}}">{{contenido_ubicacion.nombre}}</option>
+                </select>
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+
+          <!--
+        ###########################################################
+        FOOTER DEL PANEL
+        ###########################################################
+          -->
+
+          <div class="card-action">             
+            <button type="submit" class="btn waves-effect waves-light green white-text col s12 l12 ">Enviar</button>
+          </div>
+        </form>
+
+
+      </div>
+
+
+      <!--
+      ###########################################################
+      CONTENIDO DE AYUDA DEL PANEL
+      ###########################################################
+      -->
+
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">Ayuda <i class="mdi-navigation-close right"></i></span>
+        <p>Se debe llenar total mente el formulario.</p>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+
+

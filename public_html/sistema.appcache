@@ -1,0 +1,18 @@
+CACHE MANIFEST
+# Version 1
+
+CACHE:
+
+../componentes/materialize-v0.97.0/css/materialize.min.css
+../componentes/angular-ui/animate.css
+../componentes/fuentes/fuentes.css
+../componentes/fuentes/icon.css
+../componentes/messi-js/messi.min.css
+
+../componentes/jquery/jquery-1.11.1.min.js
+../componentes/materialize-v0.97.0/js/materialize.min.js
+../componentes/angular-1.3.14/angular.min.js
+
+img/icono.ico
+img/icono.png
+img/user.svg

@@ -256,7 +256,12 @@ class procesos_bd extends consulta_bd implements auditar {
 
     return $datos;
   }
-
+  
+/**
+ * 
+ * @param type $query
+ * @throws Exception
+ */
   function multiples_consultas($query) {
 
     conexion::validar_session();
