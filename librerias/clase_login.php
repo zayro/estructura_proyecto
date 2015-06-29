@@ -43,7 +43,7 @@ class login extends procesos_bd {
       return 'exitoso';
     } else {
 
-      session_destroy();
+      @session_destroy();
       return 'Revisar datos ingresados.' . $encontrado;
     }
   }

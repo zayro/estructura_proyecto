@@ -8,7 +8,7 @@
 
 
   .login{ 
-    width: 80%;
+    width: 85%;
     margin: 0px auto;
   }
 </style>
@@ -16,7 +16,7 @@
 
 
 
-<div class=" center-align  login" style="padding-top:5%;" ng-controller="login">
+<div class=" center-align  login"  ng-controller="login">
 
   <!--
   /**
@@ -69,12 +69,12 @@
 
             <div class="center-align col s6 m6 l16">
               <a class="col s12 l12 waves-effect waves-light btn-flat  black-text text-darken-4 " onclick="$('#olvido_clave').openModal();">
-                <i class="small mdi-communication-email  blue-grey-text"></i> ¿ olvido su clave ?</a>
+                  <i class="small mdi-communication-email  blue-grey-text"></i> <span class="hide-on-small-only">¿ olvido su clave ? </span> </a>
             </div>
 
             <div class="center-align col s6 m6 l6">
               <a class="col s12 l12 waves-effect waves-light btn-flat black-text text-darken-4 modal-trigger" onclick="$('#cambio_clave').openModal();">
-                <i class="small mdi-communication-vpn-key  blue-grey-text"></i> cambio de clave </a>
+                  <i class="small mdi-communication-vpn-key  blue-grey-text"></i> <span class="hide-on-small-only">cambio de clave </span> </a>
             </div>
 
 

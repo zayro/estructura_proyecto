@@ -7,6 +7,15 @@ ini_set("session.gc_maxlifetime", "1800");
 
 ini_set('session.gc_probability', 1);
 ini_set('session.gc_divisor', 100);
+/* establecer el limitador de caché a 'private' */
+
+session_cache_limiter('private');
+$cache_limiter = session_cache_limiter();
+
+/* establecer la caducidad de la caché a 30 minutos */
+session_cache_expire(30);
+$cache_expire = session_cache_expire();
+
 
 # zona horaria
 date_default_timezone_set('America/Bogota');
