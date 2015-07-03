@@ -22,3 +22,19 @@ console.timeEnd("inicia carga angularjs");
 
 
 
+/*
+###############################################
+INICIA DIRECTIVA
+###############################################
+*/
+
+
+app.directive("fragmentoEntrada", function() {
+return {
+restrict: 'E',
+templateUrl: "modulos/logueo/entrada.html",
+link: function (scope, elemento, atributos){
+}
+//controller: 'controlador'
+};
+});

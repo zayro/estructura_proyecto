@@ -5,10 +5,10 @@ INICIA DIRECTIVA
 */
 
 
-app.directive("fragmentos", function() {
+app.directive("fragmento_entrada", function() {
 return {
 restrict: 'E',
-templateUrl: "modulos/modal.html",
+templateUrl: "modulos/logueo/entrada.html",
 link: function (scope, elemento, atributos){
 }
 //controller: 'controlador'
