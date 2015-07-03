@@ -11,7 +11,7 @@ app.config(['$routeProvider',
               templateUrl: 'modulos/logueo/login.html',
               controller: 'valida_usuario'
             }).
-            when('/modulo/:modulo', {
+            when('/modulos/:modulo', {
               templateUrl: function (routeParams) {
                 return 'modulos/' + routeParams.modulo + '/' + routeParams.modulo + '.html';
               },

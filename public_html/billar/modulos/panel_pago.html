@@ -1,14 +1,20 @@
 <!-- TABLA CONTENIDOS -->
 <div class="row" id="asignar_pagos" ng-controller="controlador_billar">
-  
+
   <div class="col s12 m12 l12">
     <div class="card ">
 
       <div class="card-content ">
 
         <div class="section">
-          <span class="card-title activator grey-text text-darken-4"><strong>Mesas Asignadas</strong>
-            <a href="#"  ng-click="recargar();" class="glyphicon glyphicon-refresh" ></a><i class="mdi-navigation-more-vert right"></i></span>
+          <span class="card-title activator grey-text text-darken-4">
+            <strong>Mesas Asignadas </strong>
+ 
+ <i class="mdi-navigation-more-vert right"></i>
+ 
+          </span>
+          
+<a  ng-click="recargar();"  > <i class="material-icons">loop</i>  </a>
           <div class="divider"></div>
         </div>
 
@@ -37,10 +43,17 @@
                 <a  class="waves-effect waves-light  modal-trigger" ng-click='valor_consumos(ver_estado.id);'><i class="material-icons ">visibility</i> </a>
               </td>
               <td>
-                <a  ng-click='guardar_pago(ver_estado.id);' class="center-align" > <i class="material-icons green-text">done</i> </a> 
+                <a  ng-click='guardar_pago(ver_estado.id);' class="waves-effect waves-light center-align" > <i class="material-icons green-text">done</i> </a> 
               </td>
             </tr>
         </table>
+        
+   
+      </div>
+      
+                <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">Ayuda <i class="mdi-navigation-close right"></i></span>
+        <p>Se debe llenar total mente el formulario.</p>
       </div>
     </div>
   </div>
@@ -67,7 +80,7 @@
             <td>{{contenido_consumo.cantidad}}</td>
             <td>{{contenido_consumo.precio| currency:"$ "}}</td>
             <td>{{contenido_consumo.cantidad * contenido_consumo.precio| currency:"$ "}}</td>
-            <td><a  ng-click='eliminar_consumo(contenido_consumo.id);' class="red-text"  title='eliminar consumo'><i class='material-icons'>clear</i></a></td>
+            <td><a  ng-click='eliminar_consumo(contenido_consumo.id);' class="waves-effect waves-light red-text"  title='eliminar consumo'><i class='material-icons'>clear</i></a></td>
           </tr>
         </tbody>
       </table>

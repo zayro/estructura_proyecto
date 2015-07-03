@@ -14,24 +14,39 @@
  */
 abstract class datos {
 
- protected function local() {
-    $this->servidores = 'localhost:3308';
+  protected function local() {
+    $this->servidores = 'localhost:3306';
     $this->usuarios = 'root';
     $this->claves = 'zayro2014';
     $this->bdd = 'estructura_proyecto';
   }
+
   protected function externo() {
     $this->servidores = 'localhost:3306';
     $this->usuarios = 'zayro';
     $this->claves = 'zayro2015';
     $this->bdd = 'estructura_proyecto';
   }
-  
-  protected function billar(){
-    $this->servidores = 'localhost:3308';
+
+  protected function principal() {
+    $this->servidores = 'localhost:3306';
     $this->usuarios = 'root';
     $this->claves = 'zayro2014';
-    $this->bdd = 'billar'; 
+    $this->bdd = '';
+  }
+
+  protected function billar() {
+    $this->servidores = 'localhost:3306';
+    $this->usuarios = 'root';
+    $this->claves = 'zayro2014';
+    $this->bdd = 'billar';
+  }
+
+  protected function parqueadero() {
+    $this->servidores = 'localhost:3306';
+    $this->usuarios = 'root';
+    $this->claves = 'zayro2014';
+    $this->bdd = 'parqueadero';
   }
 
   protected function cabecera_cors() {

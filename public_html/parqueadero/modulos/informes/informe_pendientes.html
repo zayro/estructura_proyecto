@@ -1,0 +1,13 @@
+   
+    <p><strong>Filter:</strong> {{tableParams.filter()|json}}
+
+    <table ng-table="tableParams" show-filter="true" class="table">
+        <tr ng-repeat="user in $data">
+            <td data-title="'placa'" filter="{ 'name': 'text' }">
+                {{user.placa}}
+            </td>
+            <td data-title="'Age'">
+                {{user.age}}
+            </td>
+        </tr>
+    </table>

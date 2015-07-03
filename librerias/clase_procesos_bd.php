@@ -69,26 +69,27 @@ class procesos_bd extends consulta_bd implements auditar {
 
       if (!isset($_SESSION['identificacion'])) {
 
-        $auditoria_sistema = $this->mysqli->query("
-          INSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`, `mensaje`, `archivo`)	
-          VALUES ('" . conexion::obtener_ip() . "', NOW(), USER(), '$accion' , '$mensaje', '" . conexion::ruta_actual() . "');
-         ");
+        $sql = "  INSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`, `mensaje`, `archivo`)	
+          VALUES ('" . conexion::obtener_ip() . "', NOW(), USER(), '$accion' , '$mensaje', '" . conexion::ruta_actual() . "');";
+
+        $auditoria_sistema = $this->mysqli->query($sql);
 
         if (!$auditoria_sistema) {
 
-          return $this->mysqli->error;
+          return 'Error:' . $this->mysqli->error;
         }
 
         return "exitosa";
       } else {
 
-        $auditoria_sistema = $this->mysqli->query("
-          IINSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`, `mensaje`, `archivo`)	
-          VALUES ('" . conexion::obtener_ip() . "', NOW(), '" . $_SESSION['identificacion'] . "', '$accion', '$mensaje', '" . conexion::ruta_actual() . "');");
+        $sql = "INSERT INTO `auditoria` (`ip`, `tiempo`, `usuario`, `proceso`, `mensaje`, `archivo`)	
+          VALUES ('" . conexion::obtener_ip() . "', NOW(), '" . $_SESSION['identificacion'] . "', '$accion', '$mensaje', '" . conexion::ruta_actual() . "');";
+
+        $auditoria_sistema = $this->mysqli->query($sql);
 
         if (!$auditoria_sistema) {
 
-          return $this->mysqli->error;
+          return 'Error:' . $this->mysqli->error;
         }
 
         return "exitosa";
@@ -256,12 +257,12 @@ class procesos_bd extends consulta_bd implements auditar {
 
     return $datos;
   }
-  
-/**
- * 
- * @param type $query
- * @throws Exception
- */
+
+  /**
+   * 
+   * @param type $query
+   * @throws Exception
+   */
   function multiples_consultas($query) {
 
     conexion::validar_session();

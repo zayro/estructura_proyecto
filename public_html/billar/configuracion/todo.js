@@ -190,6 +190,40 @@ app.service('cargar_registros', function ($http) {
 app.controller('controlador_billar', function ($scope, $http, cargar_registros) {
 
 
+  var sync_datos_billar = new Firebase('https://billar.firebaseio.com/connected');
+
+  sync_datos_billar.on('value', function (snap) {
+    if (snap.val() === true) {
+      console.log("desconectado a fire base ");
+
+
+      var con = sync_datos_billar.push(true);
+      // when I disconnect, remove this device
+      con.onDisconnect().remove();
+
+    } else
+    {
+      console.log("conectado a fire base ");
+
+      // var sync_datos_billar = new Firebase('https://billar.firebaseio.com/');
+
+
+
+    }
+  });
+
+  sync_datos_billar.on('child_changed', function (snapshot) {
+    $scope.recargar();
+  });
+
+
+  $scope.recargar = function () {
+    console.log("se recargo la tabla seleccionar_actual");
+    cargar_registros.tabla_estado()
+            .success(function (data) {
+              $scope.registros_estado = data;
+            });
+  }
 
   cargar_registros.tabla_servicio()
           .success(function (data) {
@@ -203,7 +237,6 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
 
   cargar_registros.tabla_estado()
           .success(function (data) {
-            console.log(data);
             $scope.registros_estado = data;
           });
 
@@ -223,6 +256,8 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
 
             .success(function (data) {
 
+              sync_datos_billar.update({actualizar: {evento: data}}, $scope.recargar());
+
               cargar_registros.tabla_estado()
                       .success(function (data) {
                         $scope.registros_estado = data;
@@ -240,45 +275,48 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
 
   }
 
-  $scope.buscar_informe_pagos = function (id_formulario) {
-
-    var valor_url = "script_php/seleccionar_informe_pagos.php";
-    var valor_metodo = "POST";
-    var datos = $('#' + id_formulario).serialize();
-
-    cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
-            .success(function (data) {
-
-              $scope.informe_pagos = data;
-
-
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-            });
-
-  }
-
-  $scope.buscar_informe_tiempo = function (id_formulario) {
-
-    var valor_url = "script_php/seleccionar_informe_tiempo.php";
-    var valor_metodo = "POST";
-    var datos = $('#' + id_formulario).serialize();
-
-    cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
-            .success(function (data) {
-
-              $scope.informe_tiempo = data;
-
-
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-            });
-
-  }
+  /*
+   $scope.buscar_informe_pagos = function (id_formulario) {
+   
+   var valor_url = "script_php/seleccionar_informe_pagos.php";
+   var valor_metodo = "POST";
+   var datos = $('#' + id_formulario).serialize();
+   
+   cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
+   .success(function (data) {
+   
+   $scope.informe_pagos = data;
+   
+   
+   })
+   
+   .error(function (data, status, headers, config) {
+   console.error(data);
+   });
+   
+   }
+   
+   $scope.buscar_informe_tiempo = function (id_formulario) {
+   
+   var valor_url = "script_php/seleccionar_informe_tiempo.php";
+   var valor_metodo = "POST";
+   var datos = $('#' + id_formulario).serialize();
+   
+   cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
+   .success(function (data) {
+   
+   $scope.informe_tiempo = data;
+   
+   
+   })
+   
+   .error(function (data, status, headers, config) {
+   console.error(data);
+   });
+   
+   }
+   
+   */
 
   $scope.eliminar_consumo = function (valor_id) {
 
@@ -289,6 +327,8 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
     cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
 
             .success(function (data) {
+
+              sync_datos_billar.update({actualizar: {evento: data}}, $scope.recargar());
 
               cargar_registros.tabla_estado()
                       .success(function (data) {
@@ -320,7 +360,6 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
     cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
 
             .success(function (data) {
-              console.info("CARGANDO REGISTROS");
               $scope.registros_consumos = data;
               $('#modal1').openModal();
             })
@@ -341,10 +380,10 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
 
             .success(function (data) {
 
-
+              sync_datos_billar.update({actualizar: {evento: data}}, $scope.recargar());
 
               $('#' + id_formulario).trigger("reset");
-              console.log(data);
+
 
               if (data.success)
               {
@@ -358,6 +397,10 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
                           autoclose: 2000,
                   closeButton: true
                 });
+
+
+                // multiple envio de datos
+
 
               } else {
 

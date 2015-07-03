@@ -1,97 +1,41 @@
-<!--
-    ###########################################################
-    INICIA EL CONTROLADOR Y CONTENIDO
-    ###########################################################
--->
+
 <div class="row" id="controlador_ingreso" ng-controller="ingreso">
 
-  <!--
-     ###########################################################
-     AJUSTE DEL PANEL PARA SU RESPECTIVO TAMAÑO
-     ###########################################################
-  -->
-  <div class="col s12 m12 l12">
 
 
-      <div class="card ">
 
-        <!--
-        ###########################################################
-        TITULO PRINCIPAL DEL PANEL
-        ###########################################################
-        -->
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div class="card hoverable">
+        <div class="card-image">
+          <img src="img/paginas-webs.png" alt="imagen portada">
 
-        <!--
-                <div class=" center-align   ">
-                  <h4 class="card-panel  grey lighten-3   grey-text"> INGRESO </h4>
-                </div>
-        -->
-
-
-        <div class="card-content ">
-
-          <div class="section">
-            <span class="card-title activator grey-text text-darken-4"><strong>TITULO</strong> <i class="mdi-navigation-more-vert right"></i></span>
-            <div class="divider"></div>
-          </div>
-          <!--
-          ###########################################################
-          CONTENIDO DEL PANEL
-          ###########################################################
-          -->
-          <form name="formulario_entrada" id="formulario_entrada" class="col s12" ng-submit="enviar_formulario('formulario_entrada', 'modulos/ingreso/insertar_vehiculo.php');">
-            <div class="row">
-
-              <div class="row">
-                <div class="input-field col s12">
-                  <input name="placa" id="placa_entrada" type="text" class="validate" maxlength="6" pattern=".{6,6}"  title="ES REQUERIDA LA PLACA MINIMO 6  CARACTERES" required>
-                  <label for="placa">PLACA VEHICULO</label>
-                </div>
-              </div>
-
-              <div class="row">
-                <label>SELECCIONAR VEHICULO</label>
-                <select name="vehiculo" id="vehiculo" class="browser-default" required>
-                  <option value="" disabled selected>[SELECCIONAR]</option>
-                  <option value="1">CARRO</option>
-                  <option value="2">MOTO</option>      
-                </select>
-              </div>
-
-            </div>
-
-            <!--
-          ###########################################################
-          FOOTER DEL PANEL
-          ###########################################################
-            -->
-
-            <div class="card-action">             
-              <button type="submit" class="btn waves-effect waves-light green white-text col s12 l12 ">Aceptar</button>
-            </div>
-          </form>
-
-
+          <span class="card-title hide-on-small-only">Bienvenido  Web App</span>
         </div>
-
-
-        <!--
-        ###########################################################
-        CONTENIDO DE AYUDA DEL PANEL
-        ###########################################################
-        -->
-
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">Ayuda <i class="mdi-navigation-close right"></i></span>
-          <p>Colocamos la informacion de ayuda para el formulario.</p>
+        <div class="card-content">
+          <p> Una Página Web muy sofisticada y que transmita una imagen profesional, con información clara y actualizada de nuestros productos y servicios,</p>
+          <p> que nos permita lograr nuestros objetivos y, sobre todo, que nos permita el contacto y comunicación con nuestros clientes .</p>
         </div>
-
+        <div class="card-action">
+          <a href="#">Ingresar</a>
+        </div>
       </div>
     </div>
+  </div>
 
 
 
-
-
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">build</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
 </div>
+
 

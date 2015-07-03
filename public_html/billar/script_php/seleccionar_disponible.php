@@ -15,6 +15,7 @@ JOIN ubicacion AS u ON  u.id =t.id_ubicacion
 JOIN precio as p ON  p.id  =  u.tipo
 WHERE
 t.estado = 0
+ORDER BY u.nombre
 ";
 
 

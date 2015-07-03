@@ -1,0 +1,74 @@
+
+<style>
+
+  .btn-group{
+    padding-top: 10px;  
+    text-align: center; 
+    float: right;  position:relative;
+  }
+
+  .btn{
+       margin-left: 15px;
+       padding-left: 25px;
+       text-align: center;
+  }
+
+  .espacio_inf{
+    margin-top: 30px;  
+    width: 98%;
+    height: 800px;
+    overflow: auto;
+
+  }
+  
+  table{
+    margin: 0px auto;
+    width: 98%;
+  }
+  
+  .paginacion{ float: left;  position:relative;}
+
+
+
+
+
+</style>
+
+
+  <table ng-table="tableParams"  class="table bordered hoverable centered">
+    <tr ng-repeat="user in $data">
+
+      <td data-title="'placa'"  >
+        {{user.placa}}
+      </td>
+
+      <td data-title="'Vehiculo'">
+        {{user.vehiculo}}
+      </td>
+
+      <td data-title="'Tiempo Entrada'">
+        {{user.tiempo_entrada}}
+      </td>
+
+      <td data-title="'Tiempo Salida'">
+        {{user.tiempo_salida}}
+      </td>
+
+      <td data-title="'Estado'">
+        {{user.estado}}
+      </td>
+
+      <td data-title="'valor'">
+        {{user.valor}}
+      </td>
+
+      <td data-title="'factura'">
+        {{user.factura}}
+      </td>
+
+    </tr>
+  </table>
+
+<table>
+  <caption>{{resultado_informe_movimiento_total[0].total}}</caption>
+</table>

@@ -1,0 +1,176 @@
+<style>
+  @media print {
+    #controlador_ingreso{ display:none; }
+    #imprimir_pago, table{ margin: 0px auto; font-size:10px; text-align:center; }
+    div{margin: 0px auto;}
+    h5{font-size:15px; margin: 0px auto;}
+    .center-align{margin: 0px auto;}
+    header, footer, .modal{ display:none;}
+  }
+
+  *{border-radius: 0px;}
+  #imprimir_pago{ margin: 0px auto; }
+  #placa_entrada , #placa_salida{  text-transform: uppercase; }
+  .card-panel{ margin-top: 0px;}
+</style>
+
+<div class="row"  ng-controller="controlador_ingreso_parqueadero">
+
+  <div class="col s12 m12 l12" id="controlador_ingreso">
+
+    <!--
+/**
+* TARJETA DE ENTRADA 
+*
+    -->
+
+    <div class="col s12  m12  l6 ">
+      <div class="card ">
+
+
+
+
+
+
+        <div class="card-content ">
+
+          <span class="card-title activator grey-text text-darken-4">TIEMPO DE ENTRADA <i class="mdi-navigation-more-vert right"></i></span>
+          <form name="formulario_entrada" id="formulario_entrada" class="col s12" ng-submit="enviar_formulario_entrada('formulario_entrada');">
+            <div class="row">
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input name="placa" id="placa_entrada" type="text" class="validate" maxlength="6" pattern=".{6,6}"  title="ES REQUERIDA LA PLACA MINIMO 6  CARACTERES" required>
+                  <label for="placa_entrada">PLACA VEHICULO</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <label>SELECCIONAR VEHICULO</label>
+                <select name="vehiculo" id="vehiculo" class="browser-default" required>
+                  <option value="" disabled selected>[SELECCIONAR]</option>
+                  <option value="1">CARRO</option>
+                  <option value="2">MOTO</option>      
+                </select>
+              </div>
+
+            </div>
+
+            <div class="card-action">             
+              <button type="submit" class="btn waves-effect waves-light green white-text col s12 l12 ">Aceptar</button>
+            </div>
+          </form>
+
+
+        </div>
+
+
+
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Ayuda <i class="mdi-navigation-close right"></i></span>
+          <p>Colocamos la informacion de ayuda para el formulario.</p>
+        </div>
+
+
+
+
+      </div>
+    </div>
+    <!--
+    /**
+    * TARJETA DE SALIDA 
+    *
+    -->
+    <div class="col s12  m12  l6">
+      <div class=" card  ">
+
+
+        <div class="card-content  ">
+
+          <span class="card-title activator grey-text text-darken-4">TIEMPO DE SALIDA<i class="mdi-navigation-more-vert right"></i></span>
+
+          <form name="formulario_salida" id="formulario_salida" class="col s12" ng-submit="enviar_formulario_salida('formulario_salida');">
+            <div class="row">
+
+
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input name="placa" id="placa_salida" type="text" class="validate" maxlength="6" pattern=".{6,6}"  title="ES REQUERIDA LA PLACA MINIMO 6  CARACTERES"  required>
+                  <label for="placa_salida">PLACA VEHICULO</label>
+                </div>
+              </div>
+
+
+
+
+
+
+            </div>
+
+            <div class="card-action">             
+              <button type="submit" class="btn waves-effect waves-light green white-text col s12 l12 ">Enviar</button>
+            </div>
+          </form>
+
+        </div>
+
+
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Ayuda <i class="mdi-navigation-close right"></i></span>
+          <p>Colocamos la informacion de ayuda para el formulario.</p>
+        </div>
+
+
+
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+  <div id="imprimir_pago" class="col s12 m12 l12 center-align">
+
+    <h5 class="center-align">BIENVENIDOS PARQUEAR </h5>
+
+    <div class="row">
+      <div class="col s12 m12 center-align">FACTURA DE VENTA: {{factura}} </div>   
+    </div>
+
+
+
+    <table>
+      <tr>
+        <th>PLACA:</th>
+        <td>{{placa}}</td> 
+      </tr>
+      <tr>
+        <th>VALOR:</th>
+        <td>$ {{valor|  number }}</td> 
+      </tr>
+
+      <tr>
+        <th>TIEMPO DE SALIDA:</th>
+        <td>{{tiempo_salida}}</td> 
+      </tr>
+
+      <tr>
+        <th>TIEMPO DE ENTRADA:</th>
+        <td>{{tiempo_entrada}}</td> 
+      </tr>
+    </table>
+    <div class="divider"></div>
+    <div class="row">
+      <div class="col s12 m12 center-align">
+        Las condiciones de parqueo estan sujetas a las descritas a la factura de venta
+      </div>   
+    </div>
+
+
+
+  </div>  
+
+</div>

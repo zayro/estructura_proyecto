@@ -1,26 +1,10 @@
 <?php
 
-# 1 HORA DE TIEMPO DE SESSION
-ini_set("session.cookie_lifetime", "1800");
-ini_set("session.gc_maxlifetime", "1800");
-
-
-ini_set('session.gc_probability', 1);
-ini_set('session.gc_divisor', 100);
-/* establecer el limitador de caché a 'private' */
-
-session_cache_limiter('private');
-$cache_limiter = session_cache_limiter();
-
-/* establecer la caducidad de la caché a 30 minutos */
-session_cache_expire(30);
-$cache_expire = session_cache_expire();
-
-
 # zona horaria
 date_default_timezone_set('America/Bogota');
 
 # activar o desactivar mensajes de error
+
 /*
   ini_set ('display_errors', 1);
   set_time_limit (0);
@@ -52,7 +36,7 @@ class conexion extends datos {
    * CONTIENE LAS PROPIEDADES DE MYSQL
    * @var type objecto mysqli protegido
    */
-  public $mysqli;
+  protected $mysqli;
 
   /**
    * CONTIENE EL RESULTADO DE LA CONEXION: retorna los mensajes de conexion
@@ -121,21 +105,65 @@ class conexion extends datos {
   }
 
   /**
-   * SOLO SE CONECTA A UNA BASE DE DATOS
+   * SOLO SE CONECTA BASE DE DATOS BILLAR
    *  
    * @return boolean
    */
-   function conectar_billar() {
-     $validar_conexion = false;
+  function conectar_billar() {
+    $validar_conexion = false;
     $this->billar();
     if ($this->conectar() == 'conectado') {
-      array_push($this->resultado_conexion, $this->conectar() . ' billar');  
-       $validar_conexion = true;
+      array_push($this->resultado_conexion, $this->conectar() . ' billar');
+      $validar_conexion = true;
       return true;
     } else {
       array_push($this->resultado_conexion, $this->conectar() . ' billar');
     }
-     if (!$validar_conexion) {
+    if (!$validar_conexion) {
+      exit('<br> <strong> servidores desconectados </strong> <br>');
+    }
+
+    return false;
+  }
+
+  /**
+   * SOLO SE CONECTA BASE DE DATOS PRINCIPAL
+   *  
+   * @return boolean
+   */
+  function conectar_principal() {
+    $validar_conexion = false;
+    $this->principal();
+    if ($this->conectar() == 'conectado') {
+      array_push($this->resultado_conexion, $this->conectar() . ' principal');
+      $validar_conexion = true;
+      return true;
+    } else {
+      array_push($this->resultado_conexion, $this->conectar() . ' principal');
+    }
+    if (!$validar_conexion) {
+      exit('<br> <strong> servidores desconectados </strong> <br>');
+    }
+
+    return false;
+  }
+
+  /**
+   * SOLO SE CONECTA BASE DE DATOS PARQUEADERO
+   *  
+   * @return boolean
+   */
+  function conectar_parqueadero() {
+    $validar_conexion = false;
+    $this->parqueadero();
+    if ($this->conectar() == 'conectado') {
+      array_push($this->resultado_conexion, $this->conectar() . ' parqueadero');
+      $validar_conexion = true;
+      return true;
+    } else {
+      array_push($this->resultado_conexion, $this->conectar() . ' billar');
+    }
+    if (!$validar_conexion) {
       exit('<br> <strong> servidores desconectados </strong> <br>');
     }
 

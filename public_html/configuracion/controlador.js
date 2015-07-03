@@ -30,11 +30,11 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
     });
 
     request.done(function (data) {
-      
-      console.info("DATOS DE SESSION: %O",data);
-      
+
+      console.info("DATOS DE SESSION: %O", data);
+
       cargar_servicios.set_validar_session(data);
-      
+
 
       $scope.select_session_usuario = cargar_servicios.validar_session();
 
@@ -96,18 +96,31 @@ app.controller('valida_usuario', function ($scope, cargar_servicios) {
 
   console.group("ingreso al controlador valida usuario");
 
+  /**
+   *  HABILITA LOS EVENTOS DEL TECLADO
+   * @param {type} evento
+   * @returns {undefined}
+   */
+  function operaEvento(evento) {
+    console.log("type", evento.type);
+    console.log("which", evento.which);
+    $(document).keypress(operaEvento);
+  }
+
+
 
   /**
    * MENSAJES DE RESPUESTA
    */
   function isOnline() {
     console.info("En Linea: INTERNET");
-    Materialize.toast("Se establecio conexion a internet" + "<span class='btn-flat green-text' >X</span>", 40000);
+    Materialize.toast("Se conecto " + "<span class='btn-flat green-text' >Internet</span>", 40000);
   }
 
   function isOffline() {
     console.error("Fuera de Linea: SIN INTERNET");
-    Materialize.toast("se perdio conexion a internet" + "<a class='btn-flat red-text' href='#login'>X<a>", 40000);
+    Materialize.toast("se perdio conexion  " + "<a class='btn-flat red-text' href='#login'>Internet<a>", 40000);
+    $('#cargando').openModal();
   }
 
 
@@ -150,4 +163,170 @@ app.controller('valida_usuario', function ($scope, cargar_servicios) {
   $scope.$emit('update_parent_controller', 'ingreso');
 
   console.groupEnd();
+});
+
+/*
+ ###############################################
+ CONTROLADOR INGRESO
+ ###############################################
+ */
+
+app.controller('ingreso', function ($scope, cargar_servicios) {
+
+
+
+  $scope.enviar_formulario = function (datos, valor_url) {
+    console.group("ingreso al controlador ingreso");
+
+    var valor_metodo = "POST";
+    var valor_datos = $('#' + datos).serialize();
+
+    cargar_servicios.http_respuesta(valor_url, valor_metodo, valor_datos)
+
+            .success(function (msg) {
+
+              if (msg.success) {
+
+                Materialize.toast("Exitoso" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
+
+                //setTimeout("window.print()" , 5000);
+
+
+                cargar_servicios.http_respuesta('modulos/ingreso/consultar_pago.php', 'post', $.param({'placa': msg.placa})).success(function (data) {
+
+
+
+                });
+
+
+              } else {
+                Materialize.toast("Error" + "<a class='btn-flat red-text' href='#login'>X<a>", 5000);
+                Materialize.toast(msg.suceso + "<a class='btn-flat red-text' href='#login'>X<a>", 5000);
+              }
+
+              //$('#'+id_formulario).trigger("reset");
+
+            })
+
+            .error(function (data, status, headers, config) {
+              console.error(data);
+            });
+    console.groupEnd();
+
+  };
+
+
+
+});
+
+/*
+ ###############################################
+ CONTROLADOR LOGIN
+ ###############################################
+ */
+
+app.controller('login', function ($scope, cargar_servicios) {
+
+  console.info("ingreso al controlador login");
+
+  $scope.enviar_formulario_login = function () {
+    var valor_url = "modulos/logueo/login.php";
+    var valor_metodo = "POST";
+    var valor_datos = $('#formulario_logueo').serialize();
+
+    cargar_servicios.http_respuesta(valor_url, valor_metodo, valor_datos)
+
+            .success(function (msg) {
+
+              if (msg == 'exitoso') {
+                console.clear();
+                console.log("ingreso al sistema");
+
+
+                window.location = '#modulos/ingreso';
+                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg + "</span>", 4000);
+
+              } else {
+                Materialize.toast("Verificar los datos" + "<a class='btn-flat red-text' href='#login'>X<a>", 4000);
+              }
+
+              //$('#'+id_formulario).trigger("reset");
+
+            })
+
+            .error(function (data, status, headers, config) {
+              console.error(data);
+              console.error(status);
+              console.error(headers);
+              console.error(config);
+            });
+
+  };
+
+  $scope.enviar_formulario_cambio_clave = function (modal) {
+    var valor_url = "modulos/logueo/cambio_clave.php";
+    var valor_metodo = "POST";
+    var valor_datos = $('#formulario_cambio_clave').serialize();
+
+    cargar_servicios.http_respuesta(valor_url, valor_metodo, valor_datos)
+
+            .success(function (msg) {
+
+              if (msg.success) {
+
+                $location.path('#modulos/ingreso');
+                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
+                $('#' + modal).closeModal();
+
+              } else {
+                Materialize.toast("Datos no coinciden Verificarlos" + "<a class='btn-flat red-text' href='#login'>X<a>", 4000);
+
+              }
+
+              //$('#'+id_formulario).trigger("reset");
+
+            })
+
+            .error(function (data, status, headers, config) {
+              console.error(data);
+              console.error(status);
+              console.error(headers);
+              console.error(config);
+            });
+
+  };
+
+  $scope.enviar_validar_usuario = function ($valor) {
+
+    var valor_url = "modulos/logueo/validar_usuario.php";
+    var valor_metodo = "POST";
+    var valor_datos = $('#formulario_cambio_clave').serialize();
+
+    cargar_servicios.http_respuesta(valor_url, valor_metodo, valor_datos)
+
+            .success(function (msg) {
+
+              if (!msg.success) {
+
+
+                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
+
+
+              } else {
+                Materialize.toast("Datos no coinciden Verificarlos" + "<a class='btn-flat red-text' href='#login'>X<a>", 4000);
+
+              }
+
+              //$('#'+id_formulario).trigger("reset");
+
+            })
+
+            .error(function (data, status, headers, config) {
+              console.error(data);
+              console.error(status);
+              console.error(headers);
+              console.error(config);
+            });
+  }
+
 });
