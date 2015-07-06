@@ -16,7 +16,7 @@ abstract class datos {
 
   protected function local() {
     $this->servidores = 'localhost:3306';
-    $this->usuarios = 'root';
+    $this->usuarios = 'zayro';
     $this->claves = 'zayro2014';
     $this->bdd = 'estructura_proyecto';
   }
@@ -30,21 +30,21 @@ abstract class datos {
 
   protected function principal() {
     $this->servidores = 'localhost:3306';
-    $this->usuarios = 'root';
+    $this->usuarios = 'zayro';
     $this->claves = 'zayro2014';
     $this->bdd = '';
   }
 
   protected function billar() {
     $this->servidores = 'localhost:3306';
-    $this->usuarios = 'root';
+    $this->usuarios = 'zayro';
     $this->claves = 'zayro2014';
     $this->bdd = 'billar';
   }
 
   protected function parqueadero() {
     $this->servidores = 'localhost:3306';
-    $this->usuarios = 'root';
+    $this->usuarios = 'zayro';
     $this->claves = 'zayro2014';
     $this->bdd = 'parqueadero';
   }
