@@ -21,9 +21,7 @@
 
       .Roboto{
       font-family: 'Roboto Slab 300';	 
-      font-size: 32px;
-	  
-          
+      font-size: 32px;         
       }
 
       .Pacifico{

@@ -189,6 +189,10 @@ app.service('cargar_registros', function ($http) {
 
 app.controller('controlador_billar', function ($scope, $http, cargar_registros) {
 
+angular.element(document).ready(function () {
+
+  console.log('cargo aplicativo billar');
+});
 
   var sync_datos_billar = new Firebase('https://billar.firebaseio.com/connected');
 

@@ -108,7 +108,8 @@ class procesos_bd extends consulta_bd implements auditar {
    *
    */
   function alterar_bd($sql, $mensaje) {
-
+    
+   conexion::cabecera_json();
     /**
      * MOSTRAR EL MENSAJE EN JSON
      * @var array|null
@@ -171,6 +172,7 @@ class procesos_bd extends consulta_bd implements auditar {
   function alterar_bd_seguro($sql, $mensaje) {
 
     conexion::validar_session();
+    conexion::cabecera_json();
 
     /**
      * MOSTRAR EL MENSAJE EN JSON
@@ -238,6 +240,7 @@ class procesos_bd extends consulta_bd implements auditar {
   function transaccion($sql, $mensaje) {
 
     conexion::validar_session();
+    conexion::cabecera_json();
 
     $datos = array();
     $consulta = $this->mysqli->query($sql);
@@ -303,6 +306,9 @@ class procesos_bd extends consulta_bd implements auditar {
    */
   function procedimiento_almacenado($sql, $mensaje) {
 
+    conexion::validar_session();
+    conexion::cabecera_json();
+    
     $datos = array();
     $respuesta = array();
 

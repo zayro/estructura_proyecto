@@ -10,10 +10,7 @@
 var app = angular.module('aplicativo_parqueadero', []);
 
 
-angular.element(document).ready(function () {
 
-  console.log('cargo angular');
-});
 /*
  ###############################################
  INICIA RUTAS
@@ -79,6 +76,11 @@ app.service('cargar_servicios', function ($http) {
 
 
 app.controller('controlador_ingreso_parqueadero', function ($scope, cargar_servicios) {
+  
+  angular.element(document).ready(function () {
+
+  console.log('cargo aplicativo_parqueadero');
+});
 
   $scope.enviar_formulario_entrada = function (datos) {
 

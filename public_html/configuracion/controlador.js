@@ -1,3 +1,19 @@
+function lateral() {
+
+  $('.button-collapse').sideNav({
+    menuWidth: 340, // Default is 240
+    edge: 'right' // Choose the horizontal origin
+            //  closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+  });
+
+  $('.collapsible').collapsible({
+    accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+  });
+
+  $('select').material_select();
+}
+
+
 /*
  ###############################################
  INICIA EL CONTROLADOR APLICACIONES
@@ -6,6 +22,28 @@
 
 app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, $http, cargar_servicios) {
 
+
+  /*
+   ###############################################
+   CONFIGURACION DEL TEMA
+   ###############################################
+   */
+ 
+ angular.element(document).ready(function () {
+    $('#carga_inicial').openModal();
+     console.info("cargo controlador principal");
+  });
+
+  if (localStorage.getItem("tema") === null) {
+    var tema = {'color_menu': 'blue-grey darken-4', 'color_sidebar': 'grey darken-3'};
+    localStorage.setItem('tema', JSON.stringify(tema));
+  }
+
+  var storage_tema = localStorage.getItem("tema");
+  var datos_tema = JSON.parse(storage_tema);
+
+  $scope.color_menu = datos_tema.color_menu;
+  $scope.color_sidebar = datos_tema.color_sidebar;
   /*
    $scope.$on('$locationChangeStart', function( event ) {
    var answer = confirm("Are you sure you want to leave this page?")
@@ -94,7 +132,7 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
 
 app.controller('valida_usuario', function ($scope, cargar_servicios) {
 
-  console.group("ingreso al controlador valida usuario");
+  console.groupCollapsed("ingreso al controlador valida usuario");
 
   /**
    *  HABILITA LOS EVENTOS DEL TECLADO
@@ -115,11 +153,12 @@ app.controller('valida_usuario', function ($scope, cargar_servicios) {
   function isOnline() {
     console.info("En Linea: INTERNET");
     Materialize.toast("Se conecto " + "<span class='btn-flat green-text' >Internet</span>", 40000);
+    $('#cargando').closeModal();
   }
 
   function isOffline() {
     console.error("Fuera de Linea: SIN INTERNET");
-    Materialize.toast("se perdio conexion  " + "<a class='btn-flat red-text' href='#login'>Internet<a>", 40000);
+    Materialize.toast("se perdio conexion  " + "<a class='btn-flat red-text'  >Internet<a>", 40000);
     $('#cargando').openModal();
   }
 
@@ -189,19 +228,15 @@ app.controller('ingreso', function ($scope, cargar_servicios) {
 
                 Materialize.toast("Exitoso" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
 
+
                 //setTimeout("window.print()" , 5000);
 
 
-                cargar_servicios.http_respuesta('modulos/ingreso/consultar_pago.php', 'post', $.param({'placa': msg.placa})).success(function (data) {
-
-
-
-                });
 
 
               } else {
-                Materialize.toast("Error" + "<a class='btn-flat red-text' href='#login'>X<a>", 5000);
-                Materialize.toast(msg.suceso + "<a class='btn-flat red-text' href='#login'>X<a>", 5000);
+                Materialize.toast("Error" + "<a class='btn-flat red-text'  >X<a>", 5000);
+                Materialize.toast(msg.suceso + "<a class='btn-flat red-text'  >X<a>", 5000);
               }
 
               //$('#'+id_formulario).trigger("reset");
@@ -241,13 +276,15 @@ app.controller('login', function ($scope, cargar_servicios) {
               if (msg == 'exitoso') {
                 console.clear();
                 console.log("ingreso al sistema");
-
-
+                // remueve el menu inferio del fullpage
+                $('#fp-nav').remove();
+                // remueve el efecto overflow de fullpage
+                $("html, body").removeAttr('style');
                 window.location = '#modulos/ingreso';
                 Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg + "</span>", 4000);
 
               } else {
-                Materialize.toast("Verificar los datos" + "<a class='btn-flat red-text' href='#login'>X<a>", 4000);
+                Materialize.toast("VERIFICAR LOS DATOS" + "<a class='btn-flat red-text' > Error <a>", 4000);
               }
 
               //$('#'+id_formulario).trigger("reset");
@@ -274,12 +311,12 @@ app.controller('login', function ($scope, cargar_servicios) {
 
               if (msg.success) {
 
-                $location.path('#modulos/ingreso');
-                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
+                formulario_recordar_clave
+                Materialize.toast("SE CAMBIO CLAVE" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
                 $('#' + modal).closeModal();
 
               } else {
-                Materialize.toast("Datos no coinciden Verificarlos" + "<a class='btn-flat red-text' href='#login'>X<a>", 4000);
+                Materialize.toast("VERIFICAR LOS DATOS" + "<a class='btn-flat red-text'  > Error<a>", 4000);
 
               }
 
@@ -296,11 +333,11 @@ app.controller('login', function ($scope, cargar_servicios) {
 
   };
 
-  $scope.enviar_validar_usuario = function ($valor) {
+  $scope.enviar_formulario_recordar_clave = function ($valor) {
 
     var valor_url = "modulos/logueo/validar_usuario.php";
     var valor_metodo = "POST";
-    var valor_datos = $('#formulario_cambio_clave').serialize();
+    var valor_datos = $('#formulario_recordar_clave').serialize();
 
     cargar_servicios.http_respuesta(valor_url, valor_metodo, valor_datos)
 
@@ -309,11 +346,11 @@ app.controller('login', function ($scope, cargar_servicios) {
               if (!msg.success) {
 
 
-                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
+                Materialize.toast("ENVIANDO MENSAJE ..." + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
 
 
               } else {
-                Materialize.toast("Datos no coinciden Verificarlos" + "<a class='btn-flat red-text' href='#login'>X<a>", 4000);
+                Materialize.toast("VERIFICAR LOS DATOS" + "<a class='btn-flat red-text'  > Error<a>", 4000);
 
               }
 

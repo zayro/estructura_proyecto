@@ -15,7 +15,7 @@ class login extends procesos_bd {
     $stmt = "";
     /* crear una sentencia preparada */
     $stmt = procesos_bd::preparar_consulta("
-  SELECT count(*) as encontrado, usuario, grupo, g.nombre as nombre_grupo, identificacion 
+  SELECT count(*) as encontrado, usuario, grupo, g.nombre as nombre_grupo, identificacion, imagen 
   FROM usuarios as u join grupo as g on u.grupo  = g.id  
   WHERE usuario = ? and clave = encode( ? , 'clave') and estado = '1' ;
   ");
@@ -28,7 +28,7 @@ class login extends procesos_bd {
     $stmt->execute();
 
     /* ligar variables de resultado */
-    $stmt->bind_result($encontrado, $usuario, $grupo, $nombre_grupo, $identificacion);
+    $stmt->bind_result($encontrado, $usuario, $grupo, $nombre_grupo, $identificacion, $imagen);
 
     /* obtener valor */
     $stmt->fetch();
@@ -39,6 +39,7 @@ class login extends procesos_bd {
       $_SESSION['grupo'] = $grupo;
       $_SESSION['nombre_grupo'] = $nombre_grupo;
       $_SESSION['identificacion'] = $identificacion;
+      $_SESSION['imagen'] = $imagen;
 
       return 'exitoso';
     } else {

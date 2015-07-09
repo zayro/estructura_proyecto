@@ -1,3 +1,17 @@
+<style>
+@media only screen and (max-width: 992px){
+table.responsive-table.bordered td{
+  border-style:  ridge;
+  border-color: #E6E6E6;
+}
+.success{ background-color: #cfd8dc; }
+table.responsive-table thead tr { display: table;}
+table.responsive-table.bordered th {
+border-style:  ridge;
+}
+}
+</style>
+
 <!-- TABLA CONTENIDOS -->
 <div class="row" id="asignar_pagos" ng-controller="controlador_billar">
 
@@ -18,7 +32,7 @@
           <div class="divider"></div>
         </div>
 
-        <table class="responsive-table bordered centered striped ">
+        <table class="responsive-table centered striped bordered" border="1">
           <thead>
             <tr class="success">
               <th>Ubicacion</th>
@@ -37,13 +51,13 @@
               <td>{{ver_estado.entrada}}</td>
               <td>{{ver_estado.salida}}</td>
               <td>{{ver_estado.cancelar_minuto| currency:"$" }}</td>
-              <td>{{ver_estado.total_consumo| currency:"$" }}</td>
-              <td>{{ (ver_estado.cancelar_minuto * 1) + (ver_estado.total_consumo * 1) | currency:"$"}}</td>
+              <td>{{ (ver_estado.total_consumo) ? ver_estado.total_consumo : '0.0' | currency:"$" }}</td>
+              <td>{{ (ver_estado.cancelar_minuto)  ? (ver_estado.cancelar_minuto * 1) + (ver_estado.total_consumo * 1) : '0.0'  | currency:"$"}}</td>
               <td> 
-                <a  class="waves-effect waves-light  modal-trigger" ng-click='valor_consumos(ver_estado.id);'><i class="material-icons ">visibility</i> </a>
+                <a  ng-click='valor_consumos(ver_estado.id);'class="waves-effect waves-light" ><i class="tiny material-icons  blue-text">visibility</i> </a>
               </td>
               <td>
-                <a  ng-click='guardar_pago(ver_estado.id);' class="waves-effect waves-light center-align" > <i class="material-icons green-text">done</i> </a> 
+                <a  ng-click='guardar_pago(ver_estado.id);' class="waves-effect waves-light" > <i class="tiny material-icons green-text">done</i> </a> 
               </td>
             </tr>
         </table>

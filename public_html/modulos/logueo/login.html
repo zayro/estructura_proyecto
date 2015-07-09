@@ -1,266 +1,256 @@
-
 <style>
 
-    html{
-        /* background-color: #3B3E40;  */
-        /* background-color: #eeeee;  */
-        background: #fafafa;
-    }
-
-
+  .logo_svg{   text-align: center; margin: 0px auto; margin-top: 35px; }
+  .centrar{text-align: center; margin: 0px auto; }
 
 </style>
 
-<div ng-controller="login">
-    
-    <div id="fullpage" >
-        
-        <!-- section 0-->
-        <div class="section " id="section0">
-            
-            <div class="intro">
+<div id="fullpage" ng-controller="login">
 
-                <fragmento-entrada></fragmento-entrada>
+  <!-- section 1-->
+  <div class="section" id="section1">
 
-            </div>
+    <div class="intro">
 
+      <!--
+      /**
+      * INGRESO DE SESSION
+      */
+      -->
 
+      <form name="formulario_logueo" id="formulario_logueo" ng-submit="enviar_formulario_login();" ng-hide="select_session_usuario.identificacion" >
 
-        </div>
-        
-        <!-- section 1-->
-        <div class="section" id="section1">
-            <div class="intro">
-
-                <!--
-                /**
-                * INGRESO DE SESSION
-                */
-                -->
-                <form name="formulario_logueo" id="formulario_logueo" ng-submit="enviar_formulario_login();" ng-hide="select_session_usuario.identificacion" >
-
-                    <div class="row">
-                        <div class="col s12 ">
-                            <div class="card z-depth-1 ">
-                                <div class="card-image waves-effect waves-block waves-light" >
-
-                                    <p><img class="activator" src="img/usuario.svg" width="100" height="100"></p>
-
-                                </div>
-
-                                <div>
-                                    <span class="col s12 card-title grey-text text-darken-2 center-align "> INICIO DE SESION </span>        
-                                </div>
-
-
-                                <div class="card-content " >  
-
-                                    <div class="row">
-
-
-
-                                        <div class="input-field col s12">
-                                            <input name="usuario" id="usuario" type="text" pattern=".{5,}"  class="validate" title="DIGITE SU USUARIO O CORREO"   required>
-                                            <label for="usuario">Email o Usuario</label>
-                                        </div>
-
-                                        <div class="input-field col s12">
-                                            <input name="clave"  id="clave" type="password" pattern=".{5,}"   class="validate" title="DIGITE SU CLAVE MINIMO 5 CARACTERES" required>
-                                            <label for="clave">Password</label>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="card-action">
-
-
-
-                                    <div class="center-align col s12 m12 l12">
-                                        <button type="submit" class=" col s12 l12 waves-effect waves-light btn  green darken-3 white-text">Acceder</button>
-                                    </div>
-
-                                    <div class="center-align col s6 m6 l16">
-                                        <a class="col s12 l12 waves-effect waves-light btn-flat  black-text text-darken-4 " onclick="$('#olvido_clave').openModal();">
-                                            <i class="small mdi-communication-email  blue-grey-text"></i> <span class="hide-on-small-only">¿ olvido su clave ? </span> </a>
-                                    </div>
-
-                                    <div class="center-align col s6 m6 l6">
-                                        <a class="col s12 l12 waves-effect waves-light btn-flat black-text text-darken-4 modal-trigger" onclick="$('#cambio_clave').openModal();">
-                                            <i class="small mdi-communication-vpn-key  blue-grey-text"></i> <span class="hide-on-small-only">cambio de clave </span> </a>
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                </form> 
-
-                <!--
-              /**
-              * SEGUIR CONECTADO
-              */
-                -->
-                <div class="row" ng-show="select_session_usuario.identificacion">
-                    <div class="col s12 ">
-                        <div class="card z-depth-2 ">
-                            <div class="card-image waves-effect waves-block waves-light" >
-
-                                <p><img class="activator" src="img/usuario.svg" width="100" height="100"></p>
-
-                            </div>
-
-                            <div>
-                                <span class="col s12 card-title grey-text text-darken-2 center-align "> {{select_session_usuario.usuario}} </span>        
-                            </div>
-
-                            <div class="card-content " >  
-
-                            </div>
-
-                            <div class="card-action">
-
-                                <div class="center-align col s6 l6">
-                                    <a href="../librerias/session_salir.php" class=" col s12  waves-effect waves-light btn red white-text">Salir</a>
-                                </div>
-
-                                <div class="center-align col s6 l6 ">
-                                    <a href="#modulos/ingreso" class=" col s12 waves-effect waves-light btn green white-text">Seguir</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-
-            </div>
-        </div>
-
-        <!-- section 2-->
-        <div class="section" id="section2">
-            
-            <div class="slide" id="slide1">
-                <div class="intro">
-                    <h1>Ideal for small screens</h1>
-                </div>
-            </div>
-
-            <div class="slide" id="slide2">
-                <h1>This example uses responsiveHeight: 600</h1>
-            </div>
-
-        </div>
+        <div class="row">
+          <div class="col s12 ">
+            <div class="card  ">
 
 
 
 
-    </div>
-    <!--
-    /**
-    *MODAL RECUPERAR DE CLAVE
-    */
-    -->
-    <div id="olvido_clave" class="modal">
-        <div class="modal-content">
-            <h4>Olvido de Clave</h4>
-            <p>complete los datos para poder cambiar su clave</p>
-            <form name="formulario_olvido_clave" id="formulario_olvido_clave" 
-                  ng-submit="formulario_olvido_clave();" 
-                  ng-hide="select_session_usuario.identificacion" >
+
+              <div class="col s12 m12 l12 center-align centrar">
+
+                <object  data="img/logo.svg" type="image/svg+xml" class="responsive-img logo_svg"> </object>  
+
+              </div>                  
+
+              <span class=" card-title grey-text text-darken-2 col s12  center-align centrar"> Inicia sesión </span>        
 
 
+
+              <div class="card-content" >  
 
 
                 <div class="row">
 
-                    <div class="input-field col s8">
-                        <input name="usuario" id="usuario" type="email" class="validate" required>
-                        <label for="usuario">Correo</label>
-                    </div>
-
-                    <div class="input-field col s4">
-                        <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text ">Actualizar</button>
-                    </div>
+                <div class="input-field col s12">
+                  <label for="usuario">Email o Usuario</label>
+                  <input name="usuario" id="usuario" type="text" pattern=".{5,}" class="validate" required title="DIGITE SU USUARIO O CORREO CORRECTAMENTE"   >
 
                 </div>
 
-
-
-
-            </form> 
-        </div>
-
-    </div>
-
-    <!--
-    /**
-    *MODAL CAMBIO DE CLAVE
-    */
-    -->
-
-    <div id="cambio_clave" class="modal">
-        <div class="modal-content">
-            <h4>Cambio de Clave</h4>
-            <p>recibira un correo con su contraseña actual</p>
-            <form name="formulario_cambio_clave" id="formulario_cambio_clave" ng-submit="enviar_formulario_cambio_clave('cambio_clave');" ng-hide="select_session_usuario.identificacion" >
-
-                <div class="row">
-
-                    <div class="input-field col s12">
-                        <input name="usuario" id="usuario_cambio_clave" type="text" class="validate" required>
-                        <label for="usuario_cambio_clave">Usuario o Correo</label>
-                    </div>
-
-                    <div class="input-field col s12">
-                        <input name="clave" id="clave_cambio_clave" type="password" class="validate" required>
-                        <label for="clave_cambio_clave">Password Actual</label>
-                    </div>
-
-                    <div class="input-field col s12">
-                        <input name="nueva"  id="nueva_cambio_clave" type="password" pattern=".{5,}"  class="validate" required title="minimo 5 caracteres">
-                        <label for="nueva_cambio_clave">Password Nuevo</label>
-                    </div>
+                <div class="input-field col s12">
+                  <label for="clave">Password</label>  
+                  <input name="clave"  id="clave" type="password" pattern=".{5,}" class="validate" required title="DIGITE SU CLAVE MINIMO 5 CARACTERES" >
 
                 </div>
+</div>
+
+
+              </div>
+
+              <div class="card-action">
+
+
 
                 <div class="center-align col s12 m12 l12">
-                    <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text">Cambiar</button>
+                  <button type="submit" class=" col s12 l12 waves-effect waves-light btn  green darken-3 white-text">Acceder</button>
                 </div>
 
-            </form> 
+                <div class="center-align col s6 m6 l16">
+                  <a class="col s12 l12 waves-effect waves-light btn-flat  black-text text-darken-4 " onclick="$('#olvido_clave').openModal();">
+                    <i class="small mdi-communication-email  blue-grey-text"></i> <span class="hide-on-small-only">¿ olvido su clave ? </span> </a>
+                </div>
+
+                <div class="center-align col s6 m6 l6">
+                  <a class="col s12 l12 waves-effect waves-light btn-flat black-text text-darken-4 modal-trigger" onclick="$('#cambio_clave').openModal();">
+                    <i class="small mdi-communication-vpn-key  blue-grey-text"></i> <span class="hide-on-small-only">cambio de clave </span> </a>
+                </div>
+
+
+
+              </div>
+
+            </div>
+          </div>
+
+
         </div>
 
+      </form> 
+
+      <!--
+    /**
+    * SEGUIR CONECTADO
+    */
+      -->
+      <div class="row" ng-show="select_session_usuario.identificacion">
+        <div class="col s12 ">
+          <div class="card z-depth-2 ">
+            <div class="card-image waves-effect waves-block waves-light" >
+
+              <p><img class="activator" src="img/logo_negro.svg" width="100" height="100"></p>
+
+            </div>
+
+            <div>
+              <span class="col s12 card-title grey-text text-darken-2 center-align "> {{select_session_usuario.usuario}} </span>        
+            </div>
+
+            <div class="card-content " >  
+
+            </div>
+
+            <div class="card-action">
+
+              <div class="center-align col s6 l6">
+                <a href="../librerias/session_salir.php" class=" col s12  waves-effect waves-light btn red white-text">Salir</a>
+              </div>
+
+              <div class="center-align col s6 l6 ">
+                <a onclick="$('#fp-nav').remove();
+                            $('html, body').removeAttr('style');" href="#modulos/ingreso" class=" col s12 waves-effect waves-light btn green white-text">Seguir</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <!-- section 2-->
+  <div class="section" id="section2" ng-hide="select_session_usuario.identificacion">
+
+    <div class="slide" id="slide1">
+      <div class="center-align" >
+        <div  style="width:60%; border: 1px solid #000000; margin: 0 auto;">
+          <h5>This should be vertically aligned</h5>
+        </div>
+      </div>
     </div>
 
+    <div class="slide" id="slide2">
+      <div class="intro">
+        <h4>This example uses responsiveHeight: 600</h4>
+      </div>
+    </div>
+
+    <div class="slide" id="slide3">
+      <div class="intro">
+        <h4>This SLIDE 3</h4>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
 </div>
+<!--
+/**
+*MODAL RECUPERAR DE CLAVE
+*/
+-->
+<div id="olvido_clave" class="modal">
+  <div class="modal-content">
+    <h4>Olvido de Clave</h4>
+    <p>complete los datos para poder cambiar su clave</p>
+    <form name="formulario_recordar_clave" id="formulario_recordar_clave" 
+          ng-submit="formulario_recordar_clave();" 
+          ng-hide="select_session_usuario.identificacion" >
+
+
+
+
+      <div class="row">
+
+        <div class="input-field col s8">
+          <input name="correo_usuario" id="correo_usuario" type="email" class="validate" required>
+          <label for="correo_usuario">Correo</label>
+        </div>
+
+        <div class="input-field col s4">
+          <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text ">Actualizar</button>
+        </div>
+
+      </div>
+
+
+
+
+    </form> 
+  </div>
+
+</div>
+
+<!--
+/**
+*MODAL CAMBIO DE CLAVE
+*/
+-->
+
+<div id="cambio_clave" class="modal">
+  <div class="modal-content">
+    <h4>Cambio de Clave</h4>
+    <p>recibira un correo con su contraseña actual</p>
+    <form name="formulario_cambio_clave" id="formulario_cambio_clave" ng-submit="enviar_formulario_cambio_clave('cambio_clave');" ng-hide="select_session_usuario.identificacion" >
+
+      <div class="row">
+
+        <div class="input-field col s12">
+          <input name="usuario" id="usuario_cambio_clave" type="text" class="validate" required>
+          <label for="usuario_cambio_clave">Usuario o Correo</label>
+        </div>
+
+        <div class="input-field col s12">
+          <input name="clave" id="clave_cambio_clave" type="password" class="validate" required>
+          <label for="clave_cambio_clave">Password Actual</label>
+        </div>
+
+        <div class="input-field col s12">
+          <input name="nueva"  id="nueva_cambio_clave" type="password" pattern=".{5,}"  class="validate" required title="minimo 5 caracteres">
+          <label for="nueva_cambio_clave">Password Nuevo</label>
+        </div>
+
+      </div>
+
+      <div class="center-align col s12 m12 l12">
+        <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text">Cambiar</button>
+      </div>
+
+    </form> 
+  </div>
+
+</div>
+
 <script>
 
 
-            $('#fullpage').fullpage({
-                navigation: true,
-                navigationPosition: 'right',
-                navigationTooltips: ['First page', 'Second page', 'Third and last page']
-            });
+      $('#fullpage').fullpage({
+        navigation: true,
+        navigationPosition: 'right',
+        navigationTooltips: ['Introduccion', 'Login'],
+        sectionsColor: ['#263238', '#fafafa']
+
+
+      });
 
 
 </script>  
-
-
-
-
-
-
-
-
-
-
