@@ -47,7 +47,7 @@ class consulta_bd extends conexion {
     
     $items = array();
 
-    $resultado_json = $this->mysqli->query($sql);
+    $resultado_json = $this->consulta($sql);
 
 
     if (!$resultado_json) {
@@ -67,6 +67,31 @@ class consulta_bd extends conexion {
 
 
     return $items;
+  }
+  
+    function consulta_json($sql) {
+
+   conexion::cabecera_json();
+    #MOSTRAR EL MENSAJE EN JSON   
+    
+
+    $resultado_json = $this->consulta($sql);
+
+
+    if (!$resultado_json) {
+
+      throw new Exception("ERROR: $sql");
+    }
+
+
+   $row = $resultado_json->fetch_object();
+
+    # iberar el conjunto de resultados
+    $resultado_json->close();
+
+
+
+    return $row;
   }
 
   /**
@@ -102,6 +127,16 @@ class consulta_bd extends conexion {
     return false;
   }
   
+  function real_escape_string($sql){
+    
+     return $this->mysqli->real_escape_string($sql);      
+
+  }
+  
+  /**
+   * MULTI CONSULTAS
+   * @param type $query
+   */
   private function multi_consulta($query) {
     /* ejecutar multi consulta */
     if ($this->mysqli->multi_query($query)) {

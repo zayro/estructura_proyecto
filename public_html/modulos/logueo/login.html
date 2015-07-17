@@ -43,18 +43,18 @@
 
                 <div class="row">
 
-                <div class="input-field col s12">
-                  <label for="usuario">Email o Usuario</label>
-                  <input name="usuario" id="usuario" type="text" pattern=".{5,}" class="validate" required title="DIGITE SU USUARIO O CORREO CORRECTAMENTE"   >
+                  <div class="input-field col s12">
+                    <label for="usuario">Email o Usuario</label>
+                    <input name="usuario" id="usuario" type="text" pattern=".{5,}" class="validate" required title="DIGITE SU USUARIO O CORREO CORRECTAMENTE"   >
 
+                  </div>
+
+                  <div class="input-field col s12">
+                    <label for="clave">Password</label>  
+                    <input name="clave"  id="clave" type="password" pattern=".{5,}" class="validate" required title="DIGITE SU CLAVE MINIMO 5 CARACTERES" >
+
+                  </div>
                 </div>
-
-                <div class="input-field col s12">
-                  <label for="clave">Password</label>  
-                  <input name="clave"  id="clave" type="password" pattern=".{5,}" class="validate" required title="DIGITE SU CLAVE MINIMO 5 CARACTERES" >
-
-                </div>
-</div>
 
 
               </div>
@@ -65,6 +65,23 @@
 
                 <div class="center-align col s12 m12 l12">
                   <button type="submit" class=" col s12 l12 waves-effect waves-light btn  green darken-3 white-text">Acceder</button>
+                </div>
+
+                <div class="center-align col s12 m12 l12">
+
+                  <span id="signinButton">
+                    <span
+                      class="g-signin"
+                      data-callback="oauth2callback"                      
+                      data-clientid="903616966895-2crc44t103bopqlv9q9ob92qmmpjvahp.apps.googleusercontent.com"
+                      data-cookiepolicy="single_host_origin"
+                      data-requestvisibleactions="http://schemas.google.com/AddActivity"                      
+                      data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
+                      >
+                    </span>                    
+                  </span>
+
+
                 </div>
 
                 <div class="center-align col s6 m6 l16">
@@ -242,14 +259,14 @@
 
 <script>
 
-
       $('#fullpage').fullpage({
+        navigationTooltips: ['login', 'Introduccion'],
+        sectionsColor: ['#263238', '#00bcd4'],
+        css3: true,
         navigation: true,
         navigationPosition: 'right',
-        navigationTooltips: ['Introduccion', 'Login'],
-        sectionsColor: ['#263238', '#fafafa']
-
-
+        // tiene le problema al mover la pagina queda
+        scrollOverflow: true
       });
 
 

@@ -1,17 +1,88 @@
-function lateral() {
+
+console.time("inicia carga jquery");
+
+/**
+ * ######################################
+ * CARGAR DOM JQUERY
+ * ######################################
+ */
+$(document).ready(function () {
+
+  /*
+   * ########################################
+   * ANCHO DEL SIDEBAR
+   * ########################################
+   */
 
   $('.button-collapse').sideNav({
-    menuWidth: 340, // Default is 240
-    edge: 'right' // Choose the horizontal origin
-            //  closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    menuWidth: 250, // Default is 240
+    edge: 'left', // Choose the horizontal origin
+    closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+  }
+  );
+
+  function lateral() {
+
+    $('.button-collapse').sideNav({
+      menuWidth: 340, // Default is 240
+      edge: 'right' // Choose the horizontal origin
+              //  closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    });
+
+    $('.collapsible').collapsible({
+      accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    });
+
+    $('select').material_select();
+  }
+  /*
+   * ########################################
+   * PARA METRIAZACION DEL TIEMPO DE ESPERA
+   * ########################################
+   */
+
+
+  $.idle(600, function () {
+    console.info('Llevas 10 minutos inactivo');
   });
 
-  $('.collapsible').collapsible({
-    accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+  $.idle(900, function () {
+    $.away('cliente ausente');
   });
 
-  $('select').material_select();
-}
+  $.idle(0, function () {
+    if ($.isAway()) {
+      console.log("BIENVENIDO DE VUELTA ");
+      $.away();
+    }
+  });
+
+
+  console.info("cargo jquery");
+});
+
+
+
+
+$(window).load(function () {
+  console.log("se terminod de cargar la pagina");
+  //$('#carga_inicial').closeModal();
+});
+
+console.timeEnd("inicia carga jquery");
+
+/*
+ * ########################################
+ * AL TERMINAR DE CARGAR LOS SCRIPTS
+ * ########################################
+ */
+
+console.time("carga total pagina");
+
+
+console.timeEnd("carga total pagina");
+
+
 
 
 /*
@@ -22,16 +93,23 @@ function lateral() {
 
 app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, $http, cargar_servicios) {
 
+  /*
+   ###############################################
+   CONFIGURACION INICIO SESSION GOOGLE
+   ###############################################
+   */
 
+// Register the callback to be fired every time auth state changes
+  var ref = new Firebase("https://estructuraproyecto.firebaseio.com");
   /*
    ###############################################
    CONFIGURACION DEL TEMA
    ###############################################
    */
- 
- angular.element(document).ready(function () {
-    $('#carga_inicial').openModal();
-     console.info("cargo controlador principal");
+
+  angular.element(document).ready(function () {
+    //$('#carga_inicial').openModal();
+    console.info("cargo controlador principal");
   });
 
   if (localStorage.getItem("tema") === null) {
@@ -44,19 +122,20 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
 
   $scope.color_menu = datos_tema.color_menu;
   $scope.color_sidebar = datos_tema.color_sidebar;
-  /*
-   $scope.$on('$locationChangeStart', function( event ) {
-   var answer = confirm("Are you sure you want to leave this page?")
-   if (!answer) {
-   event.preventDefault();
-   }
-   });
-   */
+
+
+  $scope.$on('$locationChangeStart', function (event) {
+    console.warn("se recargo el navegador");
+    /*var answer = confirm("Desea salir del sistema?");
+     if (!answer) {
+     event.preventDefault();
+     }
+     */
+  });
+
 
   // funcion se ejecuta cada vez que ingreso algun modulo
   $scope.verificar_session = function () {
-
-
 
     var request = $.ajax({
       url: "../librerias/session_usuario.php",
@@ -145,8 +224,6 @@ app.controller('valida_usuario', function ($scope, cargar_servicios) {
     $(document).keypress(operaEvento);
   }
 
-
-
   /**
    * MENSAJES DE RESPUESTA
    */
@@ -227,12 +304,7 @@ app.controller('ingreso', function ($scope, cargar_servicios) {
               if (msg.success) {
 
                 Materialize.toast("Exitoso" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
-
-
                 //setTimeout("window.print()" , 5000);
-
-
-
 
               } else {
                 Materialize.toast("Error" + "<a class='btn-flat red-text'  >X<a>", 5000);
@@ -273,15 +345,20 @@ app.controller('login', function ($scope, cargar_servicios) {
 
             .success(function (msg) {
 
-              if (msg == 'exitoso') {
-                console.clear();
+
+              localStorage.setItem('session_sistema', JSON.stringify(msg));
+
+              if (msg.success) {
+                //console.clear();
                 console.log("ingreso al sistema");
                 // remueve el menu inferio del fullpage
                 $('#fp-nav').remove();
                 // remueve el efecto overflow de fullpage
                 $("html, body").removeAttr('style');
+                $("html, body").css("overflow", "auto");
+                // redigie al ingreso
                 window.location = '#modulos/ingreso';
-                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg + "</span>", 4000);
+                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg.usuario + "</span>", 4000);
 
               } else {
                 Materialize.toast("VERIFICAR LOS DATOS" + "<a class='btn-flat red-text' > Error <a>", 4000);
@@ -311,7 +388,7 @@ app.controller('login', function ($scope, cargar_servicios) {
 
               if (msg.success) {
 
-                formulario_recordar_clave
+
                 Materialize.toast("SE CAMBIO CLAVE" + "<span class='btn-flat green-text' >" + msg.suceso + "</span>", 4000);
                 $('#' + modal).closeModal();
 
