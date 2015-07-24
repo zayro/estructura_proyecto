@@ -91,6 +91,8 @@
       @media print {
         header, footer{ display:none;}
       }
+      
+      .material-icons.md-120 { font-size: 120px; }
 
 
 
@@ -143,8 +145,12 @@
               <li ng-class="color_sidebar" class="center-align "   style="padding:20px;">
                 <h5>{{select_session_usuario.usuario| uppercase }}</h5>
                 <div class="row ">
-                  <div class="col s12 m12 l12" >
-                    <img class="circle responsive-img " ng-src="img/usuarios/{{select_session_usuario.imagen}}" alt="imagen usuario" >
+                  <div class="col s12 m12 l12" >                    
+                    <img class="circle responsive-img " 
+                         ng-show="select_session_usuario.imagen" 
+                         ng-if="select_session_usuario.imagen != '' ? select_session_usuario.imagen : 'user.svg'" 
+                         ng-src="{{'img/usuarios/'+select_session_usuario.imagen}}" alt="imagen usuario" >
+                    <div ng-hide="select_session_usuario.imagen" class="circle white-text "  > <i class="material-icons md-120">face</i></div>
                   </div>
                   <div class="col s12 m12 l12">
                     <h6>{{select_session_usuario.nombre_grupo| uppercase }}</h6>

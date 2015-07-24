@@ -62,8 +62,6 @@ $(document).ready(function () {
 });
 
 
-
-
 $(window).load(function () {
   console.log("se terminod de cargar la pagina");
   //$('#carga_inicial').closeModal();
@@ -81,8 +79,6 @@ console.time("carga total pagina");
 
 
 console.timeEnd("carga total pagina");
-
-
 
 
 /*
@@ -370,6 +366,7 @@ app.controller('login', function ($scope, cargar_servicios) {
   cargar_servicios.select_combo_empresas().success(function (data) {
     $scope.combo_empresas = data;
   });
+  
   $scope.enviar_formulario_login = function () {
     var valor_url = "modulos/logueo/login.php";
     var valor_metodo = "POST";
@@ -382,7 +379,8 @@ app.controller('login', function ($scope, cargar_servicios) {
 
               localStorage.setItem('session_sistema', JSON.stringify(msg));
 
-              if (msg.success) {
+              if (msg.success)
+              {
                 //console.clear();
                 console.log("ingreso al sistema");
                 // remueve el menu inferio del fullpage
@@ -391,10 +389,11 @@ app.controller('login', function ($scope, cargar_servicios) {
                 $("html, body").removeAttr('style');
                 $("html, body").css("overflow", "auto");
                 // redigie al ingreso
-                window.location = '#modulos/ingreso';
+                window.location = '#modulo/ingreso/';
                 Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg.usuario + "</span>", 4000);
-
-              } else {
+              } 
+              else
+              {
                 Materialize.toast("VERIFICAR LOS DATOS" + "<a class='btn-flat red-text' > Error <a>", 4000);
               }
 

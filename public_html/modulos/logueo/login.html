@@ -1,8 +1,5 @@
 <style>
-
-  .logo_svg{   text-align: center; margin: 0px auto; margin-top: 35px; }
-  .centrar{text-align: center; margin: 0px auto; }
-
+  .margen{ margin:  50px 10px 10px 20px; }
 </style>
 
 <div id="fullpage" ng-controller="login">
@@ -24,18 +21,13 @@
           <div class="col s12 ">
             <div class="card  ">
 
-
-
-
-
-              <div class="col s12 m12 l12 center-align centrar">
+              <div class="col s12 m12 l12 center-align">
 
                 <object  data="img/logo.svg" type="image/svg+xml" class="responsive-img logo_svg"> </object>  
 
               </div>                  
 
               <span class=" card-title grey-text text-darken-2 col s12  center-align centrar"> Inicia sesión </span>        
-
 
 
               <div class="card-content" >  
@@ -72,14 +64,10 @@
 
               <div class="card-action">
 
-
-
                 <div class="center-align col s12 m12 l12">
                   <button type="submit" class=" col s12 l12 waves-effect waves-light btn  green darken-3 white-text">Acceder</button>
                 </div>
-
-
-
+                
                 <div class="center-align col s6 m6 l16">
                   <a class="col s12 l12 waves-effect waves-light btn-flat  black-text text-darken-4 " onclick="$('#olvido_clave').openModal();">
                     <i class="small mdi-communication-email  blue-grey-text"></i> <span class="hide-on-small-only">¿ olvido su clave ? </span> </a>
@@ -89,8 +77,6 @@
                   <a class="col s12 l12 waves-effect waves-light btn-flat black-text text-darken-4 modal-trigger" onclick="$('#cambio_clave').openModal();">
                     <i class="small mdi-communication-vpn-key  blue-grey-text"></i> <span class="hide-on-small-only">cambio de clave </span> </a>
                 </div>
-
-
 
               </div>
 
@@ -104,24 +90,39 @@
 
       <!--
     /**
+    *#########################
     * SEGUIR CONECTADO
+    *#########################
     */
       -->
-      <div class="row" ng-show="select_session_usuario.identificacion">
-        <div class="col s12 ">
-          <div class="card z-depth-2 ">
+      <div class="row margen" ng-show="select_session_usuario.identificacion">
+        <div class="col s12 ">          
+          <div class="card">
+
             <div class="card-image waves-effect waves-block waves-light" >
 
-              <p><img class="activator" src="img/logo_negro.svg" width="100" height="100"></p>
+              <div class="col s12 m12 l12 center-align">
+                
+                <img class="circle responsive-img " 
+                     ng-show="select_session_usuario.imagen" 
+                     ng-if="select_session_usuario.imagen != '' ? select_session_usuario.imagen : 'user.svg'" 
+                     ng-src="{{'img/usuarios/'+select_session_usuario.imagen}}" alt="imagen usuario" />
+
+                <div ng-hide="select_session_usuario.imagen" class="circle black-text center-align"  > 
+                  <i class="material-icons md-120">face</i>
+                </div>
+              </div>
 
             </div>
+            
+            
 
             <div>
-              <span class="col s12 card-title grey-text text-darken-2 center-align "> {{select_session_usuario.usuario}} </span>        
+              <span class="col s12 card-title grey-text text-darken-2 center-align "> LOGIN: {{select_session_usuario.usuario}} </span>        
             </div>
 
-            <div class="card-content " >  
-
+           <div class="card-content " >  
+si desea continuar la session dale seguir de lo contrario dale salir
             </div>
 
             <div class="card-action">
@@ -132,10 +133,11 @@
 
               <div class="center-align col s6 l6 ">
                 <a onclick="$('#fp-nav').remove();
-                            $('html, body').removeAttr('style');" href="#/modulos/ingreso" class=" col s12 waves-effect waves-light btn green white-text">Seguir</a>
+                            $('html, body').removeAttr('style');" href="#/modulo/ingreso" class=" col s12 waves-effect waves-light btn green white-text">Seguir</a>
               </div>
 
             </div>
+            
           </div>
         </div>
 
