@@ -35,11 +35,11 @@ abstract class datos {
     $this->bdd = '';
   }
 
-  protected function billar() {
+  protected function billar($bdd) {
     $this->servidores = 'localhost:3306';
     $this->usuarios = 'zayro';
     $this->claves = 'zayro2014';
-    $this->bdd = 'billar';
+    $this->bdd = $bdd;
   }
 
   protected function parqueadero() {

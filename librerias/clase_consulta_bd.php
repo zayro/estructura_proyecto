@@ -22,6 +22,9 @@ class consulta_bd extends conexion {
    */
   public $guardar_registros = array();
 
+  /**
+   * CONSTRUCTOR DE LA CLASE CONSULTA_BD
+   */
   function consulta_bd() {
     conexion::conexiones();
   }
@@ -69,11 +72,18 @@ class consulta_bd extends conexion {
     return $items;
   }
   
-    function consulta_json($sql) {
+  /**
+   * DEVUELVE UNA CONSULTA JSON
+   * @param type $sql
+   * @return type
+   * @throws Exception
+   */
+  function consulta_json($sql) {
 
-   conexion::cabecera_json();
+    conexion::cabecera_json();
     #MOSTRAR EL MENSAJE EN JSON   
-    
+
+
 
     $resultado_json = $this->consulta($sql);
 
@@ -83,9 +93,12 @@ class consulta_bd extends conexion {
       throw new Exception("ERROR: $sql");
     }
 
-
-   $row = $resultado_json->fetch_object();
-
+    if ($resultado_json->num_rows > 0) {
+      $row = $resultado_json->fetch_object();
+      $row->registros_encontrado = $resultado_json->num_rows;
+    }else{
+    $row['registros_encontrado'] = '0';    
+    }
     # iberar el conjunto de resultados
     $resultado_json->close();
 

@@ -5,7 +5,7 @@ include '../../libreria_php/clase.php';
 
 $conexion = new clase();
 $conexion->local();
-$conexion->conectar();
+$objeto->conectar_billar($_SESSION['empresa']);
 
 
 $rs = $conexion->mysqli->query("SELECT

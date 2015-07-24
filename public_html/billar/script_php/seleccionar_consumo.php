@@ -4,7 +4,7 @@ extract($_REQUEST);
 
 include '../../../librerias/clase_consulta_bd.php';
 $objeto = new consulta_bd();
-$objeto->conectar_billar();
+$objeto->conectar_billar($_SESSION['empresa']);
 
 
 $sql = "SELECT

@@ -109,9 +109,9 @@ class conexion extends datos {
    *  
    * @return boolean
    */
-  function conectar_billar() {
+  function conectar_billar($bdd) {
     $validar_conexion = false;
-    $this->billar();
+    $this->billar($bdd);
     if ($this->conectar() == 'conectado') {
       array_push($this->resultado_conexion, $this->conectar() . ' billar');
       $validar_conexion = true;

@@ -7,89 +7,10 @@
 
 var app = angular.module('aplicativo_billar', []);
 
+var storage = localStorage.getItem("session_sistema");
+var datos_session = JSON.parse(storage);
 
-/*
- ###############################################
- INICIA FILTROS
- ###############################################
- */
-
-
-app.filter('filtro_sumatoria', function () {
-
-  return function (data, key) {
-
-    if (angular.isUndefined(data)) {
-      return 0;
-    } else {
-
-
-      if (typeof (data) === 'undefined' && typeof (key) === 'undefined') {
-
-        return 0;
-
-      } else {
-
-
-        var sum = 0;
-
-        for (var i = 0; i < data.length; i++) {
-
-          sum = (sum + parseInt(data[i][key]));
-
-        }
-
-//debugger;
-
-        if (sum == 'undefined') {
-          return 0;
-        } else {
-          return sum;
-        }
-
-      }
-    }
-  };
-
-});
-
-
-app.filter('filtro_multiplicar', function () {
-
-
-  return function (data, key1, key2) {
-
-
-    if (angular.isUndefined(data)) {
-      return 0;
-    } else {
-
-
-
-      if (typeof (data) === 'undefined' && typeof (key1) === 'undefined' && typeof (key2) === 'undefined') {
-        return 0;
-      } else {
-
-        var sum = 0;
-
-        for (var i = 0; i < data.length; i++) {
-
-          sum = (sum + parseInt((data[i][key1] * data[i][key2])));
-
-        }
-
-        if (sum == 'undefined') {
-          return 0;
-        } else {
-          return sum;
-        }
-      }
-
-    }
-  };
-
-});
-
+var empresa = 'empresa', valor = datos_session.empresa;
 /*
  ###############################################
  INICIA RUTAS
@@ -155,6 +76,7 @@ app.service('cargar_registros', function ($http) {
 
   };
 
+
   this.tabla_ubicacion = function () {
 
     return $http.get('billar/script_php/combo_id_ubicacion.php');
@@ -189,17 +111,17 @@ app.service('cargar_registros', function ($http) {
 
 app.controller('controlador_billar', function ($scope, $http, cargar_registros) {
 
-angular.element(document).ready(function () {
+  angular.element(document).ready(function () {
 
-  console.log('cargo aplicativo billar');
-});
+    console.log('cargo aplicativo billar');
+  });
 
   var sync_datos_billar = new Firebase('https://billar.firebaseio.com/connected');
 
   sync_datos_billar.on('value', function (snap) {
+
     if (snap.val() === true) {
       console.log("desconectado a fire base ");
-
 
       var con = sync_datos_billar.push(true);
       // when I disconnect, remove this device
@@ -210,6 +132,7 @@ angular.element(document).ready(function () {
       console.log("conectado a fire base ");
 
       // var sync_datos_billar = new Firebase('https://billar.firebaseio.com/');
+
 
 
 
@@ -260,7 +183,10 @@ angular.element(document).ready(function () {
 
             .success(function (data) {
 
-              sync_datos_billar.update({actualizar: {evento: data}}, $scope.recargar());
+
+              var objeto = {empresas: {evento: data, empresa: valor}};
+
+              sync_datos_billar.update(objeto, $scope.recargar());
 
               cargar_registros.tabla_estado()
                       .success(function (data) {
@@ -332,7 +258,10 @@ angular.element(document).ready(function () {
 
             .success(function (data) {
 
-              sync_datos_billar.update({actualizar: {evento: data}}, $scope.recargar());
+
+              var objeto = {empresas: {evento: data, empresa: valor}};
+
+              sync_datos_billar.update(objeto, $scope.recargar());
 
               cargar_registros.tabla_estado()
                       .success(function (data) {
@@ -384,7 +313,7 @@ angular.element(document).ready(function () {
 
             .success(function (data) {
 
-              sync_datos_billar.update({actualizar: {evento: data}}, $scope.recargar());
+              sync_datos_billar.update({empresa: {evento: data}}, $scope.recargar());
 
               $('#' + id_formulario).trigger("reset");
 

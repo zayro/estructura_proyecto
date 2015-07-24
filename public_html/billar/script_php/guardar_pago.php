@@ -5,7 +5,7 @@ extract($_REQUEST);
 include '../../../librerias/clase_procesos_bd.php';
 
 $objeto = new procesos_bd();
-$objeto->conectar_billar();
+$objeto->conectar_billar($_SESSION['empresa']);
 
 $sql1 = "UPDATE consumo set estado = 1 where id_tiempo = '$id';";
 $sql2 = "UPDATE tiempo set estado = 1, salida = now() where id = '$id';";

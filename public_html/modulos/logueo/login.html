@@ -54,6 +54,17 @@
                     <input name="clave"  id="clave" type="password" pattern=".{5,}" class="validate" required title="DIGITE SU CLAVE MINIMO 5 CARACTERES" >
 
                   </div>
+
+                  <div class="input-field col s12">
+
+                    
+                    
+                    <select name="empresa" id="empresa" class="browser-default">
+                      <option value="" disabled selected>SELECCIONAR EMPRESA</option>
+                      <option  ng-repeat="contenido_empresas in combo_empresas" value="{{contenido_empresas.id}}">{{contenido_empresas.nombre}}</option>
+                    </select>
+                  </div>
+
                 </div>
 
 
@@ -67,22 +78,7 @@
                   <button type="submit" class=" col s12 l12 waves-effect waves-light btn  green darken-3 white-text">Acceder</button>
                 </div>
 
-                <div class="center-align col s12 m12 l12">
 
-                  <span id="signinButton">
-                    <span
-                      class="g-signin"
-                      data-callback="oauth2callback"                      
-                      data-clientid="903616966895-2crc44t103bopqlv9q9ob92qmmpjvahp.apps.googleusercontent.com"
-                      data-cookiepolicy="single_host_origin"
-                      data-requestvisibleactions="http://schemas.google.com/AddActivity"                      
-                      data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
-                      >
-                    </span>                    
-                  </span>
-
-
-                </div>
 
                 <div class="center-align col s6 m6 l16">
                   <a class="col s12 l12 waves-effect waves-light btn-flat  black-text text-darken-4 " onclick="$('#olvido_clave').openModal();">
@@ -136,7 +132,7 @@
 
               <div class="center-align col s6 l6 ">
                 <a onclick="$('#fp-nav').remove();
-                            $('html, body').removeAttr('style');" href="#modulos/ingreso" class=" col s12 waves-effect waves-light btn green white-text">Seguir</a>
+                            $('html, body').removeAttr('style');" href="#/modulos/ingreso" class=" col s12 waves-effect waves-light btn green white-text">Seguir</a>
               </div>
 
             </div>

@@ -33,6 +33,10 @@ app.service('cargar_servicios', function ($http) {
   this.select_menu = function () {
     return $http.get('modulos/menu/select_menu.php');
   };
+  
+  this.select_combo_empresas = function () {
+    return $http.get('modulos/logueo/combo_empresas.php');
+  };
 
 
 

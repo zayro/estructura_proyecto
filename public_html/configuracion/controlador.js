@@ -91,13 +91,20 @@ console.timeEnd("carga total pagina");
  ###############################################
  */
 
-app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, $http, cargar_servicios) {
+app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $log, $http, cargar_servicios) {
 
   /*
    ###############################################
    CONFIGURACION INICIO SESSION GOOGLE
    ###############################################
    */
+
+  $scope.$route = $route;
+  $scope.$location = $location;
+  $scope.$routeParams = $routeParams;
+
+
+
 
 // Register the callback to be fired every time auth state changes
   var ref = new Firebase("https://estructuraproyecto.firebaseio.com");
@@ -115,17 +122,18 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
   if (localStorage.getItem("tema") === null) {
     var tema = {'color_menu': 'blue-grey darken-4', 'color_sidebar': 'grey darken-3'};
     localStorage.setItem('tema', JSON.stringify(tema));
-  }
 
+  }
   var storage_tema = localStorage.getItem("tema");
   var datos_tema = JSON.parse(storage_tema);
-
   $scope.color_menu = datos_tema.color_menu;
   $scope.color_sidebar = datos_tema.color_sidebar;
 
 
+
   $scope.$on('$locationChangeStart', function (event) {
     console.warn("se recargo el navegador");
+    console.clear();
     /*var answer = confirm("Desea salir del sistema?");
      if (!answer) {
      event.preventDefault();
@@ -148,18 +156,43 @@ app.controller('AppCtrl', function ($scope, $timeout, $window, $location, $log, 
 
     request.done(function (data) {
 
-      console.info("DATOS DE SESSION: %O", data);
-
-      cargar_servicios.set_validar_session(data);
-
-
-      $scope.select_session_usuario = cargar_servicios.validar_session();
+      $scope.select_session_usuario = data;
 
       var identificacion = $scope.select_session_usuario.identificacion;
+      var storage = localStorage.getItem("session_sistema");
+      var datos_session = JSON.parse(storage);
 
+      var valida_modulo = $.ajax({
+        url: "modulos/logueo/select_permisos.php",
+        method: "post",
+        data: {modulo_actual: '#' + $location.path()},
+        dataType: "json",
+        beforeSend: function () {
+          console.log('se enviaran los datos para verificar modulo');
+        }
+      });
+      
+      console.log('#' + $location.path());
 
-      if (identificacion == "" || typeof identificacion === 'undefined' || !identificacion) {
+      valida_modulo.done(function (data) {
+        if (data.registros_encontrado == 0) {
+          // verifica los permisos de ingreso al modulo
+          window.location = "#/login/";
+        }
+      });
 
+      valida_modulo.fail(function (jqXHR, textStatus) {
+        console.error("Error: ");
+        console.error(textStatus);
+        console.error(jqXHR);       
+      });
+
+      if (
+              identificacion == "" ||
+              typeof identificacion === 'undefined' ||              
+              datos_session.empresa != $scope.select_session_usuario.empresa
+
+              ) {
 
         window.location = "#/login/";
 
@@ -224,9 +257,7 @@ app.controller('valida_usuario', function ($scope, cargar_servicios) {
     $(document).keypress(operaEvento);
   }
 
-  /**
-   * MENSAJES DE RESPUESTA
-   */
+
   function isOnline() {
     console.info("En Linea: INTERNET");
     Materialize.toast("Se conecto " + "<span class='btn-flat green-text' >Internet</span>", 40000);
@@ -276,7 +307,7 @@ app.controller('valida_usuario', function ($scope, cargar_servicios) {
   }
 
   // al controlador principal le digo que revice  si existe una session vigente
-  $scope.$emit('update_parent_controller', 'ingreso');
+  $scope.$emit('update_parent_controller', 'valida_ingreso');
 
   console.groupEnd();
 });
@@ -336,6 +367,9 @@ app.controller('login', function ($scope, cargar_servicios) {
 
   console.info("ingreso al controlador login");
 
+  cargar_servicios.select_combo_empresas().success(function (data) {
+    $scope.combo_empresas = data;
+  });
   $scope.enviar_formulario_login = function () {
     var valor_url = "modulos/logueo/login.php";
     var valor_metodo = "POST";
