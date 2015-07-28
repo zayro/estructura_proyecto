@@ -2,8 +2,9 @@
 
 include '../../../librerias/clase_consulta_bd.php';
 $objeto = new consulta_bd();
+extract($_REQUEST);
 
-if(extract($_REQUEST)){
+if(isset($_SESSION['grupo'])){
 
 $result = $objeto->consulta_json("SELECT
 menu.id AS id_menu,
@@ -27,6 +28,11 @@ submenu_1.modulo = '$modulo_actual'
 OR submenu_2.modulo = '$modulo_actual')
 ");
 
-echo json_encode($result);
+
+}else{
+$result = array("success"=>false);  
+  
 }
+
+echo json_encode($result);
 ?>
