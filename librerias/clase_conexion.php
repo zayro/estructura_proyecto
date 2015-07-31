@@ -153,7 +153,7 @@ class conexion extends datos {
    *  
    * @return boolean
    */
-  function conectar_parqueadero() {
+  function conectar_parqueadero($bdd) {
     $validar_conexion = false;
     $this->parqueadero();
     if ($this->conectar() == 'conectado') {

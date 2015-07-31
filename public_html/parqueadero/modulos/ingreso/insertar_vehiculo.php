@@ -6,7 +6,7 @@
 include '../../../../librerias/clase_procesos_bd.php';
 
 $objeto = new procesos_bd();
-$objeto->conectar_parqueadero();
+$objeto->conectar_parqueadero($_SESSION['empresa']);
 
 
 try{

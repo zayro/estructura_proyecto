@@ -4,9 +4,12 @@ include '../../../librerias/clase_consulta_bd.php';
 $objeto = new consulta_bd();
 extract($_REQUEST);
 
-if(isset($_SESSION['grupo'])){
 
-$result = $objeto->consulta_json("SELECT
+ 
+if(isset($_SESSION['grupo']) and isset($_SESSION['identificacion']) and isset($modulo_actual) ){
+  
+  $result = array();
+$consulta = "SELECT
 menu.id AS id_menu,
 menu.nombre AS menu,
 submenu_1.nombre AS submenu1,
@@ -25,12 +28,16 @@ grupo.id = '".$_SESSION['grupo']."'
 AND u.identificacion = '".$_SESSION['identificacion']."'
 AND (
 submenu_1.modulo = '$modulo_actual'
-OR submenu_2.modulo = '$modulo_actual')
-");
-
+OR submenu_2.modulo = '$modulo_actual')";
+ 
+$result[] = $objeto->consulta_json($consulta);
+$result['success'] = true;
+$result['sql'] = $consulta;
 
 }else{
-$result = array("success"=>false);  
+$result['success'] = false;
+
+
   
 }
 

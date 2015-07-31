@@ -3,9 +3,7 @@
 
   <head>
 
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Desarrollo Android Web">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">    
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
@@ -21,6 +19,7 @@
 
     <meta name="robots" content="INDEX,FOLLOW">
     <meta name="author" content="MARLON ZAYRO ARIAS VARGAS">
+    <meta name="description" content="Desarrollo Android Web">
 
 
     <meta charset="UTF-8">
@@ -40,19 +39,19 @@
     <!-- Enlaces Google+ --> 
     <link rel="author" href="https://plus.google.com/u/0/+ZayroArias/posts"/>
     <link rel="publisher" href="https://plus.google.com/+ZayroArias"/>
-
-
-
-
-    <!-- Compiled and minified CSS -->
-    <link rel="manifest" href="manifest.json">
-
+    
+    <!-- Loader inicial -->
+    <script src="../componentes/pace-1.0.2/pace.min.js" ></script>
+ 
+    <link href="../componentes/pace-1.0.2/themes/yellow/pace-theme-barber-shop.css" rel="stylesheet" />
+  
+    <!-- Full Page -->
     <link  href="../componentes/fullPage.js-master/jquery.fullPage.css" type="text/css" rel="stylesheet" />
 
-
-
-
+   <!-- Angular Animate -->
     <link type="text/css" rel="stylesheet" href="../componentes/angular-ui/animate.css" media="screen, projection" /> 
+    
+     <!-- Fuente e Iconos -->
     <link type="text/css" rel="stylesheet" href="../componentes/fuentes/fuentes.css" /> 
     <link type="text/css" rel="stylesheet" href="../componentes/fuentes/icon.css" />
 
@@ -64,6 +63,7 @@
 
     <!-- Material Design Tema -->
     <link type="text/css" rel="stylesheet" href="../componentes/materialize-v0.97.0/css/materialize.min.css">
+    
     <style>
 
       @media screen{
@@ -72,6 +72,8 @@
           min-height: 100vh;
           flex-direction: column;
         }
+        
+        button { margin-bottom: 10px; }
 
         main {
           flex: 1 0 auto;
@@ -85,6 +87,8 @@
         .titulo_encabezado{
           font-family: 'Open Sans 300';
         }
+        
+         .logo_sidebar{ margin-bottom: 30px; margin-top: 10px; }
 
       }
 
@@ -92,7 +96,7 @@
         header, footer{ display:none;}
       }
       
-      .material-icons.md-120 { font-size: 120px; }
+      .material-icons.md-120 { font-size: 120px;  }
 
 
 
@@ -104,13 +108,14 @@
   <body ng-controller="AppCtrl" >
 
     <header ng-show="select_session_usuario.identificacion" ng-swipe-right="mostrar_menu();" ng-swipe-left="ocultar_menu();">
+      
       <div class="navbar-fixed">
-        <nav ng-class="color_menu">
+        
+        <nav class="teal darken-1" ng-class="color_menu">
 
           <div class="nav-wrapper">
 
             <a class="brand-logo titulo_encabezado"> &nbsp; SISTEMATIZADO  </a>
-
 
             <!-- BARRA FRONTAL DERECHA -->
             <ul class="right hide-on-med-and-down">
@@ -127,7 +132,7 @@
               <li>{{select_session_usuario.usuario| uppercase }}</li>
               <li><a class="abrir menu " ng-click="mostrar_menu();"><i class="small mdi-action-account-box"></i></a></li>
               <li><a class="abrir menu" onclick=" $('#modal_menu').openModal();"><i class=" tiny mdi-action-view-headline"></i></a></li>
-              <li><a class="abrir menu " href="../librerias/session_salir.php"><i class="small mdi-action-settings-power"></i></a></li>
+              <li><a class="abrir menu " href="../librerias/session_salir.php" ><i class="small mdi-action-settings-power"></i></a></li>
 
 
             </ul>
@@ -146,11 +151,11 @@
                 <h5>{{select_session_usuario.usuario| uppercase }}</h5>
                 <div class="row ">
                   <div class="col s12 m12 l12" >                    
-                    <img class="circle responsive-img " 
+                    <img class=" responsive-img  circle" 
                          ng-show="select_session_usuario.imagen" 
                          ng-if="select_session_usuario.imagen != '' ? select_session_usuario.imagen : 'user.svg'" 
                          ng-src="{{'img/usuarios/'+select_session_usuario.imagen}}" alt="imagen usuario" >
-                    <div ng-hide="select_session_usuario.imagen" class="circle white-text "  > <i class="material-icons md-120">face</i></div>
+                    <div ng-hide="select_session_usuario.imagen" class="circle white-text "  > <i class="material-icons md-120 logo_sidebar">face</i></div>
                   </div>
                   <div class="col s12 m12 l12">
                     <h6>{{select_session_usuario.nombre_grupo| uppercase }}</h6>
@@ -205,7 +210,7 @@
     </header>
 
 
-    <main >
+    <main>
 
       <div class="contenedor">
 
@@ -320,41 +325,6 @@
     </div>
 
 
-    <!--  Recarga de Pagina -->
-    <div id="carga_inicial" class="modal">
-      <div class="modal-content">
-
-
-        <h3 class="center-align " > Cargando ... !!  </h3>
-        <h6>con la conexion al servidor comunicarse con el administrador web</h6>
-
-        <div class="center-align">
-          <div class="preloader-wrapper big active">
-
-
-            <div class="spinner-layer spinner-red-only">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-            </div>
-
-
-
-
-          </div>
-        </div>      
-      </div>
-      <div class="modal-footer">
-        <a  class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
-      </div>
-    </div>
-
-
-
     <!-- Jquery Plugins -->
     <script src="../componentes/jquery/jquery-2.1.1.min.js"></script>
 
@@ -367,10 +337,18 @@
     <!-- notificaciones messi -->
     <script src="../componentes/messi-js/messi.min.js"></script>
 
-    <!-- fullPage -->
+ 
+    
+    
+    <!-- Manejo Fechas Js -->
+    <script src="../componentes/time-js/moment-with-locales.js" ></script>
+    
+    <!-- Dom Jquery -->
+    <script src="js/jquery.estructura.js" type="text/javascript"></script>  
+    
+       <!-- fullPage -->    
     <script src="../componentes/fullPage.js-master/jquery.slimscroll.js" type="text/javascript"></script>
     <script src="../componentes/fullPage.js-master/jquery.fullPage.js" type="text/javascript"></script>
-
 
     <!-- Angular  Dependencies -->
     <script src="../componentes/angular-1.4.3/angular.min.js"></script>
@@ -382,22 +360,19 @@
 
     <!-- Angular  Modulos  -->
     <script src="../componentes/angular-ui/angular-locale_es-es.js"></script>
-    <script src="../componentes/angular-ui/angular-filter.js"></script>      
-
+    <script src="../componentes/angular-ui/angular-filter.js"></script>
 
     <!-- Angular Configuracion -->
     <script src="configuracion/app.js" ></script>   
-    <script src="configuracion/filtros.js"></script>  
-    <!-- Api -->
+    <script src="configuracion/filtros.js"></script>
+    
+    <!-- Api billar -->
     <script src="billar/configuracion/todo.js" ></script>
-    <script src="parqueadero/configuracion/todo.js" ></script>
     
+    <!-- Api parqueadero -->
+    <script src="parqueadero/configuracion/todo.js" ></script> 
     
-    <!-- Dom Jquery -->
-    <script src="js/jquery.estructura.js" type="text/javascript"></script>
-   
-    
- 
+
     
   </body>
 

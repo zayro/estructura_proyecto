@@ -24,11 +24,11 @@ app.config(['$routeProvider',
               templateUrl: 'parqueadero/modulos/ingreso/ingreso.html',
               controller: 'valida_usuario'
             }).
-            when('/parqueadero/modulo/panel_salida', {
+            when('/parqueadero/modulo/panel_salida/', {
               templateUrl: 'parqueadero/modulos/ingreso/salida.html',
               controller: 'valida_usuario'
             }).
-            when('/parqueadero/modulo/panel_parqueadero', {
+            when('/parqueadero/modulo/panel_parqueadero/', {
               templateUrl: 'parqueadero/modulos/ingreso/parqueadero.html',
               controller: 'valida_usuario'
             }).

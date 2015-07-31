@@ -40,15 +40,46 @@ class manejo_carpetas {
 
   /**
    * 
+   * @param type $archivo
+   * @return boolean
+   */
+  public function eliminar_archivo($archivo) {
+    if (!unlink($archivo)) {
+      return "ocurrio un problema $archivo";
+    } else {
+      return true;
+    }
+  }
+
+  /**
+   * 
    * @param type $ruta
-   * @return type
    */
   public function eliminar_carpeta($ruta) {
     if (is_dir($ruta)) {
       rmdir($ruta);
     } else {
-      return "no existe la ruta: " . $ruta;
+      echo "no existe la ruta: " . $ruta;
     }
+  }
+
+  /**
+   * 
+   * @param type $carpeta
+   */
+  public function eliminar_contenido_carpeta($carpeta) {
+    foreach (glob($carpeta . "/*") as $archivos_carpeta) {
+#archivos a eliminar	
+//echo $archivos_carpeta;
+
+      if (is_dir($archivos_carpeta)) {
+        eliminar_contenido_carpeta($archivos_carpeta);
+      } else {
+        unlink($archivos_carpeta);
+      }
+    }
+
+    rmdir($carpeta);
   }
 
   /**
@@ -56,7 +87,7 @@ class manejo_carpetas {
    * @param type $ruta
    * @return array
    */
-  function ver_carpeta($ruta) {
+  public function ver_carpeta($ruta) {
     $registros = array();
     $nombre = array();
 

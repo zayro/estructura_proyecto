@@ -42,11 +42,11 @@ abstract class datos {
     $this->bdd = $bdd;
   }
 
-  protected function parqueadero() {
+  protected function parqueadero($bdd) {
     $this->servidores = 'localhost:3306';
     $this->usuarios = 'zayro';
     $this->claves = 'zayro2014';
-    $this->bdd = 'parqueadero';
+    $this->bdd = '';
   }
 
   protected function cabecera_cors() {

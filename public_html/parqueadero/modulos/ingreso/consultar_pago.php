@@ -3,7 +3,7 @@
 
 include "../../../../librerias/clase_consulta_bd.php";
 $objeto = new consulta_bd();
-$objeto->conectar_parqueadero();
+$objeto->conectar_parqueadero($_SESSION['empresa']);
 
 if (extract($_REQUEST)) {
 

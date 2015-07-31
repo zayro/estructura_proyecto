@@ -7,10 +7,28 @@
 
 var app = angular.module('aplicativo_billar', []);
 
-var storage = localStorage.getItem("session_sistema");
-var datos_session = JSON.parse(storage);
+var sync_datos_billar = new Firebase('https://billar.firebaseio.com/connected');
 
-var empresa = 'empresa', valor = datos_session.empresa;
+  sync_datos_billar.on('value', function (snap) {
+
+    if (snap.val() === true) {
+      Firebase.goOffline();
+      console.error("desconectado a fire base ");
+
+      var con = sync_datos_billar.push(true);
+      // when I disconnect, remove this device
+      con.onDisconnect().remove();
+
+    } else
+    {
+      console.info("conectado a fire base ");    
+
+    }
+  });
+  
+ 
+
+
 /*
  ###############################################
  INICIA RUTAS
@@ -116,28 +134,7 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
     console.log('cargo aplicativo billar');
   });
 
-  var sync_datos_billar = new Firebase('https://billar.firebaseio.com/connected');
 
-  sync_datos_billar.on('value', function (snap) {
-
-    if (snap.val() === true) {
-      console.log("desconectado a fire base ");
-
-      var con = sync_datos_billar.push(true);
-      // when I disconnect, remove this device
-      con.onDisconnect().remove();
-
-    } else
-    {
-      console.log("conectado a fire base ");
-
-      // var sync_datos_billar = new Firebase('https://billar.firebaseio.com/');
-
-
-
-
-    }
-  });
 
   sync_datos_billar.on('child_changed', function (snapshot) {
     $scope.recargar();

@@ -127,7 +127,8 @@ $(document).ready(function () {
    */
 
   console.info("activando manejador");
-  navigator.registerProtocolHandler("web+zav", "http://localhost/estructura_proyecto/?uri=%s", "manejador zav");
+  if(navigator.registerProtocolHandler){navigator.registerProtocolHandler("web+zav", "http://localhost/estructura_proyecto/?uri=%s", "manejador zav");}
+  
 
   /*
    * ########################################

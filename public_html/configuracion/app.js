@@ -1,12 +1,12 @@
 /*
-###############################################
-INICIA APP
-###############################################
-*/
+ ###############################################
+ INICIA APP
+ ###############################################
+ */
 
 "use strict";
 
-var app = angular.module('app', ['ngRoute', 'ngSanitize',  'ngLocale', 'ngTouch',  'aplicativo_billar', 'aplicativo_parqueadero']);
+var app = angular.module('app', ['ngRoute', 'ngSanitize', 'ngLocale', 'ngTouch', 'aplicativo_billar', 'aplicativo_parqueadero']);
 
 
 angular.element(document).ready(function () {
@@ -21,13 +21,12 @@ angular.element(document).ready(function () {
  ###############################################
  */
 
-
 app.service('cargar_servicios', function ($http) {
 
   this.http_respuesta = function (valor_url, valor_metodo, valor_formulario) {
 
     console.log('url: ' + valor_url + ' datos: ' + valor_formulario);
-    
+
     return $http({
       method: valor_metodo,
       url: valor_url,
@@ -48,7 +47,7 @@ app.service('cargar_servicios', function ($http) {
   this.select_menu = function () {
     return $http.get('modulos/menu/select_menu.php');
   };
-  
+
   this.select_combo_empresas = function () {
     return $http.get('modulos/logueo/combo_empresas.php');
   };
@@ -96,20 +95,19 @@ app.config(['$routeProvider',
   }]);
 
 /*
-###############################################
-INICIA DIRECTIVA
-###############################################
-*/
+ ###############################################
+ INICIA DIRECTIVA
+ ###############################################
+ */
 
-
-app.directive("fragmentoEntrada", function() {
-return {
-restrict: 'E',
-templateUrl: "modulos/logueo/entrada.html",
-link: function (scope, elemento, atributos){
-}
+app.directive("fragmentoEntrada", function () {
+  return {
+    restrict: 'E',
+    templateUrl: "modulos/logueo/entrada.html",
+    link: function (scope, elemento, atributos) {
+    }
 //controller: 'controlador'
-};
+  };
 });
 /*
  ###############################################
@@ -119,21 +117,14 @@ link: function (scope, elemento, atributos){
 
 app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $log, $http, cargar_servicios) {
 
-  /*
-   ###############################################
-   CONFIGURACION INICIO SESSION GOOGLE
-   ###############################################
-   */
 
   $scope.$route = $route;
   $scope.$location = $location;
   $scope.$routeParams = $routeParams;
 
 
-
-
 // Register the callback to be fired every time auth state changes
-  var ref = new Firebase("https://estructuraproyecto.firebaseio.com");
+//  var ref = new Firebase("https://estructuraproyecto.firebaseio.com");
   /*
    ###############################################
    CONFIGURACION DEL TEMA
@@ -148,8 +139,8 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
   if (localStorage.getItem("tema") === null) {
     var tema = {'color_menu': 'blue-grey darken-4', 'color_sidebar': 'grey darken-3'};
     localStorage.setItem('tema', JSON.stringify(tema));
-
   }
+
   var storage_tema = localStorage.getItem("tema");
   var datos_tema = JSON.parse(storage_tema);
   $scope.color_menu = datos_tema.color_menu;
@@ -187,6 +178,8 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
       var identificacion = $scope.select_session_usuario.identificacion;
       var storage = localStorage.getItem("session_sistema");
       var datos_session = JSON.parse(storage);
+      
+      console.log("locacion",'#' + $location.path());
 
       var valida_modulo = $.ajax({
         url: "modulos/logueo/select_permisos.php",
@@ -271,6 +264,11 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
 app.controller('valida_usuario', function ($scope, cargar_servicios) {
 
   console.groupCollapsed("ingreso al controlador valida usuario");
+  
+  
+  $('#fp-nav').remove();
+  $('html, body').removeAttr('style');
+  
 
 
   // al controlador principal le digo que revice  si existe una session vigente
