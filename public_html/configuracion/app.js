@@ -192,6 +192,7 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
       });
 
       console.log('#' + $location.path());
+     $scope.ocultar_menu();
 
       valida_modulo.done(function (data) {
         if (data.registros_encontrado == 0) {
@@ -205,7 +206,7 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
         console.error(textStatus);
         console.error(jqXHR);
       });
-
+        $scope.ocultar_menu();
       if (
               identificacion == "" ||
               typeof identificacion === 'undefined' ||
@@ -241,6 +242,15 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
 
     $scope.mostrar_menu = function () {
       $('.button-collapse').sideNav('show');
+      $('#modal_menu').openModal();
+    };
+    
+    $scope.mostrar_sidebar= function () {
+      $('.button-collapse').sideNav('show');      
+    };
+    
+        $scope.ocultar_sidebar= function () {
+      $('.button-collapse').sideNav('hide');
     };
 
   };
