@@ -161,6 +161,7 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
 
   // funcion se ejecuta cada vez que ingreso algun modulo
   $scope.verificar_session = function () {
+    
 
     var request = $.ajax({
       url: "../librerias/session_usuario.php",
@@ -172,6 +173,13 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
     });
 
     request.done(function (data) {
+      
+          
+      if(data.session){ 
+        console.info("se elimino session_sistema");
+        localStorage.removeItem('session_sistema');
+        window.location = "#/login/";
+        }
 
       $scope.select_session_usuario = data;
 
@@ -191,8 +199,7 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
         }
       });
 
-      console.log('#' + $location.path());
-     $scope.ocultar_menu();
+      console.log('#' + $location.path());      
 
       valida_modulo.done(function (data) {
         if (data.registros_encontrado == 0) {
@@ -206,26 +213,21 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
         console.error(textStatus);
         console.error(jqXHR);
       });
-        $scope.ocultar_menu();
-      if (
-              identificacion == "" ||
-              typeof identificacion === 'undefined' ||
-              datos_session.empresa != $scope.select_session_usuario.empresa
-
-              ) {
+    
+      
+      if (  typeof identificacion === 'undefined' ||  datos_session.empresa != $scope.select_session_usuario.empresa  ) {
 
         window.location = "#/login/";
 
       } else {
+        $scope.ocultar_menu();
 
         cargar_servicios.select_menu().success(function (data) {
           $scope.menu_logueo = data.registros;
           console.info("MENU : %O ", data.registros);
         });
-
-
-
       }
+      
     });
 
     request.fail(function (jqXHR, textStatus) {

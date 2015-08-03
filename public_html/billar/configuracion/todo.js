@@ -7,26 +7,42 @@
 
 var app = angular.module('aplicativo_billar', []);
 
-var sync_datos_billar = new Firebase('https://billar.firebaseio.com/connected');
+
+if (localStorage.getItem("session_sistema") != null) {
+
+  var session_sistema = localStorage.getItem("session_sistema");
+  var datos_session = JSON.parse(session_sistema);
+  valor = datos_session.empresa;
+  console.log(valor);
+
+
+
+  sync_datos_billar = new Firebase('https://billar.firebaseio.com/' + valor);
 
   sync_datos_billar.on('value', function (snap) {
 
     if (snap.val() === true) {
       Firebase.goOffline();
       console.error("desconectado a fire base ");
-
       var con = sync_datos_billar.push(true);
-      // when I disconnect, remove this device
       con.onDisconnect().remove();
-
-    } else
-    {
-      console.info("conectado a fire base ");    
-
+    } else {
+      console.info("conectado a fire base ");
     }
+
+
   });
+
+
   
- 
+  
+
+
+
+}
+
+
+
 
 
 /*
@@ -117,6 +133,8 @@ app.service('cargar_registros', function ($http) {
 
 
 
+
+
 });
 
 
@@ -134,14 +152,28 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
     console.log('cargo aplicativo billar');
   });
 
+  $scope.actualizar = function (data){
+    
+    if(sync_datos_billar){
+    var objeto = {empresas: {evento: data, empresa: valor}};
+    sync_datos_billar.update(objeto, $scope.recargar());
+    console.info('se actualizo'); 
+  }else{ console.info("no hay conexion con firebase");}
+  
+  };
+  
+   sync_datos_billar.on('child_changed', function (snapshot) {
+     console.log("fire base child_changed");
+   $scope.recargar();
+     
+   });
 
-
-  sync_datos_billar.on('child_changed', function (snapshot) {
-    $scope.recargar();
-  });
 
 
   $scope.recargar = function () {
+    
+    navigator.vibrate(500);
+    
     console.log("se recargo la tabla seleccionar_actual");
     cargar_registros.tabla_estado()
             .success(function (data) {
@@ -181,19 +213,9 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
             .success(function (data) {
 
 
-              var objeto = {empresas: {evento: data, empresa: valor}};
+          $scope.actualizar(data);
 
-              sync_datos_billar.update(objeto, $scope.recargar());
-
-              cargar_registros.tabla_estado()
-                      .success(function (data) {
-                        $scope.registros_estado = data;
-                      });
-
-              cargar_registros.mesas_disponibles()
-                      .success(function (data) {
-                        $scope.registros_mesas_disponibles = data;
-                      });
+      
             })
 
             .error(function (data, status, headers, config) {
@@ -201,49 +223,6 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
             });
 
   }
-
-  /*
-   $scope.buscar_informe_pagos = function (id_formulario) {
-   
-   var valor_url = "script_php/seleccionar_informe_pagos.php";
-   var valor_metodo = "POST";
-   var datos = $('#' + id_formulario).serialize();
-   
-   cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
-   .success(function (data) {
-   
-   $scope.informe_pagos = data;
-   
-   
-   })
-   
-   .error(function (data, status, headers, config) {
-   console.error(data);
-   });
-   
-   }
-   
-   $scope.buscar_informe_tiempo = function (id_formulario) {
-   
-   var valor_url = "script_php/seleccionar_informe_tiempo.php";
-   var valor_metodo = "POST";
-   var datos = $('#' + id_formulario).serialize();
-   
-   cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
-   .success(function (data) {
-   
-   $scope.informe_tiempo = data;
-   
-   
-   })
-   
-   .error(function (data, status, headers, config) {
-   console.error(data);
-   });
-   
-   }
-   
-   */
 
   $scope.eliminar_consumo = function (valor_id) {
 
@@ -255,20 +234,8 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
 
             .success(function (data) {
 
-
-              var objeto = {empresas: {evento: data, empresa: valor}};
-
-              sync_datos_billar.update(objeto, $scope.recargar());
-
-              cargar_registros.tabla_estado()
-                      .success(function (data) {
-                        $scope.registros_estado = data;
-                      });
-
-              cargar_registros.mesas_disponibles()
-                      .success(function (data) {
-                        $scope.mesas_disponibles = data;
-                      });
+            
+             $scope.actualizar(data);      
 
 
               $('#modal1').closeModal();
@@ -310,7 +277,7 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
 
             .success(function (data) {
 
-              sync_datos_billar.update({empresa: {evento: data}}, $scope.recargar());
+              $scope.actualizar(data);
 
               $('#' + id_formulario).trigger("reset");
 
