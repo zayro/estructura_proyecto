@@ -32,4 +32,10 @@ if (extract($_REQUEST)) {
 
   echo json_encode($verificar);
 }
+
+
+echo $objeto->multi_consulta("call conectar_usuarios('zayro', 'zayro1');");
+
+
+
 ?>

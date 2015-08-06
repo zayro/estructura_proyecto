@@ -150,7 +150,7 @@ class consulta_bd extends conexion {
    * MULTI CONSULTAS
    * @param type $query
    */
-  private function multi_consulta($query) {
+  public function multi_consulta($query) {
     /* ejecutar multi consulta */
     if ($this->mysqli->multi_query($query)) {
       do {

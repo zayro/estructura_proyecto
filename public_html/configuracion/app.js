@@ -172,8 +172,7 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
       }
     });
 
-    request.done(function (data) {
-      
+    request.done(function (data) {     
           
       if(data.session){ 
         console.info("se elimino session_sistema");
@@ -357,18 +356,21 @@ app.controller('login', function ($scope, cargar_servicios) {
 
             .success(function (msg) {
 
-
+              // ########### guarda la session #########
               localStorage.setItem('session_sistema', JSON.stringify(msg));
 
               if (msg.success)
               {
-                //console.clear();
+                
                 console.log("ingreso al sistema");
                 // remueve el menu inferio del fullpage
                 $('#fp-nav').remove();
                 // remueve el efecto overflow de fullpage
                 $("html, body").removeAttr('style');
                 $("html, body").css("overflow", "auto");
+                
+           
+                
                 // redigie al ingreso
                 window.location = '#modulo/ingreso/';
                 Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg.usuario + "</span>", 4000);

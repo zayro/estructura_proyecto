@@ -8,6 +8,15 @@ console.time("inicia carga jquery");
  */
 $(document).ready(function () {
 
+document.addEventListener('DOMContentLoaded', function () {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+
+
+
+
 
   /**
    * ######################################
@@ -119,7 +128,7 @@ $(document).ready(function () {
    */
 
   console.info("activando manejador");
-  if(navigator.registerProtocolHandler){navigator.registerProtocolHandler("web+zav", "http://localhost/estructura_proyecto/?uri=%s", "manejador zav");}
+ // if(navigator.registerProtocolHandler){navigator.registerProtocolHandler("web+zav", "http://localhost/estructura_proyecto/?uri=%s", "manejador zav");}
   
 
   /*
@@ -175,11 +184,27 @@ $(document).ready(function () {
   console.info("cargo jquery");
 });
 
+function notificaciones_chrome(titulo, icono, texto){
+  
+  if (Notification.permission !== "granted")
+  { Notification.requestPermission();}
+  else {
+    var notification = new Notification(titulo, {
+      icon: icono,
+      body: texto
+    });
+/*
+    notification.onclick = function () {
+      window.open("http://stackoverflow.com/a/13328397/1269037");      
+    };
+*/    
+  
+    
+  }
+}
 
-$(window).load(function () {
-  console.log("se terminod de cargar la pagina");
-  //$('#carga_inicial').closeModal();
-});
+
+
 
 console.timeEnd("inicia carga jquery");
 

@@ -7,44 +7,6 @@
 
 var app = angular.module('aplicativo_billar', []);
 
-
-if (localStorage.getItem("session_sistema") != null) {
-
-  var session_sistema = localStorage.getItem("session_sistema");
-  var datos_session = JSON.parse(session_sistema);
-  valor = datos_session.empresa;
-  console.log(valor);
-
-
-
-  sync_datos_billar = new Firebase('https://billar.firebaseio.com/' + valor);
-
-  sync_datos_billar.on('value', function (snap) {
-
-    if (snap.val() === true) {
-      Firebase.goOffline();
-      console.error("desconectado a fire base ");
-      var con = sync_datos_billar.push(true);
-      con.onDisconnect().remove();
-    } else {
-      console.info("conectado a fire base ");
-    }
-
-
-  });
-
-
-  
-  
-
-
-
-}
-
-
-
-
-
 /*
  ###############################################
  INICIA RUTAS
@@ -147,34 +109,57 @@ app.service('cargar_registros', function ($http) {
 
 app.controller('controlador_billar', function ($scope, $http, cargar_registros) {
 
-  angular.element(document).ready(function () {
 
-    console.log('cargo aplicativo billar');
-  });
+  $scope.billar = function () {
 
-  $scope.actualizar = function (data){
-    
-    if(sync_datos_billar){
-    var objeto = {empresas: {evento: data, empresa: valor}};
-    sync_datos_billar.update(objeto, $scope.recargar());
-    console.info('se actualizo'); 
-  }else{ console.info("no hay conexion con firebase");}
-  
+    if (localStorage.getItem("session_sistema") != null) {
+
+      var session_sistema = localStorage.getItem("session_sistema");
+      var datos_session = JSON.parse(session_sistema);
+      var url = 'https://billar.firebaseio.com/' + datos_session.empresa;
+      sync_datos_billar = new Firebase(url);
+      sync_datos_billar.on('value', function (snap) {
+        if (snap.val() === true) {
+          Firebase.goOffline();
+          console.error("desconectado a fire base ");
+          var con = sync_datos_billar.push(true);
+          con.onDisconnect().remove();
+        } else {
+          console.info("conectado a fire base ");
+          sync_datos_billar.on('child_changed', function (snapshot) {
+            console.log("fire base child_changed");
+            $scope.recargar();
+            //notificaciones_chrome("Actualizando Registros","img/icono.png","se ha actualizado la lista");
+          });
+        }
+
+      });
+
+    }
+
   };
+
+  $scope.billar();
+
+  $scope.actualizar = function (data) {
+
+    if (sync_datos_billar) {
+      var objeto = {empresas: {evento: data}};
+      sync_datos_billar.update(objeto, $scope.recargar());
+    } else {
+      console.info("no hay conexion con firebase");
+    }
+
+  };
+
   
-   sync_datos_billar.on('child_changed', function (snapshot) {
-     console.log("fire base child_changed");
-   $scope.recargar();
-     
-   });
-
-
 
   $scope.recargar = function () {
-    
+
     navigator.vibrate(500);
-    
-    console.log("se recargo la tabla seleccionar_actual");
+
+    console.info("se recargo la tabla seleccionar_actual");
+
     cargar_registros.tabla_estado()
             .success(function (data) {
               $scope.registros_estado = data;
@@ -212,10 +197,9 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
 
             .success(function (data) {
 
+              $scope.actualizar(data);
 
-          $scope.actualizar(data);
 
-      
             })
 
             .error(function (data, status, headers, config) {
@@ -234,8 +218,9 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
 
             .success(function (data) {
 
-            
-             $scope.actualizar(data);      
+
+              $scope.actualizar(data);
+
 
 
               $('#modal1').closeModal();
