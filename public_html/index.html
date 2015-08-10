@@ -146,7 +146,7 @@
                             <li>{{select_session_usuario.usuario| uppercase }}</li>
                             <li><a class="abrir menu " onclick="$('.button-collapse').sideNav('show');"><i class="small mdi-action-account-box"></i></a></li>
                             <li><a class="abrir menu" onclick=" $('#modal_menu').openModal();"><i class=" tiny mdi-action-view-headline"></i></a></li>
-                            <li><a class="abrir menu " href="../librerias/session_salir.php" ><i class="small mdi-action-settings-power"></i></a></li>
+                            <li><a class="abrir menu " href="../librerias/session_salir.php?identificacion={{select_session_usuario.identificacion}}" ><i class="small mdi-action-settings-power"></i></a></li>
 
 
                         </ul>
@@ -206,7 +206,7 @@
                             </li>
 
                             <li class="no-padding"  >
-                                <a  href="../librerias/session_salir.php" class="collapsible-header waves-effect waves-teal"><i class=" tiny mdi-action-settings-power"></i>SALIR</a>
+                                <a  href="../librerias/session_salir.php?identificacion={{select_session_usuario.identificacion}}" class="collapsible-header waves-effect waves-teal"><i class=" tiny mdi-action-settings-power"></i>SALIR</a>
                             </li>
 
 

@@ -151,14 +151,19 @@ class consulta_bd extends conexion {
    * @param type $query
    */
   public function multi_consulta($query) {
+    
+    $items = array();
+    
     /* ejecutar multi consulta */
     if ($this->mysqli->multi_query($query)) {
       do {
         /* almacenar primer juego de resultados */
-        if ($result = $this->mysqli->store_result()) {
-          while ($row = $result->fetch_row()) {
-            printf("%s\n", $row[0]);
+        if ($result = $this->mysqli->store_result()) {          
+    
+          while ($row = $result->fetch_object()) {
+             array_push($items, $row);
           }
+          return $items;
           $result->free();
         }
         /* mostrar divisor */
@@ -168,6 +173,11 @@ class consulta_bd extends conexion {
       } while (@$this->mysqli->next_result());
     }
   }
+  
+  public function multi_query($sql){ return $this->mysqli->multi_query($sql); }
+  public function store_result(){ return $this->mysqli->store_result(); }  
+  public function more_results(){ return $this->mysqli->more_results(); }
+  public function next_result(){ return @$this->mysqli->next_result(); }
 
   private function estructura_consultas_multiples_anidadas() {
     $sql1 = "";

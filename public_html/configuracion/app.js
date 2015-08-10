@@ -109,6 +109,7 @@ app.directive("fragmentoEntrada", function () {
 //controller: 'controlador'
   };
 });
+
 /*
  ###############################################
  INICIA EL CONTROLADOR APLICACIONES
@@ -358,8 +359,9 @@ app.controller('login', function ($scope, cargar_servicios) {
 
               // ########### guarda la session #########
               localStorage.setItem('session_sistema', JSON.stringify(msg));
+              console.log(msg);
 
-              if (msg.success)
+              if (msg.success == 'true')
               {
                 
                 console.log("ingreso al sistema");

@@ -4,38 +4,48 @@ require('../../../librerias/clase_consulta_bd.php');
 
 $objeto = new consulta_bd();
 
+#$resultado = $objeto->multi_consulta("call conectar_usuarios('zayro', 'zayro1');");
+header('Content-Type: application/json');
+
 if (extract($_REQUEST)) {
+  $query = ("call conectar_usuarios('$usuario', '$clave');");
 
-  $sql = sprintf("SELECT count(*) as encontrado, u.usuario, u.grupo, g.nombre as nombre_grupo, u.identificacion, u.imagen, u.empresa as codigo_empresa, e.nombre as empresa 
-  FROM usuarios as u join grupo as g on u.grupo  = g.id join empresas as e on e.id = u.empresa  
-  WHERE u.usuario = '%s' and u.clave = encode( '%s' , 'clave') and u.empresa = '%s' and estado = '1';", $objeto->real_escape_string($usuario), $objeto->real_escape_string($clave), $objeto->real_escape_string($empresa));
+  $items = array();
 
-  $verificar = array();
 
-  $verificar = $objeto->consulta_json($sql);
+  /* ejecutar multi consulta */
+  if ($objeto->multi_query($query)) {
 
-  if ($verificar->encontrado != 0) {
+    do {
 
-    $verificar->success = true;
-    $_SESSION['usuario'] = $verificar->usuario;
-    $_SESSION['grupo'] = $verificar->grupo;
-    $_SESSION['nombre_grupo'] = $verificar->nombre_grupo;
-    $_SESSION['identificacion'] = $verificar->identificacion;
-    $_SESSION['codigo_empresa'] = $verificar->codigo_empresa;
-    $_SESSION['empresa'] = $verificar->empresa;
-    $_SESSION['imagen'] = $verificar->imagen;
-    
-  } else {
+      /* almacenar primer juego de resultados */
+      if ($result = $objeto->store_result()) {
 
-    $verificar->success = false;
+        while ($row = $result->fetch_object()) {
+          array_push($items, $row);
+
+          if ($row->success == 'true') {
+
+            $_SESSION['usuario'] = $row->usuario;
+            $_SESSION['grupo'] = $row->grupo;
+            $_SESSION['nombre_grupo'] = $row->nombre_grupo;
+            $_SESSION['identificacion'] = $row->identificacion;
+            $_SESSION['codigo_empresa'] = $row->codigo_empresa;
+            $_SESSION['empresa'] = $row->empresa;
+            $_SESSION['imagen'] = $row->imagen;
+          }
+        }
+
+        $result->free();
+      }
+      /* mostrar divisor */
+      if ($objeto->more_results()) {
+        #printf("-----------------\n");
+      }
+    } while ($objeto->next_result());
   }
 
-  echo json_encode($verificar);
+
+  echo json_encode($items[0]);
 }
-
-
-echo $objeto->multi_consulta("call conectar_usuarios('zayro', 'zayro1');");
-
-
-
 ?>
