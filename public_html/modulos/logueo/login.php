@@ -7,8 +7,10 @@ $objeto = new consulta_bd();
 #$resultado = $objeto->multi_consulta("call conectar_usuarios('zayro', 'zayro1');");
 header('Content-Type: application/json');
 
+$ip = $objeto->obtener_ip();
+
 if (extract($_REQUEST)) {
-  $query = ("call conectar_usuarios('$usuario', '$clave');");
+  $query = ("call conectar_usuarios('$usuario', '$clave', '$empresa', '$ip');");
 
   $items = array();
 
@@ -33,7 +35,13 @@ if (extract($_REQUEST)) {
             $_SESSION['codigo_empresa'] = $row->codigo_empresa;
             $_SESSION['empresa'] = $row->empresa;
             $_SESSION['imagen'] = $row->imagen;
+            $_SESSION['ip'] = $ip;
           }
+          
+        
+          
+          
+          
         }
 
         $result->free();
@@ -46,6 +54,6 @@ if (extract($_REQUEST)) {
   }
 
 
-  echo json_encode($items[0]);
+  echo json_encode($items);
 }
 ?>

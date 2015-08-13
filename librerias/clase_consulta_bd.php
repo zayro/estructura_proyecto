@@ -28,7 +28,41 @@ class consulta_bd extends conexion {
   function consulta_bd() {
     conexion::conexiones();
   }
+  
+    /**
+   * SABER SI EL USUARIO ESTA ACTIVO EN LA BASE DE DATOS
+   * @param type $identificacion
+   * @return type
+   */
+  function usuario_online($identificacion) {
+    
+    $sql = "SELECT COUNT(*) AS conectado FROM enlinea WHERE identificacion = '$identificacion' ; ";
 
+    $resultado = $this->consulta($sql);
+    
+    if (!$resultado) {
+
+      throw new Exception("ERROR: $sql");
+      
+    }
+    
+    $row = $resultado->fetch_object();
+      
+    
+    
+    /*
+    if($row->conectado == 0){ 
+    
+    header('Location: ../../../librerias/session_salir.php?identificacion='.$identificacion);   
+    
+    }
+      */
+ 
+    $resultado->close();
+   
+    return $row->conectado;
+  }
+  
   /**
    * LAS CONSULTAS SERAN DEVUELTAS EN FORMATOS JSON
    *
@@ -129,11 +163,14 @@ class consulta_bd extends conexion {
    */
   function consulta($sql) {
     
-    $buscar = stristr($sql, 'select');
+    $buscar_minuscula = stristr($sql, 'select');
+    $buscar_mayuscula = stristr($sql, 'SELECT');
        
-    if ($buscar) {
+    if ($buscar_minuscula or $buscar_mayuscula){
      return $this->mysqli->query($sql);      
     }else{
+      echo "ERROR AL ENVIAR CONSULTA DEBE CONTENER SELECT";
+      exit();
       return "NO CUMPLE LA CONDICION SELECT";
     }
    

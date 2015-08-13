@@ -107,7 +107,7 @@ app.service('cargar_registros', function ($http) {
  */
 
 
-app.controller('controlador_billar', function ($scope, $http, cargar_registros) {
+app.controller('controlador_billar', function ($scope, $route, $http, cargar_registros) {
 
 
   $scope.billar = function () {
@@ -160,11 +160,8 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
 
     console.info("se recargo la tabla seleccionar_actual");
 
-    cargar_registros.tabla_estado()
-            .success(function (data) {
-              $scope.registros_estado = data;
-            });
-  }
+
+  };
 
   cargar_registros.tabla_servicio()
           .success(function (data) {
@@ -263,8 +260,10 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
             .success(function (data) {
 
               $scope.actualizar(data);
+      
+      
 
-              $('#' + id_formulario).trigger("reset");
+              //$('#' + id_formulario).trigger("reset");
 
 
               if (data.success)
@@ -286,7 +285,7 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
 
               } else {
 
-                new Messi(data.suceso, {
+                new Messi("SE PERDIO LA CONEXION: "+data.suceso, {
                   center: true,
                   width: '250px',
                   title: 'ocurrio un problema',
@@ -295,6 +294,9 @@ app.controller('controlador_billar', function ($scope, $http, cargar_registros) 
                           autoclose: 2000,
                   closeButton: true
                 });
+                
+                
+                $route.reload();
 
               }
 

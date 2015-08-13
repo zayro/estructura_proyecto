@@ -216,7 +216,7 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
     
       
       if (  typeof identificacion === 'undefined' ||  datos_session.empresa != $scope.select_session_usuario.empresa  ) {
-
+        $scope.ocultar_menu();
         window.location = "#/login/";
 
       } else {
@@ -355,7 +355,11 @@ app.controller('login', function ($scope, cargar_servicios) {
 
     cargar_servicios.http_respuesta(valor_url, valor_metodo, valor_datos)
 
-            .success(function (msg) {
+            .success(function (data) {
+              
+             var msg = data[0];
+              
+              $scope.respuesta_login = data;
 
               // ########### guarda la session #########
               localStorage.setItem('session_sistema', JSON.stringify(msg));
@@ -369,17 +373,20 @@ app.controller('login', function ($scope, cargar_servicios) {
                 $('#fp-nav').remove();
                 // remueve el efecto overflow de fullpage
                 $("html, body").removeAttr('style');
-                $("html, body").css("overflow", "auto");
-                
-           
+                $("html, body").css("overflow", "auto");           
                 
                 // redigie al ingreso
                 window.location = '#modulo/ingreso/';
-                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg.usuario + "</span>", 4000);
+                Materialize.toast("Ingreso Exitoso" + "<span class='btn-flat green-text' >" + msg.usuario + "</span>", 2000);
               }
-              else
+              if(msg.success == 'false')
               {
-                Materialize.toast("VERIFICAR LOS DATOS" + "<a class='btn-flat red-text' > Error <a>", 4000);
+                Materialize.toast("VERIFICAR LOS DATOS" + "<a class='btn-flat red-text' > Error <a>", 5000);
+              }
+              if(msg.success == 'conectado')
+              {
+                
+                Materialize.toast("YA AHY ALGUIEN CONECTADO" + '<a onclick="$(\'#usuario_conectado\').openModal()" class="btn-flat yellow-text" > Advertencia <a>', 8000);
               }
 
               //$('#'+id_formulario).trigger("reset");
