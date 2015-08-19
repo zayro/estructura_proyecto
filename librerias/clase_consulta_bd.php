@@ -34,33 +34,33 @@ class consulta_bd extends conexion {
    * @param type $identificacion
    * @return type
    */
-  function usuario_online($identificacion) {
-    
-    $sql = "SELECT COUNT(*) AS conectado FROM enlinea WHERE identificacion = '$identificacion' ; ";
+  function usuario_online() {
+
+   $identificacion =  $_SESSION['identificacion'];
+   $ip = $_SESSION['ip'];
+   
+    $sql = "SELECT COUNT(*) AS conectado FROM enlinea WHERE identificacion = '$identificacion' and ip = '$ip' ; ";
 
     $resultado = $this->consulta($sql);
     
     if (!$resultado) {
 
-      throw new Exception("ERROR: $sql");
+      throw new Exception("ERROR usuario_online: $sql");
       
     }
     
     $row = $resultado->fetch_object();
-      
-    
-    
-    /*
-    if($row->conectado == 0){ 
-    
-    header('Location: ../../../librerias/session_salir.php?identificacion='.$identificacion);   
-    
+
+    if($row->conectado == '0'){ 
+      @session_destroy();       
+     return exit(); 
     }
-      */
- 
+    
     $resultado->close();
-   
-    return $row->conectado;
+    
+    
+    
+    return $sql;
   }
   
   /**

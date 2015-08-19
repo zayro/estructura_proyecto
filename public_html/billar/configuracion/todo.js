@@ -287,11 +287,11 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
 
                 new Messi("SE PERDIO LA CONEXION: "+data.suceso, {
                   center: true,
-                  width: '250px',
+                  width: '850px',
                   title: 'ocurrio un problema',
                   titleClass: 'anim error',
                   center: true,
-                          autoclose: 2000,
+                          autoclose: 8000,
                   closeButton: true
                 });
                 

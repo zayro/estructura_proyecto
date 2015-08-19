@@ -363,7 +363,7 @@ app.controller('login', function ($scope, cargar_servicios) {
 
               // ########### guarda la session #########
               localStorage.setItem('session_sistema', JSON.stringify(msg));
-              console.log(msg);
+              console.info(msg);
 
               if (msg.success == 'true')
               {

@@ -6,7 +6,7 @@ require('clase_consulta_bd.php');
 $objeto = new consulta_bd();
 
 if(!empty($_SESSION['identificacion'])){
-$conectado = $objeto->usuario_online($_SESSION['identificacion']);  
+$conectado = $objeto->usuario_online();  
 }else{
 $datos["session"] = "no hay una session iniciada";  
 @session_destroy();
@@ -19,7 +19,7 @@ $valores = array_values($_SESSION);// obtiene los valores de las varibles
 
 $datos = array();
 
-if($numero > 0 and $conectado != '0'){
+if($numero > 0){
 
 for($i=0;$i<$numero;$i++){
 
