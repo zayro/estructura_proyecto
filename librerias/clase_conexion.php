@@ -272,12 +272,12 @@ class conexion extends datos {
    * 
    */
   function validar_session() {
-    if (empty($_SESSION) or empty($_SESSION['identificacion']) or ! isset($_SESSION['identificacion'])) {
-
+    if (empty($_SESSION) or empty($_SESSION['identificacion']) or ! isset($_SESSION['identificacion']))
+      {
       echo "sin acceso al sistema ingrese a la plataforma";
       exit();
     } else {
-      return "ok";
+      return $_SESSION['identificacion'];
     }
   }
 

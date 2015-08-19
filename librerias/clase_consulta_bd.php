@@ -28,7 +28,41 @@ class consulta_bd extends conexion {
   function consulta_bd() {
     conexion::conexiones();
   }
+  
+    /**
+   * SABER SI EL USUARIO ESTA ACTIVO EN LA BASE DE DATOS
+   * @param type $identificacion
+   * @return type
+   */
+  function usuario_online() {
 
+   $identificacion =  $_SESSION['identificacion'];
+   $ip = $_SESSION['ip'];
+   
+    $sql = "SELECT COUNT(*) AS conectado FROM enlinea WHERE identificacion = '$identificacion' and ip = '$ip' ; ";
+
+    $resultado = $this->consulta($sql);
+    
+    if (!$resultado) {
+
+      throw new Exception("ERROR usuario_online: $sql");
+      
+    }
+    
+    $row = $resultado->fetch_object();
+
+    if($row->conectado == '0'){ 
+      @session_destroy();       
+     return exit(); 
+    }
+    
+    $resultado->close();
+    
+    
+    
+    return $sql;
+  }
+  
   /**
    * LAS CONSULTAS SERAN DEVUELTAS EN FORMATOS JSON
    *
@@ -129,11 +163,14 @@ class consulta_bd extends conexion {
    */
   function consulta($sql) {
     
-    $buscar = stristr($sql, 'select');
+    $buscar_minuscula = stristr($sql, 'select');
+    $buscar_mayuscula = stristr($sql, 'SELECT');
        
-    if ($buscar) {
+    if ($buscar_minuscula or $buscar_mayuscula){
      return $this->mysqli->query($sql);      
     }else{
+      echo "ERROR AL ENVIAR CONSULTA DEBE CONTENER SELECT";
+      exit();
       return "NO CUMPLE LA CONDICION SELECT";
     }
    
@@ -150,15 +187,20 @@ class consulta_bd extends conexion {
    * MULTI CONSULTAS
    * @param type $query
    */
-  private function multi_consulta($query) {
+  public function multi_consulta($query) {
+    
+    $items = array();
+    
     /* ejecutar multi consulta */
     if ($this->mysqli->multi_query($query)) {
       do {
         /* almacenar primer juego de resultados */
-        if ($result = $this->mysqli->store_result()) {
-          while ($row = $result->fetch_row()) {
-            printf("%s\n", $row[0]);
+        if ($result = $this->mysqli->store_result()) {          
+    
+          while ($row = $result->fetch_object()) {
+             array_push($items, $row);
           }
+          return $items;
           $result->free();
         }
         /* mostrar divisor */
@@ -168,6 +210,11 @@ class consulta_bd extends conexion {
       } while (@$this->mysqli->next_result());
     }
   }
+  
+  public function multi_query($sql){ return $this->mysqli->multi_query($sql); }
+  public function store_result(){ return $this->mysqli->store_result(); }  
+  public function more_results(){ return $this->mysqli->more_results(); }
+  public function next_result(){ return @$this->mysqli->next_result(); }
 
   private function estructura_consultas_multiples_anidadas() {
     $sql1 = "";

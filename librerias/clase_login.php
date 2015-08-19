@@ -210,6 +210,14 @@ class login extends procesos_bd {
 
     return procesos_bd::alterar_bd($sql, $mensaje);
   }
+  
+  function eliminar_conectado($identificacion){
+    
+    $sql = " DELETE FROM enlinea where identificacion = '$identificacion'; ";
+    $mensaje = "USUARIO TERMINO SESSION";
+
+    return procesos_bd::alterar_bd($sql, $mensaje);        
+  }
 
 #CIERRA CLASE
 }

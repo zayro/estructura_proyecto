@@ -8,6 +8,15 @@ console.time("inicia carga jquery");
  */
 $(document).ready(function () {
 
+document.addEventListener('DOMContentLoaded', function () {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+
+
+
+
 
   /**
    * ######################################
@@ -66,21 +75,13 @@ $(document).ready(function () {
    * VERIFICAMOS SI EL NAVEGADOR PIERDE CONEXION A INTERNET
    */
   if (window.addEventListener) {
-    /*
-     Works well in Firefox and Opera with the 
-     Work Offline option in the File menu.
-     Pulling the ethernet cable doesn't seem to trigger it.
-     Later Google Chrome and Safari seem to trigger it well
-     */
+
     window.addEventListener("online", isOnline, false);
     window.addEventListener("offline", isOffline, false);
     console.warn("nuevos navegadores");
   }
   else {
-    /*
-     Works in IE with the Work Offline option in the 
-     File menu and pulling the ethernet cable
-     */
+ 
     document.body.ononline = isOnline;
     document.body.onoffline = isOffline;
     console.warn("antiguo navegadores");
@@ -127,7 +128,7 @@ $(document).ready(function () {
    */
 
   console.info("activando manejador");
-  if(navigator.registerProtocolHandler){navigator.registerProtocolHandler("web+zav", "http://localhost/estructura_proyecto/?uri=%s", "manejador zav");}
+ // if(navigator.registerProtocolHandler){navigator.registerProtocolHandler("web+zav", "http://localhost/estructura_proyecto/?uri=%s", "manejador zav");}
   
 
   /*
@@ -183,11 +184,27 @@ $(document).ready(function () {
   console.info("cargo jquery");
 });
 
+function notificaciones_chrome(titulo, icono, texto){
+  
+  if (Notification.permission !== "granted")
+  { Notification.requestPermission();}
+  else {
+    var notification = new Notification(titulo, {
+      icon: icono,
+      body: texto
+    });
+/*
+    notification.onclick = function () {
+      window.open("http://stackoverflow.com/a/13328397/1269037");      
+    };
+*/    
+  
+    
+  }
+}
 
-$(window).load(function () {
-  console.log("se terminod de cargar la pagina");
-  //$('#carga_inicial').closeModal();
-});
+
+
 
 console.timeEnd("inicia carga jquery");
 

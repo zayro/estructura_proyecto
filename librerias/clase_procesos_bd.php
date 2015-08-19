@@ -99,7 +99,7 @@ class procesos_bd extends consulta_bd implements auditar {
   }
 
   /**
-   * CUALQUIER CAMBIO DIRECTO A LA BASE DE DATOS TIENE QUE PASAR POR AQUI
+   * CAMBIO DIRECTO A LA BASE DE DATOS SIN AUDITORIA
    *
    * @return $datos retorna los mensajes despues de ejecutar la consulta y la auditoria
    * @throws dispara la consulta que se encuentre mal generada

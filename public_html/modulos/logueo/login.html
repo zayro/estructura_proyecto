@@ -5,7 +5,8 @@
   .size{ width: 200px; height: 200px; margin-top: 30px;}
 </style>
 
-<div id="fullpage" ng-controller="login">
+<div ng-controller="login">
+<div id="fullpage" >
 
   <!-- section 1-->
   <div class="section" id="section1">
@@ -181,8 +182,9 @@
 
 
 
-
 </div>
+
+
 <!--
 /**
 *MODAL RECUPERAR DE CLAVE
@@ -265,6 +267,55 @@
   </div>
 
 </div>
+
+<!--
+/**
+*MODAL USUARIO CONECTADO
+*/
+-->
+
+<div id="usuario_conectado" class="modal">
+  <div class="modal-content">
+    <h4>usuario conectado</h4>
+    <span>cierre la session para poder ingresar.</span>
+    
+
+      <table>
+        <thead>
+          <tr>
+            <th>identificacion</th>
+            <th>fecha</th>
+            <th>ip</th>
+            <th>cerrar</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr ng-repeat="ver in respuesta_login">
+            <td>{{ver.identificacion}}</td>
+            <td>{{ver.fecha}}</td>
+            <td>{{ver.ip}}</td>
+            <td><a href="../librerias/session_salir.php?identificacion={{ver.identificacion}}">cerrar</a></td>
+          </tr>
+        </tbody>  
+        
+      </table>
+      
+
+      <div class="row">
+        <div class="center-align col s12 m12 l12">
+          <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text">Cambiar</button>
+        </div>
+      </div>
+
+
+  </div>
+
+</div>
+
+
+</div>
+
 
 <script>
 
