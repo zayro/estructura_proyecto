@@ -110,6 +110,18 @@ app.service('cargar_registros', function ($http) {
 app.controller('controlador_billar', function ($scope, $route, $http, cargar_registros) {
 
 
+  $scope.recargar = function () {
+
+    navigator.vibrate(500);
+
+    console.info("se recargo la tabla seleccionar_actual");
+
+  cargar_registros.tabla_estado()
+          .success(function (data) {
+            $scope.registros_estado = data;
+          });
+  };
+
   $scope.billar = function () {
 
     if (localStorage.getItem("session_sistema") != null) {
@@ -118,22 +130,29 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
       var datos_session = JSON.parse(session_sistema);
       var url = 'https://billar.firebaseio.com/' + datos_session.empresa;
       sync_datos_billar = new Firebase(url);
+      
       sync_datos_billar.on('value', function (snap) {
         if (snap.val() === true) {
           Firebase.goOffline();
           console.error("desconectado a fire base ");
           var con = sync_datos_billar.push(true);
           con.onDisconnect().remove();
-        } else {
-          console.info("conectado a fire base ");
-          sync_datos_billar.on('child_changed', function (snapshot) {
-            console.log("fire base child_changed");
-            $scope.recargar();
-            //notificaciones_chrome("Actualizando Registros","img/icono.png","se ha actualizado la lista");
-          });
-        }
+        }else{ 
+        console.info ("conectado a fire base ");
+        $scope.recargar();
+        notificaciones_chrome("Actualizando Registros","img/icono.png","se ha actualizado la lista");
+        } 
+
 
       });
+      
+      /*
+         sync_datos_billar.on('child_changed', function (snapshot) {
+          console.log("fire base child_changed");
+           //$scope.recargar();
+            
+          });
+          */
 
     }
 
@@ -145,7 +164,8 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
 
     if (sync_datos_billar) {
       var objeto = {empresas: {evento: data}};
-      sync_datos_billar.update(objeto, $scope.recargar());
+      sync_datos_billar.update(objeto);
+      
     } else {
       console.info("no hay conexion con firebase");
     }
@@ -154,14 +174,7 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
 
   
 
-  $scope.recargar = function () {
 
-    navigator.vibrate(500);
-
-    console.info("se recargo la tabla seleccionar_actual");
-
-
-  };
 
   cargar_registros.tabla_servicio()
           .success(function (data) {
