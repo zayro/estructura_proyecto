@@ -127,10 +127,6 @@ app.controller('controlador_ingreso_parqueadero', function ($scope, cargar_servi
               if (msg.success) {
 
 
-
-
-
-
                 cargar_servicios.http_respuesta('parqueadero/modulos/ingreso/consultar_pago.php', 'post', $.param({'placa': msg.placa})).success(function (data) {
 
                   console.log(data[0]);

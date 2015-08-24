@@ -10,6 +10,7 @@ date_default_timezone_set('America/Bogota');
   set_time_limit (0);
  */
 
+ini_set("zlib.output_compression", "On");
 session_start();
 
 include ('clase_abstracta.php');
@@ -339,5 +340,8 @@ class conexion extends datos {
 
     return $script_nombre;
   }
+  
+  function iniciar_buffer(){ob_start(); }
+  function termina_buffer(){ob_end_flush(); }
 
 }
