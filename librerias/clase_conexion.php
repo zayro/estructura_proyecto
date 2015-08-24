@@ -17,13 +17,13 @@ include ('clase_abstracta.php');
 /**
  * CLASE DE CONEXION PRINCIPAL
  *
- * En esta parte nos encargamos de crear los tipos de conexion del proyecto 
+ * En esta parte nos encargamos de crear los tipos de conexion del proyecto
  * para poder asi administrar los tipos de permisos de acceso
  *
  * @author MARLON ZAYRO ARIAS VARGAS <zayro8905@gmail.com>
  * @version 1.0
  * @since 2015-05-02
- * @copyright 2015 
+ * @copyright 2015
  * @package clase
  * @category conexion
  */
@@ -67,8 +67,8 @@ class conexion extends datos {
   }
 
   /**
-   * DATOS DE LAS CONEXIONES 
-   * 
+   * DATOS DE LAS CONEXIONES
+   *
    * @return boolean
    */
   protected function conexiones() {
@@ -106,7 +106,7 @@ class conexion extends datos {
 
   /**
    * SOLO SE CONECTA BASE DE DATOS BILLAR
-   *  
+   *
    * @return boolean
    */
   function conectar_billar($bdd) {
@@ -128,7 +128,7 @@ class conexion extends datos {
 
   /**
    * SOLO SE CONECTA BASE DE DATOS PRINCIPAL
-   *  
+   *
    * @return boolean
    */
   function conectar_principal() {
@@ -150,7 +150,7 @@ class conexion extends datos {
 
   /**
    * SOLO SE CONECTA BASE DE DATOS PARQUEADERO
-   *  
+   *
    * @return boolean
    */
   function conectar_parqueadero($bdd) {
@@ -172,7 +172,7 @@ class conexion extends datos {
 
   /**
    * SOLO IMPRIME JSON
-   * 
+   *
    * @param type $array
    */
   function imprime_json($array) {
@@ -181,7 +181,7 @@ class conexion extends datos {
 
   /**
    * VERIFICA E IMPRIMER ERRORES DE IMPRESION DE JSON
-   * 
+   *
    * @return type PHP_EOL
    */
   function verificar_json() {
@@ -215,11 +215,11 @@ class conexion extends datos {
   }
 
   /**
-   * Reemplaza todos los acentos por sus equivalentes sin ellos 
-   * 
+   * Reemplaza todos los acentos por sus equivalentes sin ellos
+   *
    * @param type $string
    * string la cadena a sanear
-   * 
+   *
    * @return type $string
    * string saneada
    */
@@ -269,7 +269,7 @@ class conexion extends datos {
 
   /**
    * VALIDA SI EXISTE SESSION
-   * 
+   *
    */
   function validar_session() {
     if (empty($_SESSION) or empty($_SESSION['identificacion']) or ! isset($_SESSION['identificacion']))
@@ -283,7 +283,7 @@ class conexion extends datos {
 
   /**
    * ENVIO DE CORREOS
-   * 
+   *
    * @param type $recibe recibe correos
    * @param type $envia envio correos
    * @param type $mensaje_html contenido html del correo
@@ -309,7 +309,7 @@ class conexion extends datos {
 
   /**
    * OBTENER IP DE UN EQUIPO
-   * 
+   *
    * @return string retorna ip
    */
   function obtener_ip() {
@@ -328,7 +328,7 @@ class conexion extends datos {
 
   /**
    * OBTENER RUTA ACTUAL DE UN ARCHIVO
-   * 
+   *
    * @return string retorna ruta
    */
   function ruta_actual() {

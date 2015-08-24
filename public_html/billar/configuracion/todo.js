@@ -140,7 +140,7 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
         }else{ 
         console.info ("conectado a fire base ");
         $scope.recargar();
-        notificaciones_chrome("Actualizando Registros","img/icono.png","se ha actualizado la lista");
+        
         } 
 
 
@@ -161,7 +161,7 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
   $scope.billar();
 
   $scope.actualizar = function (data) {
-
+    notificaciones_chrome("Actualizando Registros","img/icono.png","se ha actualizado la lista");
     if (sync_datos_billar) {
       var objeto = {empresas: {evento: data}};
       sync_datos_billar.update(objeto);
