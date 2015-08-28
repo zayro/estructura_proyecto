@@ -143,18 +143,7 @@ class login extends procesos_bd {
    */
   function cambio_clave($usuario, $clave, $nueva) {
 
-    $sql = "
-    UPDATE
-    usuarios
-    SET
-    clave = encode('$nueva', 'clave')
-    WHERE
-    usuario = '$usuario'
-    and
-    clave = encode('$clave', 'clave')
-    and
-    estado  = '1'
-     ";
+    $sql = "SELECT cambio_clave('$clave','$nueva','$usuario') as respuesta;  ";
 
     $mensaje = "CAMBIO CLAVE DE USUARIO";
 
@@ -167,7 +156,7 @@ class login extends procesos_bd {
    * @param string $usuario
    * @param string $clave
    */
-  function desactivar_usuario($usuario, $clave) {
+  function desactivar_usuario($usuario) {
 
     $sql = "
     UPDATE
@@ -175,9 +164,7 @@ class login extends procesos_bd {
     SET
     estado  = '0'
     WHERE
-    usuario = '$usuario'
-    and
-    clave = encode('$clave', 'clave')
+    usuario = '$usuario'   
     and
     estado  = '1'
      ";
