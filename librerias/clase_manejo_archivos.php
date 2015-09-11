@@ -24,6 +24,18 @@ class manejo_carpetas {
       throw new Exception("ocurrio un error al crear la carpeta");
     }
   }
+  
+  /**
+   * 
+   * @param type $ruta
+   * @param type $destino
+   * @throws Exception
+   */
+  public function mover_archivos($ruta, $destino) {
+    if (!rename($ruta, $destino)) {
+      throw new Exception("ocurrio un error al redireccionar archivo");
+    }
+  }
 
   /**
    * 
@@ -88,6 +100,7 @@ class manejo_carpetas {
    * @return array
    */
   public function ver_carpeta($ruta) {
+    
     $registros = array();
     $nombre = array();
 
@@ -120,11 +133,11 @@ class manejo_carpetas {
 //leer_archivos_y_directorios($ruta_completa . "/");
             } else {
 #  echo '<br />' . $archivo . '<br />';
-              $nombre['imagen'] = utf8_encode($archivo);
+              $nombre['nombre'] = utf8_encode($archivo);
               $nombre['ruta'] = utf8_encode($ruta);
               array_push($registros, $nombre);
 
-              $datos['imagenes'] = $registros;
+              $datos['archivos'] = $registros;
             }
           }
         }
