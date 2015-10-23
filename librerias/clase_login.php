@@ -197,13 +197,27 @@ class login extends procesos_bd {
 
     return procesos_bd::alterar_bd($sql, $mensaje);
   }
-  
-  function eliminar_conectado($identificacion){
-    
+
+  function eliminar_conectado($identificacion) {
+
     $sql = " DELETE FROM enlinea where identificacion = '$identificacion'; ";
     $mensaje = "USUARIO TERMINO SESSION";
 
-    return procesos_bd::alterar_bd($sql, $mensaje);        
+    return procesos_bd::alterar_bd($sql, $mensaje);
+  }
+
+  function eliminar_usuario($id) {
+
+    $sql = "
+    DELETE FROM
+    usuarios
+    WHERE
+    id = '$id' ;
+    ";
+
+    $mensaje = "ELIMINANDO USUARIO";
+
+    return procesos_bd::alterar_bd($sql, $mensaje);
   }
 
 #CIERRA CLASE

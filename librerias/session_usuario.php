@@ -1,6 +1,4 @@
 <?php
-
-
 require('clase_consulta_bd.php');
 
 $objeto = new consulta_bd();
@@ -39,6 +37,6 @@ $datos["session"] = "no hay una session iniciada";
 }
 
 
-echo json_encode($datos);
+print json_encode($datos);
 
 ?>

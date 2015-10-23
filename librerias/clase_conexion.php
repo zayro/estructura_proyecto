@@ -1,19 +1,31 @@
 <?php
+#iniciar sessiones
+session_start();
 
 # zona horaria
 date_default_timezone_set('America/Bogota');
 
 # activar o desactivar mensajes de error
+ini_set('display_errors', 1);
+set_time_limit(0);
 
-/*
-  ini_set ('display_errors', 1);
-  set_time_limit (0);
- */
+# pruebas de testeo
+assert_options(ASSERT_ACTIVE, 1);
+assert_options(ASSERT_WARNING, 0);
+assert_options(ASSERT_BAIL, 1);
+assert_options(ASSERT_CALLBACK, 'testeo');
 
+function testeo($script, $line, $message) {
+  echo "<h1>Condicion fallo!</h1><br />
+        Script: <strong>$script</strong><br />
+        Linea: <strong>$line</strong><br />
+        Condicion: <br /><pre>$message</pre>";
+}
+
+# habilitar compresiones
 ini_set("zlib.output_compression", "On");
-session_start();
 
-include ('clase_abstracta.php');
+include 'clase_abstracta.php';
 
 /**
  * CLASE DE CONEXION PRINCIPAL
@@ -179,7 +191,7 @@ class conexion extends datos {
   function imprime_json($array) {
     echo json_encode($array, JSON_PRETTY_PRINT);
   }
-
+  
   /**
    * VERIFICA E IMPRIMER ERRORES DE IMPRESION DE JSON
    *
@@ -273,8 +285,7 @@ class conexion extends datos {
    *
    */
   function validar_session() {
-    if (empty($_SESSION) or empty($_SESSION['identificacion']) or ! isset($_SESSION['identificacion']))
-      {
+    if (empty($_SESSION) or empty($_SESSION['identificacion']) or ! isset($_SESSION['identificacion'])) {
       echo "sin acceso al sistema ingrese a la plataforma";
       exit();
     } else {
@@ -336,12 +347,15 @@ class conexion extends datos {
     $ruta = getcwd();
     $raiz = $_SERVER['DOCUMENT_ROOT'];
     $script_nombre = $_SERVER['SCRIPT_FILENAME'];
-
-
     return $script_nombre;
   }
-  
-  function iniciar_buffer(){ob_start(); }
-  function termina_buffer(){ob_end_flush(); }
+
+  function iniciar_buffer() {
+    ob_start();
+  }
+
+  function termina_buffer() {
+    ob_end_flush();
+  }
 
 }

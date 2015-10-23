@@ -2,3 +2,9 @@
 
 Options -Indexes
  
+ RewriteEngine on  
+
+
+Options +FollowSymLinks
+
+RewriteRule ^usuario(/.*)?$ usuario.php [L]

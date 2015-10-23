@@ -75,6 +75,7 @@ class consulta_bd extends conexion {
   function json_bd($sql) {
 
    conexion::cabecera_json();
+   conexion::cabecera_cors();
     #MOSTRAR EL MENSAJE EN JSON
 
     $datos_json = array();
