@@ -107,72 +107,52 @@ app.service('cargar_registros', function ($http) {
  */
 
 
-app.controller('controlador_billar', function ($scope, $route, $http, cargar_registros) {
+app.controller('controlador_billar', function ($scope, $log, $route, $http, cargar_registros, cargar_servicios,  socket) {
+  
 
+  cargar_servicios.session_usuario().success(function (data) {
+    try {
+    
+    socket.zocalo.on('connect', function(){});
+    
+    socket.zocalo.emit('agregar', data.usuario);
+    
+    socket.zocalo.emit('CambiarSala', 'billar');
+    
+    socket.zocalo.on('sala', function (rooms, current_room) {
+      console.debug('salta', rooms + ' acual: ' + current_room);
+    });
+        
+    socket.zocalo.on('actualizar', function (username, data) {
+     console.debug(username,data);
+     $scope.recargar();
+    });
+    
+    } catch(err) {
+    console.error(err.message);
+    }
+
+   });
+
+
+  
 
   $scope.recargar = function () {
 
     navigator.vibrate(500);
 
-    console.info("se recargo la tabla seleccionar_actual");
+    console.debug("se recargo la tabla seleccionar_actual");
 
-  cargar_registros.tabla_estado()
-          .success(function (data) {
-            $scope.registros_estado = data;
-          });
-  };
-
-  $scope.billar = function () {
-
-    if (localStorage.getItem("session_sistema") != null) {
-
-      var session_sistema = localStorage.getItem("session_sistema");
-      var datos_session = JSON.parse(session_sistema);
-      var url = 'https://billar.firebaseio.com/' + datos_session.empresa;
-      sync_datos_billar = new Firebase(url);
-      
-      sync_datos_billar.on('value', function (snap) {
-        if (snap.val() === true) {
-          Firebase.goOffline();
-          console.error("desconectado a fire base ");
-          var con = sync_datos_billar.push(true);
-          con.onDisconnect().remove();
-        }else{ 
-        console.info ("conectado a fire base ");
-        $scope.recargar();
-        
-        } 
-
-
+    cargar_registros.tabla_estado().success(function (data) {
+        $scope.registros_estado = data;
       });
-      
-      /*
-         sync_datos_billar.on('child_changed', function (snapshot) {
-          console.log("fire base child_changed");
-           //$scope.recargar();
-            
-          });
-          */
-
-    }
-
   };
 
-  $scope.billar();
 
-  $scope.actualizar = function (data) {
-    notificaciones_chrome("Actualizando Registros","img/icono.png","se ha actualizado la lista");
-    if (sync_datos_billar) {
-      var objeto = {empresas: {evento: data}};
-      sync_datos_billar.update(objeto);
-      
-    } else {
-      console.info("no hay conexion con firebase");
-    }
-
+  $scope.actualizar = function (data) {    
+    notificaciones_chrome("Actualizando Registros", "img/icono.png", "se ha actualizado la lista");
+    socket.zocalo.emit('EnviarMensaje', data);
   };
-
-  
 
 
 
@@ -216,7 +196,7 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
               console.error(data);
             });
 
-  }
+  };
 
   $scope.eliminar_consumo = function (valor_id) {
 
@@ -241,7 +221,7 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
               console.error(data);
             });
 
-  }
+  };
 
   $scope.valor_consumos = function (valor_id) {
 
@@ -260,7 +240,7 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
               console.error(data);
             });
 
-  }
+  };
 
   $scope.enviar_formulario = function (id_formulario, url_formulario, metodo_formulario) {
 
@@ -272,11 +252,7 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
 
             .success(function (data) {
 
-              $scope.actualizar(data);
-      
-      
-
-              //$('#' + id_formulario).trigger("reset");
+              $('#' + id_formulario).trigger("reset");
 
 
               if (data.success)
@@ -288,34 +264,45 @@ app.controller('controlador_billar', function ($scope, $route, $http, cargar_reg
                   title: 'exitoso',
                   titleClass: 'success',
                   center: true,
-                          autoclose: 2000,
+                  autoclose: 2000,
                   closeButton: true
                 });
 
 
                 // multiple envio de datos
+                $scope.actualizar(data);
 
 
               } else {
 
-                new Messi("SE PERDIO LA CONEXION: "+data.suceso, {
+                new Messi("ocurrio una advertencia: " + data.suceso, {
                   center: true,
-                  width: '850px',
+                  width: '250px',
                   title: 'ocurrio un problema',
-                  titleClass: 'anim error',
+                  titleClass: 'anim warning',
+                  closeButton: true,
                   center: true,
-                          autoclose: 8000,
-                  closeButton: true
+                  autoclose: 3000
+                 
                 });
-                
-                
-                $route.reload();
+
+
+                //$route.reload();
 
               }
 
             })
 
             .error(function (data, status, headers, config) {
+                  new Messi("ocurrio un error: " , {
+                  center: true,
+                  width: '250px',
+                  title: 'ocurrio un error comunicarlo con al administrador',
+                  titleClass: 'anim error',
+                  center: true,
+                  autoclose: 3000,
+                  closeButton: true
+                });
               console.error(data);
             });
 

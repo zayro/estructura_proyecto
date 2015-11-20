@@ -31,7 +31,7 @@ $datos[$tags[$i]] =  $valor_session;
 $datos["conectado"] = $conectado;  
 }else{
 
-$datos["session"] = "no hay una session iniciada";  
+$datos["session"] = false;  
 @session_destroy();
     
 }

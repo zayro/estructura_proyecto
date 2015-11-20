@@ -1,8 +1,8 @@
 <?php
 
-include('clase_procesos_bd.php');
+require('../../librerias/clase_procesos_bd.php');
 
-class login extends procesos_bd {
+class usuario extends procesos_bd {
 
   /**
    * 
@@ -156,7 +156,7 @@ class login extends procesos_bd {
    * @param string $usuario
    * @param string $clave
    */
-  function desactivar_usuario($usuario) {
+  function desactivar_usuario($identificacion) {
 
     $sql = "
     UPDATE
@@ -164,7 +164,7 @@ class login extends procesos_bd {
     SET
     estado  = '0'
     WHERE
-    usuario = '$usuario'   
+    identificacion = '$identificacion'  
     and
     estado  = '1'
      ";
@@ -206,13 +206,13 @@ class login extends procesos_bd {
     return procesos_bd::alterar_bd($sql, $mensaje);
   }
 
-  function eliminar_usuario($id) {
+  function eliminar_usuario($identificacion) {
 
     $sql = "
     DELETE FROM
     usuarios
     WHERE
-    id = '$id' ;
+    identificacion = '$identificacion' ;
     ";
 
     $mensaje = "ELIMINANDO USUARIO";

@@ -295,10 +295,10 @@ class Api extends Rest {
 
 }
 
+/*     
 $api = new Api();
 $api->procesarLLamada();
-?>  
-
 https://dedudosaprocedencia.wordpress.com/2012/05/09/rest-usando-php-y-curl/
-
 http://programandolo.blogspot.com.co/2013/08/ejemplo-php-de-servicio-restful-parte-1.html
+
+ */

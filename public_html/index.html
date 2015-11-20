@@ -26,6 +26,7 @@
 
 
         <meta charset="UTF-8">
+        <base href="/estructura_proyecto/public_html/">
 
         <!-- Add to homescreen for Chrome on Android -->
         <meta name="mobile-web-app-capable" content="yes">
@@ -70,13 +71,10 @@
         <link type="text/css" rel="stylesheet" href="../componentes/fuentes/icon.css" />
 
         <!-- Tema Notificacion messi.js -->
-        <link type="text/css" rel="stylesheet" href="../componentes/messi-js/messi.min.css" />
-
-        <!-- Firebase -->
-        <script src='../componentes/firebase/firebase.js'></script>
+        <link type="text/css" rel="stylesheet" href="../componentes/MessiJS-master/messi.min.css" />
 
         <!-- Material Design Tema -->
-        <link type="text/css" rel="stylesheet" href="../componentes/materialize-v0.97.0/css/materialize.min.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
 
         <style>
 
@@ -144,9 +142,12 @@
                             <!-- <li><a class="abrir menu " onclick=" $('#modal1').openModal();"><i class="small mdi-navigation-menu waves-effect waves-light"></i></a></li> 
                             -->
                             <li>{{select_session_usuario.usuario| uppercase }}</li>
-                            <li><a class="abrir menu " onclick="$('.button-collapse').sideNav('show');"><i class="small mdi-action-account-box"></i></a></li>
+                            <li><a class="abrir menu" onclick="$('.button-collapse').sideNav('show');"><i class="small mdi-action-account-box"></i></a></li>
                             <li><a class="abrir menu" onclick=" $('#modal_menu').openModal();"><i class=" tiny mdi-action-view-headline"></i></a></li>
-                            <li><a class="abrir menu " href="../librerias/session_salir.php?identificacion={{select_session_usuario.identificacion}}" ><i class="small mdi-action-settings-power"></i></a></li>
+                            <li>
+                              <a class="abrir menu" ng-click="terminar_session()" >
+                                <i class="small mdi-action-settings-power"></i></a>
+                            </li>
 
 
                         </ul>
@@ -206,7 +207,7 @@
                             </li>
 
                             <li class="no-padding"  >
-                                <a  href="../librerias/session_salir.php?identificacion={{select_session_usuario.identificacion}}" class="collapsible-header waves-effect waves-teal"><i class=" tiny mdi-action-settings-power"></i>SALIR</a>
+                                <a  ng-click="terminar_session(select_session_usuario.identificacion)" class="collapsible-header waves-effect waves-teal"><i class=" tiny mdi-action-settings-power"></i>SALIR</a>
                             </li>
 
 
@@ -344,7 +345,8 @@
 
         <!-- Jquery Plugins -->
         <script src="../componentes/jquery/jquery-2.1.1.min.js"></script>
-
+        
+        <script src="js/fancywebsocket.js"></script>
         <!-- materialize --> 
         <script src="../componentes/materialize-v0.97.0/js/materialize.min.js"></script>
 
@@ -352,10 +354,7 @@
         <script src="../componentes/jquery-away/jquery-away.js"></script>
 
         <!-- notificaciones messi -->
-        <script src="../componentes/messi-js/messi.min.js"></script>
-
-
-
+        <script src="../componentes/MessiJS-master/messi.min.js"></script>
 
         <!-- Manejo Fechas Js -->
         <script src="../componentes/time-js/moment-with-locales.js" ></script>
@@ -368,24 +367,21 @@
         <script src="../componentes/fullPage.js-master/jquery.fullPage.js" type="text/javascript"></script>
 
         <!-- Angular  Dependencies -->
-        <script src="../componentes/angular-1.4.3/angular.min.js"></script>
-        <script src="../componentes/angular-1.4.3/angular-animate.min.js"></script>
-        <script src="../componentes/angular-1.4.3/angular-sanitize.min.js"></script>
-        <script src="../componentes/angular-1.4.3/angular-touch.min.js"></script>
-        <script src="../componentes/angular-1.4.3/angular-route.min.js"></script>
-        <script src="../componentes/angular-1.4.3/angular-messages.min.js"></script>
+        <script src="../componentes/angular-1.2.29/angular.min.js"></script>
+        <script src="../componentes/angular-1.2.29/angular-animate.min.js"></script>
+        <script src="../componentes/angular-1.2.29/angular-sanitize.min.js"></script>
+        <script src="../componentes/angular-1.2.29/angular-touch.min.js"></script>
+        <script src="../componentes/angular-1.2.29/angular-route.min.js"></script>        
 
         <!-- Angular  Modulos  -->
         <script src="../componentes/angular-ui/angular-locale_es-es.js"></script>
         <script src="../componentes/angular-ui/angular-filter.js"></script>
         
+        <script src="js/socket.io.js"></script>
+        
         <!-- Angular Configuracion -->
         <script src="configuracion/app.js" ></script>   
         <script src="configuracion/filtros.js"></script>
-        
-        <!-- vista login -->
-        <link href="assets/stylesheets/login.css" rel="stylesheet" type="text/css"/>
-        <script src="controller/login.js" type="text/javascript"></script>
 
         <!-- Api billar -->
         <script src="billar/configuracion/todo.js" ></script>
@@ -395,6 +391,7 @@
         
         <!-- Loader inicial -->
         <script src="../componentes/pace-1.0.2/pace.min.js" ></script>
+        
 
    </body>
 

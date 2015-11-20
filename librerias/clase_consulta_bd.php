@@ -141,7 +141,7 @@ class consulta_bd extends conexion {
 
     return $row;
   }
-
+  
   /**
    *
    * @param type $sql se van guardando las consultas en $guarda_registros

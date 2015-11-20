@@ -1,0 +1,326 @@
+        
+<!-- vista login -->
+<link href="assets/stylesheets/login.css" rel="stylesheet" type="text/css" />
+<script src="controller/controller_login.js" ></script>
+
+
+<div ng-controller="login">
+  <div id="fullpage" >
+
+    <!-- section 1-->
+    <div class="section" id="section1">
+
+      <div class="intro">
+
+        <!--
+        /**
+        *#########################
+        * INGRESO DE SESSION
+        *#########################
+        */
+        -->
+
+        <form name="formulario_logueo" id="formulario_logueo" ng-submit="enviar_formulario_login();" ng-hide="select_session_usuario.identificacion" >
+
+          <div class="row">
+            <div class="col s12 ">
+              <div class="card  ">
+
+                <div class="col s12 m12 l12 center-align">
+
+                  <object  data="img/logo.svg" type="image/svg+xml" class="responsive-img logo_svg"> </object>  
+
+                </div>                  
+
+                <span class=" card-title grey-text text-darken-2 col s12  center-align centrar"> Inicia sesión </span>        
+
+
+                <div class="card-content" >  
+
+
+                  <div class="row">
+
+                    <div class="input-field col s12">
+                      <label for="usuario">Email o Usuario</label>
+                      <input name="usuario" id="usuario" type="text" pattern=".{5,}" class="validate" required title="DIGITE SU USUARIO O CORREO CORRECTAMENTE"   >
+
+                    </div>
+
+                    <div class="input-field col s12">
+                      <label for="clave">Password</label>  
+                      <input name="clave"  id="clave" type="password" pattern=".{5,}" class="validate" required title="DIGITE SU CLAVE MINIMO 5 CARACTERES" >
+
+                    </div>
+
+                    <div class="input-field col s12">
+
+
+
+                      <select name="empresa" id="empresa" class="browser-default" required>
+                        <option value="" disabled selected>SELECCIONAR EMPRESA</option>
+                        <option  ng-repeat="contenido_empresas in combo_empresas" value="{{contenido_empresas.id}}">{{contenido_empresas.nombre}}</option>
+                      </select>
+                    </div>
+
+                  </div>
+
+
+                </div>
+
+                <div class="card-action">
+
+                  <div class="center-align col s12 m12 l12">
+                    <button type="submit" class=" col s12 l12 waves-effect waves-light btn  green darken-3 white-text">Acceder</button>
+                  </div>
+
+                  <div class="center-align col s6 m6 l16">
+                    <a class="col s12 l12 waves-effect waves-light btn-flat  black-text text-darken-4 " onclick="$('#olvido_clave').openModal();">
+                      <i class="small mdi-communication-email  blue-grey-text"></i> <span class="hide-on-small-only">¿ olvido su clave ? </span> </a>
+                  </div>
+
+                  <div class="center-align col s6 m6 l6">
+                    <button type="button" class="col s12 l12 waves-effect waves-light btn-flat black-text text-darken-4 modal-trigger" onclick="$('#cambio_clave').openModal();">
+                      <i class="small mdi-communication-vpn-key  blue-grey-text"></i> <span class="hide-on-small-only">cambio de clave </span> </button>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+
+        </form> 
+
+        <!--
+      /**
+      *#########################
+      * SEGUIR CONECTADO
+      *#########################
+      */
+        -->
+        <div class="row margen" ng-show="select_session_usuario.identificacion">
+          <div class="col s12 ">          
+            <div class="card">
+
+              <div class="waves-effect waves-block waves-light" >
+
+                <div class="col s12 m12 l12 center-align">
+
+                  <img class="circle responsive-img size " 
+                       ng-show="select_session_usuario.imagen" 
+                       ng-if="select_session_usuario.imagen != '' ? select_session_usuario.imagen : 'user.svg'" 
+                       ng-src="{{'img/usuarios/' + select_session_usuario.imagen}}"
+                       alt="imagen usuario" />
+
+                  <div ng-hide="select_session_usuario.imagen" class="circle black-text center-align"  > 
+                    <i class="material-icons md-120">face</i>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+              <div>
+                <span class="col s12 card-title grey-text text-darken-2 center-align "> LOGIN: {{select_session_usuario.usuario}} </span>        
+              </div>
+
+              <div class="card-content " >  
+                si desea continuar la session dale seguir de lo contrario dale salir
+              </div>
+
+              <div class="card-action">
+
+                <div class="center-align col s6 l6">
+                  <a ng-click="terminar_session(select_session_usuario.identificacion)" class=" col s12  waves-effect waves-light btn red white-text">Salir</a>
+                </div>
+
+                <div class="center-align col s6 l6 ">
+                  <a href="#/principal" class=" col s12 waves-effect waves-light btn green white-text">Seguir</a>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <!-- section 2-->
+    <div class="section" id="section2" ng-hide="select_session_usuario.identificacion">
+
+      <div class="slide" id="slide1">
+        <div class="center-align" >
+          <div  style="width:60%; border: 1px solid #000000; margin: 0 auto;">
+            <h5>This should be vertically aligned</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide" id="slide2">
+        <div class="intro">
+          <h4>This example uses responsiveHeight: 600</h4>
+        </div>
+      </div>
+
+      <div class="slide" id="slide3">
+        <div class="intro">
+          <h4>This SLIDE 3</h4>
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+
+  <!--
+  /**
+  *MODAL RECUPERAR DE CLAVE
+  */
+  -->
+
+  <div id="olvido_clave" class="modal">
+    <div class="modal-content">
+      <h4>olvido de clave</h4>
+      <p>complete los datos para poder cambiar su clave</p>
+      <form name="formulario_recordar_clave" id="formulario_recordar_clave" 
+            ng-submit="formulario_recordar_clave();" 
+            ng-hide="select_session_usuario.identificacion" >
+
+
+
+
+        <div class="row">
+
+          <div class="input-field col s12 m12 l12">
+            <input name="correo_usuario" id="correo_usuario" type="email" class="validate" required>
+            <label for="correo_usuario">Correo</label>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class=" col s12 m12 l6">
+            <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text ">Actualizar</button>
+          </div>
+        </div>
+
+
+
+
+
+
+      </form> 
+    </div>
+
+  </div>
+
+  <!--
+  /**
+  *MODAL CAMBIO DE CLAVE
+  */
+  -->
+
+  <div id="cambio_clave" class="modal">
+    <div class="modal-content">
+      <h4>cambio de clave</h4>
+      <span>recibira un correo con su nueva contraseña.</span>
+      <form name="formulario_cambio_clave" id="formulario_cambio_clave" ng-submit="enviar_formulario_cambio_clave('cambio_clave');" ng-hide="select_session_usuario.identificacion" >
+
+        <div class="row">
+
+          <div class="input-field col s12">
+            <input name="usuario" id="usuario_cambio_clave" type="text" class="validate" required>
+            <label for="usuario_cambio_clave">Usuario o Correo</label>
+          </div>
+
+          <div class="input-field col s12">
+            <input name="clave" id="clave_cambio_clave" type="password" class="validate" required>
+            <label for="clave_cambio_clave">Password Actual</label>
+          </div>
+
+          <div class="input-field col s12">
+            <input name="nueva"  id="nueva_cambio_clave" type="password" pattern=".{5,}"  class="validate" required title="minimo 5 caracteres">
+            <label for="nueva_cambio_clave">Password Nuevo</label>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="center-align col s12 m12 l12">
+            <button type="submit" class=" col s12 l12 waves-effect waves-light btn  light-blue darken-3 white-text">Cambiar</button>
+          </div>
+        </div>
+
+      </form> 
+    </div>
+
+  </div>
+
+  <!--
+  /**
+  *MODAL USUARIO CONECTADO
+  */
+  -->
+
+  <div id="usuario_conectado" class="modal">
+    <div class="modal-content">
+      <h4>usuario conectado</h4>
+      <span>cierre la session para poder ingresar.</span>
+
+
+      <table class="responsive-table centered striped bordered" border="1">
+        <thead>
+          <tr>
+            <th>identificacion</th>
+            <th>fecha</th>
+            <th>ip</th>
+            <th>cerrar</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="ver in respuesta_login">
+            <td>{{ver.identificacion}}</td>
+            <td>{{ver.fecha}}</td>
+            <td>{{ver.ip}}</td>
+            <td><a ng-click="cerrar_modal_conectado(); terminar_session(ver.identificacion); ">cerrar</a></td>
+          </tr>
+        </tbody>  
+
+      </table>
+
+
+
+
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<script>
+
+          $('#fullpage').fullpage({
+            navigationTooltips: ['login', 'Introduccion'],
+            sectionsColor: ['#263238', '#00bcd4'],
+            css3: true,
+            navigation: true,
+            navigationPosition: 'right'
+          });
+
+</script>  
