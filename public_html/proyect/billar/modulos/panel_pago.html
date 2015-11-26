@@ -1,0 +1,109 @@
+<style>
+  @media only screen and (max-width: 992px){
+    table.responsive-table.bordered td{
+      border-style:  ridge;
+      border-color: #E6E6E6;
+    }
+    .success{ background-color: #cfd8dc; }
+    table.responsive-table thead tr { display: table;}
+    table.responsive-table.bordered th {
+      border-style:  ridge;
+    }
+  }
+</style>
+
+<!-- TABLA CONTENIDOS -->
+<div class="row" id="asignar_pagos" ng-controller="controlador_billar">
+
+  <div class="col s12 m12 l12">
+    <div id="flight-card" class="card ">
+
+      <div id="profile-card"  class="card-content">
+
+        <div class="section">
+          <span class="card-title activator grey-text text-darken-4">
+            <strong>Mesas Asignadas </strong>
+
+            <i class="mdi-navigation-more-vert right"></i>
+
+          </span>
+
+          <a  ng-click="recargar();"  > <i class="material-icons">loop</i>  </a>
+          <div class="divider"></div>
+        </div>
+
+        <table class="responsive-table centered striped bordered" border="1">
+          <thead>
+            <tr class="success">
+              <th>Ubicacion</th>
+              <th>Entrada</th>
+              <th>Termina</th>
+              <th>Valor tiempo</th>
+              <th>Valor consumo</th>
+              <th>Valor total</th>
+              <th>Consumo</th>
+              <th>Cancelar</th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr ng-repeat="ver_estado in registros_estado">
+              <td>{{ver_estado.nombre}}</td>
+              <td>{{ver_estado.entrada}}</td>
+              <td>{{ver_estado.salida}}</td>
+              <td>{{ver_estado.cancelar_minuto| currency:"$" }}</td>
+              <td>{{ (ver_estado.total_consumo) ? ver_estado.total_consumo : '0.0' | currency:"$"}}</td>
+              <td>{{ (ver_estado.cancelar_minuto)  ? (ver_estado.cancelar_minuto * 1) + (ver_estado.total_consumo * 1) : '0.0' | currency:"$"}}</td>
+              <td> 
+                <a  ng-click='valor_consumos(ver_estado.id);'class="waves-effect waves-light" ><i class="tiny material-icons  blue-text">visibility</i> </a>
+              </td>
+              <td>
+                <a  ng-click='guardar_pago(ver_estado.id);' class="waves-effect waves-light" > <i class="tiny material-icons green-text">done</i> </a> 
+              </td>
+            </tr>
+        </table>
+
+
+      </div>
+
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">Ayuda <i class="mdi-navigation-close right"></i></span>
+        <p>Se debe llenar total mente el formulario.</p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <table class="responsive-table bordered centered striped">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Valor</th>
+            <th>Cancelar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr ng-repeat="contenido_consumo in registros_consumos">
+            <td>{{contenido_consumo.nombre}}</td>
+            <td>{{contenido_consumo.cantidad}}</td>
+            <td>{{contenido_consumo.precio| currency:"$ "}}</td>
+            <td>{{contenido_consumo.cantidad * contenido_consumo.precio| currency:"$ "}}</td>
+            <td><a  ng-click='eliminar_consumo(contenido_consumo.id);' class="waves-effect waves-light red-text"  title='eliminar consumo'><i class='material-icons'>clear</i></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+
+
+
+</div>
+<!-- CIERRA CONTENIDOS -->

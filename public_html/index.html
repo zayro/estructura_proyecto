@@ -1,398 +1,396 @@
 <!DOCTYPE html>
 <html lang="es-ES" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"   ng-app="app" >
 
-    <head>
+  <head>
 
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">    
 
-        <!--Let browser know website is optimized for mobile-->
-        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
 
-        <title>Sistema</title>
+    <title>Sistema</title>
 
-        <!-- Add to homescreen -->
-        <!-- <link rel="manifest" href="manifest.json"> -->
+    <!-- Add to homescreen -->
+    <!-- <link rel="manifest" href="manifest.json"> -->
 
 
-        <!-- Schema.org para Google+ --> 
-        <meta itemprop="name" content="WEB SAV DESARROLLO"> 
-        <meta itemprop="description" content="web de desarrollo web"> 
+    <!-- Schema.org para Google+ --> 
+    <meta itemprop="name" content="WEB SAV DESARROLLO"> 
+    <meta itemprop="description" content="web de desarrollo web"> 
 
 
-        <meta name="robots" content="INDEX,FOLLOW">
-        <meta name="author" content="MARLON ZAYRO ARIAS VARGAS">
-        <meta name="description" content="Desarrollo Android Web">
+    <meta name="robots" content="INDEX,FOLLOW">
+    <meta name="author" content="MARLON ZAYRO ARIAS VARGAS">
+    <meta name="description" content="Desarrollo Android Web">
 
 
-        <meta charset="UTF-8">
-        <base href="/estructura_proyecto/public_html/">
+    <meta charset="UTF-8">
+    <base href="/estructura_proyecto/public_html/">
 
-        <!-- Add to homescreen for Chrome on Android -->
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="application-name" content="Web Zav">
-        
-        <meta name="theme-color" content="#263238">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Web Zav">
 
-        <!-- Status bar style -->
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#263238">
 
-        <!-- Color of navigation buttons (back/forward) (Desktop) -->
-        <meta name="msapplication-navbutton-color" content="#FF3300" />
+    <!-- Status bar style -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+    <!-- Color of navigation buttons (back/forward) (Desktop) -->
+    <meta name="msapplication-navbutton-color" content="#FF3300" />
 
-        <link rel="icon" sizes="192x192" href="img/icono.png">
 
-        <link rel="shortcut icon" href="img/icono.png">
+    <link rel="icon" sizes="192x192" href="assets/images/logos/icono.png">
 
-        <!-- desahibiliar cache -->
-        <meta http-equiv="cache-control" content="max-age=0" />
-        <meta http-equiv="cache-control" content="no-cache" />
-        <meta http-equiv="expires" content="0" />        
-        <meta http-equiv="pragma" content="no-cache" />
+    <link rel="shortcut icon" href="assets/images/logos/icono.png">
 
+    <!-- desahibiliar cache -->
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />        
+    <meta http-equiv="pragma" content="no-cache" />
 
-        <!-- Enlaces Google+ --> 
-        <link rel="author" href="https://plus.google.com/u/0/+ZayroArias/posts"/>
-        <link rel="publisher" href="https://plus.google.com/+ZayroArias"/>
 
+    <!-- Enlaces Google+ --> 
+    <link rel="author" href="https://plus.google.com/u/0/+ZayroArias/posts"/>
+    <link rel="publisher" href="https://plus.google.com/+ZayroArias"/>
 
 
-        <link href="../componentes/pace-1.0.2/themes/yellow/pace-theme-barber-shop.css" rel="stylesheet" />
 
-        <!-- Full Page -->
-        <link  href="../componentes/fullPage.js-master/jquery.fullPage.css" type="text/css" rel="stylesheet" />
+    <link href="../componentes/pace-1.0.2/themes/yellow/pace-theme-barber-shop.css" rel="stylesheet" />
 
-        <!-- Angular Animate -->
-        <link type="text/css" rel="stylesheet" href="../componentes/angular-ui/animate.css" media="screen, projection" /> 
+    <!-- Full Page -->
+    <link  href="../componentes/fullPage.js-master/jquery.fullPage.css" type="text/css" rel="stylesheet" />
 
-        <!-- Fuente e Iconos -->
-        <link type="text/css" rel="stylesheet" href="../componentes/fuentes/fuentes.css" /> 
-        <link type="text/css" rel="stylesheet" href="../componentes/fuentes/icon.css" />
+    <!-- Angular Animate -->
+    <link type="text/css" rel="stylesheet" href="../componentes/angular-ui/animate.css" media="screen, projection" /> 
 
-        <!-- Tema Notificacion messi.js -->
-        <link type="text/css" rel="stylesheet" href="../componentes/MessiJS-master/messi.min.css" />
+    <!-- Fuente e Iconos -->
+    <link type="text/css" rel="stylesheet" href="../componentes/fuentes/fuentes.css" /> 
+    <link type="text/css" rel="stylesheet" href="../componentes/fuentes/icon.css" />
 
-        <!-- Material Design Tema -->
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <!-- Tema Notificacion messi.js -->
+    <link type="text/css" rel="stylesheet" href="../componentes/MessiJS-master/messi.min.css" />
 
-        <style>
+    <!-- Material Design Tema -->
+    <link rel="stylesheet" href="../componentes/materialize-v0.97.3/css/materialize.css">
 
-            @media screen{
-                body {
-                    display: flex;
-                    min-height: 100vh;
-                    flex-direction: column;
-                }
+    <link rel="stylesheet" href="assets/stylesheets/default.css">
 
-                button { margin-bottom: 10px; }
 
-                main {
-                    flex: 1 0 auto;
-                }
-                .overflow_auto{overflow:auto;}
 
-                .contenedor{  margin: 0  auto; }
+  </head>
 
-                .brand-logo{ margin: 0px 3px 0px 3px;}
+  <body ng-controller="AppCtrl" >
 
-                .titulo_encabezado{
-                    font-family: 'Open Sans 300';
-                }
+    <header ng-show="select_session_usuario.identificacion" ng-swipe-right="mostrar_sidebar();" ng-swipe-left="ocultar_sidebar;">
 
-                .logo_sidebar{ margin-bottom: 30px; margin-top: 10px; }
+      <div class="navbar-fixed">
 
-            }
+        <nav class="teal darken-1" ng-class="color_menu">
 
-            @media print {
-                header, footer{ display:none;}
-            }
+          <div class="nav-wrapper">
 
-            .material-icons.md-120 { font-size: 120px;  }
+            <a class="brand-logo titulo_encabezado"> &nbsp; SISTEMATIZADO  </a>
 
+            <!-- BARRA FRONTAL DERECHA -->
+            <ul class="right hide-on-med-and-down">
 
+              <!--  
+              <li><a href="sass.html"><i class="small mdi-action-search"></i></a></li>
+                <li><a href="mobile.html"><i class="small mdi-navigation-more-vert"></i></a></li>
+                <li><a href="components.html"><i class="small mdi-action-view-module"></i></a></li>
+                <li><a href="javascript.html"><i class="small mdi-navigation-refresh"></i></a></li>
+              -->
 
-        </style>
+              <!-- <li><a class="abrir menu " onclick=" $('#modal1').openModal();"><i class="small mdi-navigation-menu waves-effect waves-light"></i></a></li> 
+              -->
+              <li>{{select_session_usuario.usuario| uppercase }}</li>
+              <li><a class="abrir menu" onclick="$('.button-collapse').sideNav('show');"><i class="small mdi-action-account-box"></i></a></li>
+              <li><a class="abrir menu" onclick=" $('#modal_menu').openModal();"><i class=" mdi-action-view-headline"></i></a></li>
+              <li><a class="waves-effect waves-block waves-light toggle-fullscreen"><i class="mdi-action-settings-overscan"></i></a></li>
+              <li>
+                <a class="abrir menu" ng-click="terminar_session(select_session_usuario.identificacion)" >
+                  <i class="small mdi-action-settings-power"></i></a>
+              </li>                        
 
 
-    </head>
 
-    <body ng-controller="AppCtrl" >
+            </ul>
 
-        <header ng-show="select_session_usuario.identificacion" ng-swipe-right="mostrar_sidebar();" ng-swipe-left="ocultar_sidebar;">
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
 
-            <div class="navbar-fixed">
 
-                <nav class="teal darken-1" ng-class="color_menu">
 
-                    <div class="nav-wrapper">
+            <!-- BARRA LATERAL -->
+            <aside id="left-sidebar-nav" class="linea-inferior">
 
-                        <a class="brand-logo titulo_encabezado"> &nbsp; SISTEMATIZADO  </a>
 
-                        <!-- BARRA FRONTAL DERECHA -->
-                        <ul class="right hide-on-med-and-down">
+              <ul id="slide-out" class=" side-nav  leftside-navigation ">
 
-                            <!--  
-                            <li><a href="sass.html"><i class="small mdi-action-search"></i></a></li>
-                              <li><a href="mobile.html"><i class="small mdi-navigation-more-vert"></i></a></li>
-                              <li><a href="components.html"><i class="small mdi-action-view-module"></i></a></li>
-                              <li><a href="javascript.html"><i class="small mdi-navigation-refresh"></i></a></li>
-                            -->
 
-                            <!-- <li><a class="abrir menu " onclick=" $('#modal1').openModal();"><i class="small mdi-navigation-menu waves-effect waves-light"></i></a></li> 
-                            -->
-                            <li>{{select_session_usuario.usuario| uppercase }}</li>
-                            <li><a class="abrir menu" onclick="$('.button-collapse').sideNav('show');"><i class="small mdi-action-account-box"></i></a></li>
-                            <li><a class="abrir menu" onclick=" $('#modal_menu').openModal();"><i class=" tiny mdi-action-view-headline"></i></a></li>
-                            <li>
-                              <a class="abrir menu" ng-click="terminar_session()" >
-                                <i class="small mdi-action-settings-power"></i></a>
-                            </li>
+                <!-- CABECERA -->
 
+                <li ng-class="color_sidebar"  >
 
-                        </ul>
+                  <div class="row" style="margin-bottom: 2px">
 
-                        <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+                    <div class="col s4 m4 l4 left-align">
 
+                      <img class="circle responsive-img valign profile-image logo_sidebar" 
+                           ng-show="select_session_usuario.imagen" 
+                           ng-if="select_session_usuario.imagen != '' ? select_session_usuario.imagen : 'user.svg'" 
+                           ng-src="{{'assets/images/usuarios/' + select_session_usuario.imagen}}" alt="imagen usuario" >
 
-
-                        <!-- BARRA LATERAL -->
-                        <ul id="slide-out" class="side-nav">
-
-
-                            <!-- CABECERA -->
-
-                            <li ng-class="color_sidebar" class="center-align "   style="padding:20px;">
-                                <h5>{{select_session_usuario.usuario| uppercase }}</h5>
-                                <div class="row ">
-                                    <div class="col s12 m12 l12" >                    
-                                        <img class=" responsive-img  circle" 
-                                             ng-show="select_session_usuario.imagen" 
-                                             ng-if="select_session_usuario.imagen != '' ? select_session_usuario.imagen : 'user.svg'" 
-                                             ng-src="{{'img/usuarios/' + select_session_usuario.imagen}}" alt="imagen usuario" >
-                                        <div ng-hide="select_session_usuario.imagen" class="circle white-text "  > <i class="material-icons md-120 logo_sidebar">face</i></div>
-                                    </div>
-                                    <div class="col s12 m12 l12">
-                                        <h6>{{select_session_usuario.nombre_grupo| uppercase }}</h6>
-                                    </div>
-                                </div>
-                            </li>
-
-
-                            <!--
-                                        <li class="no-padding">
-                                          <ul class="collapsible collapsible-accordion">
-                                            <li class="bold"><a class="collapsible-header  waves-effect waves-teal"><i class="medium mdi-image-filter-drama"></i>OPCIONES</a>
-                                              <div class="collapsible-body" >
-                                                <ul>
-                            
-                                                  <li><a class="abrir menu " href="../librerias/session_salir.php"><i class="tiny mdi-action-settings-power"></i> SALIR</a></li>
-                            
-                                                  <li class="no-padding" onclick=" $('#modal1').openModal();" >
-                                                    <a  class="collapsible-header waves-effect waves-teal"><i class="tiny mdi-action-view-headline"></i>MENU</a>
-                                                  </li>                     
-                                                </ul>
-                                              </div>
-                                            </li>
-                                          </ul>
-                                        </li>
-                            -->
-
-                            <li class="no-padding" ng-click="mostrar_menu();" >
-                                <a  class="collapsible-header waves-effect waves-teal"><i class=" tiny mdi-action-view-headline"></i>MENU</a>
-                            </li>
-
-                            <li class="no-padding hide-on-small-only"  >
-                                <a href="../componentes/phpmyadmin"  target="_blank" class="collapsible-header waves-effect waves-teal"><i class=" tiny mdi-social-person-add"></i>ADMINISTRACION</a>
-                            </li>
-
-                            <li class="no-padding"  >
-                                <a  ng-click="terminar_session(select_session_usuario.identificacion)" class="collapsible-header waves-effect waves-teal"><i class=" tiny mdi-action-settings-power"></i>SALIR</a>
-                            </li>
-
-
-
-                        </ul>
-
-
+                      <span ng-hide="select_session_usuario.imagen" class="white-text circle responsive-img valign profile-image"  > 
+                        <i class="material-icons md-60 ">face</i>
+                      </span> 
 
                     </div>
-                </nav>
 
-            </div>
+                    <div class="col s8 m8 l8  left-align">
 
-
-        </header>
-
-
-        <main>
-
-            <div class="contenedor">
-
-                <!-- contenido de la pagina -->
-                <ng-view></ng-view>
-
-                <!-- Modal Structure menu  -->
-                <div id="modal_menu" class="modal">
-                    <div class="modal-content">
-                        <h4 class="center-align card-panel grey darken-3 white-text">
-                            <i class="small mdi-navigation-menu"></i>  MENU  </h4>
+                      <a class="btn-flat dropdown-button waves-effect waves-light white-text" data-activates="profile-dropdown">
+                        <strong class="titulo_encabezado">informacion</strong> <i class="mdi-navigation-arrow-drop-down right"></i>
+                      </a>
 
 
-                        <div class="row z-depth-1">
-                            <div ng-repeat="cargar_menu_principal in menu_logueo"  >
-
-                                <div ng-repeat="cargar_menu  in cargar_menu_principal.privilegio" class="col s12 m6 l3 ">
-                                    <ul>
-
-                                        <li  ng-click="ver_submenu = !ver_submenu" class="truncate" style="margin-left:-30px;">                       
-                                            <i class="tyni mdi-navigation-arrow-drop-down btn-flat "></i>{{cargar_menu.menu}}
-                                        </li>
-
-                                        <ul ng-repeat="cargar_submenu1 in cargar_menu.submenu1" ng-hide="ver_submenu">
-
-                                            <li style="margin-left:-20px;" > 
-                                                <a href="{{cargar_submenu1.modulo}}" class=" waves-effect waves-teal blue-text btn-flat truncate"> 
-                                                    <i class="tyni mdi-action-label grey-text"></i> {{ ' ' + cargar_submenu1.submenu}}
-                                                </a>
-                                            </li>
+                      <ul id="profile-dropdown" class="dropdown-content">
+                        <li><a href="#"><i class="mdi-action-face-unlock"></i> Perfil </a> </li>
+                        <li><a href="#"><i class="mdi-action-settings"></i> Configuracion </a> </li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="mdi-action-lock-outline"></i> Lock</a> </li>
+                        <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout</a> </li>
+                      </ul>
 
 
-                                            <ul ng-repeat="cargar_submenu2 in cargar_submenu1.submenu2">
-                                                <li style="margin-left:-30px;"> 
-                                                    <a href="{{cargar_submenu2.modulo}}" ng-click=" ocultar_menu();"  class=" waves-effect waves-teal black-text btn-flat truncate">
-                                                        <i class="tyni mdi-action-label-outline  grey-text"></i> {{' ' + cargar_submenu2.submenu}}</a> 
-                                                </li>
-                                            </ul>
+                      <a class="btn-flat waves-effect waves-light white-text user-roal titulo_encabezado"  >
+                        {{select_session_usuario.nombre_grupo| lowercase }}                  
+                      </a>
 
-                                        </ul>
-
-                                    </ul>
-                                </div>
-
-
-                            </div>
-                        </div>
                     </div>
-                </div>
 
 
-            </div>
-
-        </main>
 
 
-        <footer class="page-footer light-blue darken-3" style="display:none;">
-            <div class="container">
-                <div class="row">
-                    <div class="col l6 s12">
-                        <h5 class="white-text">Footer Content</h5>
-                        <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-                    </div>
-                    <div class="col l4 offset-l2 s12">
-                        <h5 class="white-text">Links</h5>
+
+                  </div>
+                </li>
+
+
+                <li class="no-padding" ng-click="mostrar_menu();" >
+                  <a  class=" waves-effect waves-teal"><i class=" tiny mdi-action-view-headline"></i>MENU</a>
+                </li>
+
+                <li class="no-padding hide-on-small-only"  >
+                  <a href="../componentes/phpmyadmin"  target="_blank" class=" waves-effect waves-teal"><i class=" tiny mdi-social-person-add"></i>ADMINISTRACION</a>
+                </li>
+
+
+
+                <li class="no-padding"  >
+                  <a  ng-click="terminar_session(select_session_usuario.identificacion)" class=" waves-effect waves-teal"><i class=" tiny mdi-action-settings-power"></i>SALIR</a>
+                </li>        
+
+
+                <li class="no-padding">
+                  <ul class="collapsible collapsible-accordion">
+                    <li class="bold">
+                      <a id="mini" class="collapsible-header  waves-effect waves-teal"><i class="medium mdi-image-filter-drama"></i>PEFIL</a>
+                      <div class="collapsible-body" >
                         <ul>
-                            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                            <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                          <li><a class="waves-effect waves-teal">SALIR</a></li>
+                          <li><a class="waves-effect waves-teal">MENU</a></li>
                         </ul>
-                    </div>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+
+              </ul>
+
+            </aside>
+
+          </div>
+        </nav>
+
+      </div>
+
+
+    </header>
+
+
+    <main>
+
+      <div class="contenedor">
+
+
+        <!-- contenido de la pagina -->
+        <ng-view></ng-view>
+
+        <!-- Modal Structure menu  -->
+        <div id="modal_menu" class="modal">
+          <div class="modal-content">
+            <h4 class="center-align card-panel grey darken-3 white-text">
+              <i class="small mdi-navigation-menu"></i>  MENU  </h4>
+
+
+            <div class="row z-depth-1">
+              <div ng-repeat="cargar_menu_principal in menu_logueo"  >
+
+                <div ng-repeat="cargar_menu  in cargar_menu_principal.privilegio" class="col s12 m6 l3 ">
+                  <ul>
+
+                    <li  ng-click="ver_submenu = !ver_submenu" class="truncate" style="margin-left:-30px;">                       
+                      <i class="tyni mdi-navigation-arrow-drop-down btn-flat "></i>{{cargar_menu.menu}}
+                    </li>
+
+                    <ul ng-repeat="cargar_submenu1 in cargar_menu.submenu1" ng-hide="ver_submenu">
+
+                      <li style="margin-left:-20px;" > 
+                        <a href="{{cargar_submenu1.modulo}}" class=" waves-effect waves-teal blue-text btn-flat truncate"> 
+                          <i class="tyni mdi-action-label grey-text"></i> {{ ' ' + cargar_submenu1.submenu}}
+                        </a>
+                      </li>
+
+
+                      <ul ng-repeat="cargar_submenu2 in cargar_submenu1.submenu2">
+                        <li style="margin-left:-30px;"> 
+                          <a href="{{cargar_submenu2.modulo}}" ng-click=" ocultar_menu();"  class=" waves-effect waves-teal black-text btn-flat truncate">
+                            <i class="tyni mdi-action-label-outline  grey-text"></i> {{' ' + cargar_submenu2.submenu}}</a> 
+                        </li>
+                      </ul>
+
+                    </ul>
+
+                  </ul>
                 </div>
+
+
+              </div>
             </div>
-            <div class="footer-copyright">
-                <div class="container">
-                    © 2015 Copyright Text
-                    <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-                </div>
-            </div>
-        </footer>
-
-
-        <!--  Modal perdida de conexion -->
-        <div id="cargando" class="modal">
-            <div class="modal-content">
-
-                <div class="progress">
-                    <div class="indeterminate  black"></div>
-                </div>
-                <h3 class="center-align " > Ocurrio un problema !! <i class="  medium material-icons">perm_scan_wifi</i>  </h3>
-                <h4>con la conexion al servidor comunicarse con el administrador web</h4>
-
-                <div class="center-align">
-                    <div class="preloader-wrapper big active">
-
-
-                        <div class="spinner-layer spinner-red-only">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-
-
-
-
-                    </div>
-                </div>      
-            </div>
-            <div class="modal-footer">
-                <a  class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
-            </div>
+          </div>
         </div>
 
 
-        <!-- Jquery Plugins -->
-        <script src="../componentes/jquery/jquery-2.1.1.min.js"></script>
-        
-        <script src="js/fancywebsocket.js"></script>
-        <!-- materialize --> 
-        <script src="../componentes/materialize-v0.97.0/js/materialize.min.js"></script>
+      </div>
 
-        <!-- Jquery Plugins detecta ausencia -->
-        <script src="../componentes/jquery-away/jquery-away.js"></script>
+    </main>
 
-        <!-- notificaciones messi -->
-        <script src="../componentes/MessiJS-master/messi.min.js"></script>
 
-        <!-- Manejo Fechas Js -->
-        <script src="../componentes/time-js/moment-with-locales.js" ></script>
+    <footer class="page-footer light-blue darken-3" style="display:none;">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Footer Content</h5>
+            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Links</h5>
+            <ul>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2015 Copyright Text
+          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+      </div>
+    </footer>
 
-        <!-- Dom Jquery -->
-        <script src="js/jquery.estructura.js" type="text/javascript"></script>  
 
-        <!-- fullPage -->    
-        <script src="../componentes/fullPage.js-master/jquery.slimscroll.js" type="text/javascript"></script>
-        <script src="../componentes/fullPage.js-master/jquery.fullPage.js" type="text/javascript"></script>
+    <!--  Modal perdida de conexion -->
+    <div id="cargando" class="modal">
+      <div class="modal-content">
 
-        <!-- Angular  Dependencies -->
-        <script src="../componentes/angular-1.2.29/angular.min.js"></script>
-        <script src="../componentes/angular-1.2.29/angular-animate.min.js"></script>
-        <script src="../componentes/angular-1.2.29/angular-sanitize.min.js"></script>
-        <script src="../componentes/angular-1.2.29/angular-touch.min.js"></script>
-        <script src="../componentes/angular-1.2.29/angular-route.min.js"></script>        
+        <div class="progress">
+          <div class="indeterminate  black"></div>
+        </div>
+        <h3 class="center-align " > Ocurrio un problema !! <i class="  medium material-icons">perm_scan_wifi</i>  </h3>
+        <h4>con la conexion al servidor comunicarse con el administrador web</h4>
 
-        <!-- Angular  Modulos  -->
-        <script src="../componentes/angular-ui/angular-locale_es-es.js"></script>
-        <script src="../componentes/angular-ui/angular-filter.js"></script>
-        
-        <script src="js/socket.io.js"></script>
-        
-        <!-- Angular Configuracion -->
-        <script src="configuracion/app.js" ></script>   
-        <script src="configuracion/filtros.js"></script>
+        <div class="center-align">
+          <div class="preloader-wrapper big active">
 
-        <!-- Api billar -->
-        <script src="billar/configuracion/todo.js" ></script>
 
-        <!-- Api parqueadero -->
-        <script src="parqueadero/configuracion/todo.js" ></script> 
-        
-        <!-- Loader inicial -->
-        <script src="../componentes/pace-1.0.2/pace.min.js" ></script>
-        
+            <div class="spinner-layer spinner-red-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
 
-   </body>
+
+
+
+          </div>
+        </div>      
+      </div>
+      <div class="modal-footer">
+        <a  class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
+      </div>
+    </div>
+
+
+    <!-- Jquery Plugins -->
+    <script src="../componentes/jquery/jquery-2.1.1.min.js"></script>
+
+
+    <!-- materialize --> 
+    <script src="../componentes/materialize-v0.97.3/js/materialize.min.js"></script>
+
+    <!-- Jquery Plugins detecta ausencia -->
+    <script src="../componentes/jquery-away/jquery-away.js"></script>
+
+    <!-- notificaciones messi -->
+    <script src="../componentes/MessiJS-master/messi.min.js"></script>
+
+    <!-- Manejo Fechas Js -->
+    <script src="../componentes/time-js/moment-with-locales.js" ></script>
+
+    <!-- Dom Jquery -->
+    <script src="assets/javascript/jquery.estructura.js" type="text/javascript"></script>  
+
+    <!-- fullPage -->    
+    <script src="../componentes/fullPage.js-master/jquery.slimscroll.js" type="text/javascript"></script>
+    <script src="../componentes/fullPage.js-master/jquery.fullPage.js" type="text/javascript"></script>
+
+    <!-- Angular  Dependencies -->
+    <script src="../componentes/angular-1.2.29/angular.min.js"></script>
+    <script src="../componentes/angular-1.2.29/angular-animate.min.js"></script>
+    <script src="../componentes/angular-1.2.29/angular-sanitize.min.js"></script>
+    <script src="../componentes/angular-1.2.29/angular-touch.min.js"></script>
+    <script src="../componentes/angular-1.2.29/angular-route.min.js"></script>        
+
+    <!-- Angular  Modulos  -->
+    <script src="../componentes/angular-ui/angular-locale_es-es.js"></script>
+    <script src="../componentes/angular-ui/angular-filter.js"></script>
+
+    <script src="assets/javascript/socket.io.js"></script>
+
+    <!-- Angular Configuracion -->
+    <script src="configuration/app.js" ></script>   
+    <script src="configuration/filtros.js"></script>
+
+    <!-- Api billar -->
+    <script src="proyect/billar/configuracion/todo.js" ></script>
+
+    <!-- Api parqueadero -->
+    <script src="proyect/parqueadero/configuracion/todo.js" ></script> 
+
+    <!-- Loader inicial -->
+    <script src="../componentes/pace-1.0.2/pace.min.js" ></script>
+
+
+  </body>
 
 </html>
