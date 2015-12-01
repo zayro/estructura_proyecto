@@ -25,7 +25,7 @@ class consulta_bd extends conexion {
   /**
    * CONSTRUCTOR DE LA CLASE CONSULTA_BD
    */
-  function consulta_bd() {
+  public function consulta_bd() {
     conexion::conexiones();
   }
 
@@ -34,7 +34,7 @@ class consulta_bd extends conexion {
    * @param type $identificacion
    * @return type
    */
-  function usuario_online() {
+  public function usuario_online() {
 
    $identificacion =  $_SESSION['identificacion'];
    $ip = $_SESSION['ip'];
@@ -72,7 +72,7 @@ class consulta_bd extends conexion {
    * @throws Exception dispara la consulta que se encuentre mal generada
    *
    */
-  function json_bd($sql) {
+  public function json_bd($sql) {
 
    conexion::cabecera_json();
    conexion::cabecera_cors();
@@ -113,7 +113,7 @@ class consulta_bd extends conexion {
    * @return type
    * @throws Exception
    */
-  function consulta_json($sql) {
+  public function consulta_json($sql) {
 
     conexion::cabecera_json();
     #MOSTRAR EL MENSAJE EN JSON
@@ -134,8 +134,8 @@ class consulta_bd extends conexion {
     }else{
     $row['registros_encontrado'] = '0';
     }
-    # iberar el conjunto de resultados
-    $resultado_json->close();
+    # liberar el conjunto de resultados
+    #$resultado_json->close();
 
 
 
@@ -146,7 +146,7 @@ class consulta_bd extends conexion {
    *
    * @param type $sql se van guardando las consultas en $guarda_registros
    */
-  function consulta_unida($sql) {
+  public function consulta_unida($sql) {
 
     $resultado = $this->mysqli->query($sql);
 
@@ -162,7 +162,7 @@ class consulta_bd extends conexion {
    * @param type $sql se recibe la consulta para ejecutar solo select
    * @return type
    */
-  function consulta($sql) {
+  public function consulta($sql) {
 
     $buscar_minuscula = stristr($sql, 'select');
     $buscar_mayuscula = stristr($sql, 'SELECT');
@@ -178,7 +178,7 @@ class consulta_bd extends conexion {
     return false;
   }
 
-  function real_escape_string($sql){
+  public function real_escape_string($sql){
 
      return $this->mysqli->real_escape_string($sql);
 

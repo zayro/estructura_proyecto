@@ -41,7 +41,8 @@ io.sockets.on('connection', function (socket) {
 
 		socket.emit('sala', rooms, 'principal');
 
-     console.log('se ha conectado  : '+socket.username.green+' al sistema: '+socket.room.green );
+     
+console.log('se ha conectado  : '+socket.username.green+' con la ip'+ socket.handshake.address+' al sistema: '+socket.room.green );
 	});
 
 	// when the client emits 'sendchat', this listens and executes

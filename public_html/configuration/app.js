@@ -6,7 +6,7 @@
 
 "use strict";
 
-var app = angular.module('app', ['ngRoute', 'ngSanitize', 'ngLocale', 'ngTouch',  'aplicativo_billar', 'aplicativo_parqueadero']);
+var app = angular.module('app', ['ngRoute', 'ngSanitize', 'ngLocale', 'ngTouch', 'aplicativo_billar', 'aplicativo_parqueadero']);
 
 
 angular.element(document).ready(function () {
@@ -131,31 +131,32 @@ app.service('cargar_servicios', function ($http) {
   };
 
   this.select_menu = function () {
-    return $http.get('view/menu/select_menu.php');
+    return $http.get('controller/controller_menu.php?mostrar_menu=true');
   };
 
   this.select_combo_empresas = function () {
-    return $http.get('view/logueo/combo_empresas.php');
+    return $http.get('controller/controller_empresa.php?mostrar_empresas=true');
   };
-  
-  this.session_usuario  = function () {
-  return $http.get('../librerias/session_usuario.php');
+
+  this.session_usuario = function () {
+    return $http.get('../librerias/session_usuario.php');
   };
 
 });
 
 app.service('socket', function () {
 
-try{
-  var socket = io.connect('http://172.21.10.38:1234');
-  
-  this.zocalo = socket;
+  try {
+    var socket = io.connect('http://192.168.1.10:1234');
 
-}catch(mensaje){
-  console.error('ocurrion un problemna: '+mensaje);
-  
-}
-  
+    this.zocalo = socket;
+
+  } catch (mensaje) {
+
+    console.error('ocurrion un problemna: ' + mensaje);
+
+  }
+
 });
 
 /*
@@ -166,7 +167,7 @@ try{
 
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
-   // wsProvider.setUrl('ws://172.21.10.38:9300');
+    // wsProvider.setUrl('ws://172.21.10.38:9300');
 
     $routeProvider.
             when('/login', {
@@ -179,7 +180,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
             }).
             when('/view/:view', {
               templateUrl: function (routeParams) {
-                return 'view/' + routeParams.modulo + '/' + routeParams.modulo + '.html';
+                return 'view/' + routeParams.view + '/' + routeParams.view + '.html';
               },
               controller: 'valida_usuario',
               resolve: {
@@ -217,10 +218,10 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
  */
 
 
-app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $log, $http, cargar_servicios) { 
+app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $log, $http, cargar_servicios) {
 //function AppCtrl($scope, $route, $routeParams, $location, $log, $http, cargar_servicios) {
 
-  
+
 
   /*
    ###############################################
@@ -231,10 +232,10 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
    ws.on('message', function (event) {
    $log.info('New message', event.data);
    });
-  
-    ws.baseSocket.onmessage = function (event) {
-    $log.debug('Nuevo mensaje', event.data);
-    }
+   
+   ws.baseSocket.onmessage = function (event) {
+   $log.debug('Nuevo mensaje', event.data);
+   }
    
    ws.send('custom message');
    
@@ -275,8 +276,8 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
   angular.element(document).ready(function () {
     //$('#carga_inicial').openModal();
     console.info("cargo controlador principal");
-    
-      $('.dropdown-button').dropdown({
+
+    $('.dropdown-button').dropdown({
       inDuration: 300,
       outDuration: 225,
       constrain_width: true, // Does not change width of dropdown to that of the activator
@@ -285,8 +286,8 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
       belowOrigin: true, // Displays dropdown below the button
       alignment: 'right' // Displays dropdown with edge aligned to the left of button
     }
-  );
-        
+    );
+
 
 
 
@@ -325,8 +326,8 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
   });
 
   $scope.terminar_session = function (identificacion) {
-      $http.get('controller/controller_login.php?salir=true&identificacion=' + identificacion).success(function (respuesta) {
-      console.debug('salir del sistema', respuesta);       
+    $http.get('controller/controller_login.php?salir=true&identificacion=' + identificacion).success(function (respuesta) {
+      console.debug('salir del sistema', respuesta);
       $location.path('/login');
       $route.reload();
     });
@@ -337,21 +338,21 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
   $scope.verificar_session = function () {
 
 
-  cargar_servicios.session_usuario().success(function (data) {
-       
-    if (data.session == false && $location.path() != '/login' ) {        
+    cargar_servicios.session_usuario().success(function (data) {
+
+      if (data.session == false && $location.path() != '/login') {
         console.info("se elimino session_sistema");
         localStorage.removeItem('session_sistema');
         window.location = "login";
         //$location.path('/login');
       }
-           
+
       $scope.select_session_usuario = data;
-       console.log(data);   
+      console.log(data);
       var identificacion = $scope.select_session_usuario.identificacion;
       var storage = localStorage.getItem("session_sistema");
-      var datos_session = JSON.parse(storage);  
-      
+      var datos_session = JSON.parse(storage);
+
 
       var valida_modulo = $.ajax({
         url: "view/logueo/select_permisos.php",
@@ -364,7 +365,7 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
         }
       });
 
-    
+
       valida_modulo.done(function (data) {
         if (data.registros_encontrado == 0) {
           // verifica los permisos de ingreso al modulo
@@ -398,10 +399,8 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
 
 
     $scope.cerrar_modal_conectado = function () {
-    $('#usuario_conectado').closeModal();
+      $('#usuario_conectado').closeModal();
     };
-
-
 
     $scope.ocultar_menu = function () {
       $('.button-collapse').sideNav('hide');
@@ -430,6 +429,51 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
   });
 
 
+  $scope.cambiar_color_menu = function (valor) {
+     
+    var tema = {
+      'color_menu': valor,
+      'color_sidebar': 'blue-grey darken-3'
+    };
+
+    localStorage.setItem('tema', JSON.stringify(tema));
+    var storage_tema = localStorage.getItem("tema");
+    var datos_tema = JSON.parse(storage_tema);
+    console.debug(datos_tema);
+
+    $scope.color_menu = datos_tema.color_menu;
+    
+    $route.reload();
+    
+
+  };
+
+  $scope.cambiar_color_sidebar = function (valor) {
+    var tema = {
+      'color_menu': 'blue-grey darken-4',
+      'color_sidebar': valor
+    };
+
+    localStorage.setItem('tema', JSON.stringify(tema));
+    var storage_tema = localStorage.getItem("tema");
+    var datos_tema = JSON.parse(storage_tema);
+    console.debug(datos_tema);
+
+    $scope.color_sidebar = datos_tema.color_sidebar;  
+    
+    $route.reload();
+  };
+  
+    /* 
+  $scope.$watch('color_menu', function (newValue, oldValue) {
+    console.debug('$watch: color_menu', newValue);
+  });
+
+  $scope.$watch('color_sidebar', function (newValue, oldValue) {
+    console.debug('$watch: color_sidebar', newValue);
+  });
+  */
+
 });
 
 /*
@@ -438,7 +482,7 @@ app.controller('AppCtrl', function ($scope, $route, $routeParams, $location, $lo
  ###################################################
  */
 
-app.controller('valida_usuario', function ($scope, cargar_servicios) { 
+app.controller('valida_usuario', function ($scope, $route, cargar_servicios) {
 //function valida_usuario($scope, cargar_servicios) {
 
   console.groupCollapsed("ingreso al controlador valida usuario");
@@ -452,3 +496,4 @@ app.controller('valida_usuario', function ($scope, cargar_servicios) {
 
   console.groupEnd();
 });
+

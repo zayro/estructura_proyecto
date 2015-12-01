@@ -1,7 +1,7 @@
 <?php
 
 include('clase_consulta_bd.php');
-include ('clase_interfas.php');
+include('clase_interfas.php');
 
 /**
  * CLASE DE PROCESOS A LA BASE DE DATOS
@@ -16,35 +16,35 @@ include ('clase_interfas.php');
  */
 class procesos_bd extends consulta_bd implements auditar {
 
-  function procesos_bd() {
+  public function procesos_bd() {
     conexion::conexiones();
   }
 
-  function preparar_consulta($sql) {
+  public function preparar_consulta($sql) {
     return $this->mysqli->prepare($sql);
   }
 
-  function inicia_transaccion() {
+  public function inicia_transaccion() {
 
     $this->mysqli->autocommit(false);
   }
 
-  function finaliza_transaccion() {
+  public function finaliza_transaccion() {
 
     $this->mysqli->commit();
   }
 
-  function cancela_transaccion() {
+  public function cancela_transaccion() {
 
     $this->mysqli->rollback();
   }
 
-  function cerrar_conexion() {
+  public function cerrar_conexion() {
 
     $this->mysqli->close();
   }
 
-  function ultimo_insert() {
+  public function ultimo_insert() {
 
     $this->mysqli->insert_id;
   }
@@ -54,7 +54,7 @@ class procesos_bd extends consulta_bd implements auditar {
    * @param string $mensaje
    * @param string $sql
    */
-  function auditoria($sql, $mensaje) {
+  public function auditoria($sql, $mensaje) {
 
     #MENSAJE DE AUDITORIA PARA EL USUARIO
 
@@ -107,7 +107,7 @@ class procesos_bd extends consulta_bd implements auditar {
    * @param string $mensaje se le envia un mensaje de auditoria 
    *
    */
-  function alterar_bd($sql, $mensaje) {
+  public function alterar_bd($sql, $mensaje) {
     
    conexion::cabecera_json();
     /**
@@ -169,7 +169,7 @@ class procesos_bd extends consulta_bd implements auditar {
    * @param string $mensaje se le envia un mensaje de auditoria 
    *
    */
-  function alterar_bd_seguro($sql, $mensaje) {
+  public function alterar_bd_seguro($sql, $mensaje) {
 
     conexion::validar_session();
     conexion::cabecera_json();
@@ -237,7 +237,7 @@ class procesos_bd extends consulta_bd implements auditar {
    * @return array $datos retorna arreglos de datos
    * @throws Exception disparar un error si la consulta no fue exitosa
    */
-  function transaccion($sql, $mensaje) {
+  public function transaccion($sql, $mensaje) {
 
     conexion::validar_session();
     conexion::cabecera_json();
@@ -266,7 +266,7 @@ class procesos_bd extends consulta_bd implements auditar {
    * @param type $query
    * @throws Exception
    */
-  function multiples_consultas($query) {
+  public function multiples_consultas($query) {
 
     conexion::validar_session();
 
@@ -304,7 +304,7 @@ class procesos_bd extends consulta_bd implements auditar {
    * @return type
    * @throws Exception cuando sucede un error en alguna consulta
    */
-  function procedimiento_almacenado($sql, $mensaje) {
+  public function procedimiento_almacenado($sql, $mensaje) {
 
     conexion::validar_session();
     conexion::cabecera_json();

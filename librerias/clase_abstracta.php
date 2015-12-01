@@ -37,7 +37,7 @@ abstract class datos {
 
   protected function billar($bdd) {
     $this->servidores = 'localhost:3306';
-    $this->usuarios = 'root';
+    $this->usuarios = 'zayro';
     $this->claves = 'zayro2014';
     $this->bdd = $bdd;
   }

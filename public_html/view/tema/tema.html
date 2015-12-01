@@ -1,0 +1,79 @@
+<div class="row" id="asignar_mesa" >
+
+
+  <div class="col s12 m12 l12">
+
+
+
+    <div id="flight-card" class="card ">
+
+
+      <div class="card-header grey lighten-2">
+
+        <div class="card-title">
+
+          <span class="activator"> <i class="mdi-navigation-more-vert right"></i></span>
+          <!-- <a class="secondary-content"><i class="black-text mdi-action-grade right"></i></a> -->
+
+          <div class="flight-card-title"> Configurar Tema </div>
+
+
+        </div>
+
+      </div>  
+
+      <div id="profile-card"  class="card-content">
+        <!--
+        <a class="btn-floating  btn-move-up  right">
+          <i class="white-text grey darken-2 mdi-action-account-circle"></i>
+        </a>
+        -->
+
+        <form>
+
+          <div class="row">
+
+            <div class="input-field col s6 m6 l6">
+              <input name="color_menu" id="color_menu" type="text" ng-value="color_menu" ng-model="color_menu"  title="DIGITE COLOR" class="validate" required>
+              <label class="active"  for="color_menu">DIGITAR COLOR MENU</label>              
+            </div>
+
+            <div class="input-field col s6 m6 l6">
+              <button type="button" ng-click="cambiar_color_menu(color_menu);" class="btn waves-effect waves-light green white-text col s12 l12 ">Guardar</button>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+
+            <div class="input-field col s6 m6 l6">
+              <label class="active" for="color_sidebar">DIGITAR COLOR BARRA LATERAL</label>
+              <input name="color_sidebar" id="color_menu" type="text" ng-value="color_sidebar" ng-model="color_sidebar"  title="DIGITE COLOR" required>
+            </div>
+
+            <div class="input-field col s6 m6 l6">
+              <button type="button" ng-click="cambiar_color_sidebar(color_sidebar);" class="btn waves-effect waves-light green white-text col s12 l12 ">Guardar</button>
+            </div>
+
+          </div>
+
+
+
+
+        </form>
+
+      </div>
+
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+      </div>
+
+    </div>
+
+
+
+  </div>
+</div>
+<!-- Cierra Panel ubicacion -->

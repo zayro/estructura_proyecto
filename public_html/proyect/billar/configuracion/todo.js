@@ -140,19 +140,19 @@ app.controller('controlador_billar', function ($scope, $log, $route, $http, carg
 
   $scope.recargar = function () {
 
-    navigator.vibrate(500);
-
     console.debug("se recargo la tabla seleccionar_actual");
 
     cargar_registros.tabla_estado().success(function (data) {
       $scope.registros_estado = data;
     });
+    
   };
 
 
   $scope.actualizar = function (data) {
     notificaciones_chrome("Actualizando Registros", "img/icono.png", "se ha actualizado la lista");
     socket.zocalo.emit('EnviarMensaje', data);
+    navigator.vibrate(500);
   };
 
 

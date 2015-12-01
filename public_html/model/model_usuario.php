@@ -10,7 +10,7 @@ class usuario extends procesos_bd {
    * @param string $clave
    * @return string
    */
-  function logueo($usuario, $clave) {
+  public function logueo($usuario, $clave) {
 
     $stmt = "";
     /* crear una sentencia preparada */
@@ -55,7 +55,7 @@ class usuario extends procesos_bd {
    * @param String $usuario
    * @return string
    */
-  function validar_usuario($usuario) {
+  public function validar_usuario($usuario) {
 
     $respuesta = array();
     $stmt = "";
@@ -94,7 +94,7 @@ class usuario extends procesos_bd {
    * 
    * @param string $correo
    */
-  function recuperar_clave($usuario) {
+  public function recuperar_clave($usuario) {
 
     $sql = "
     SELECT
@@ -141,7 +141,7 @@ class usuario extends procesos_bd {
    * @param string $clave
    * @param string $nueva
    */
-  function cambio_clave($usuario, $clave, $nueva) {
+  public function cambio_clave($usuario, $clave, $nueva) {
 
     $sql = "SELECT cambio_clave('$clave','$nueva','$usuario') as respuesta;  ";
 
@@ -156,7 +156,7 @@ class usuario extends procesos_bd {
    * @param string $usuario
    * @param string $clave
    */
-  function desactivar_usuario($identificacion) {
+  public function desactivar_usuario($identificacion) {
 
     $sql = "
     UPDATE
@@ -183,7 +183,7 @@ class usuario extends procesos_bd {
    * @param string $grupo
    * @param string $identificacion
    */
-  function usuario_nuevo($usuario, $clave, $correo, $grupo, $identificacion) {
+  public function usuario_nuevo($usuario, $clave, $correo, $grupo, $identificacion) {
 
     $sql = "
     INSERT INTO
@@ -198,7 +198,13 @@ class usuario extends procesos_bd {
     return procesos_bd::alterar_bd($sql, $mensaje);
   }
 
-  function eliminar_conectado($identificacion) {
+  /**
+   * ELIMINAR CONECTADO
+   * 
+   * @param type $identificacion
+   * @return type
+   */
+  public function eliminar_conectado($identificacion) {
 
     $sql = " DELETE FROM enlinea where identificacion = '$identificacion'; ";
     $mensaje = "USUARIO TERMINO SESSION";
@@ -206,7 +212,7 @@ class usuario extends procesos_bd {
     return procesos_bd::alterar_bd($sql, $mensaje);
   }
 
-  function eliminar_usuario($identificacion) {
+  private function eliminar_usuario($identificacion) {
 
     $sql = "
     DELETE FROM
