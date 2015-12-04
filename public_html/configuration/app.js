@@ -145,9 +145,10 @@ app.service('cargar_servicios', function ($http) {
 });
 
 app.service('socket', function () {
-
+   
+    
   try {
-    var socket = io.connect('http://192.168.1.10:1234');
+    var socket = io.connect('http://'+myip+':1234');
 
     this.zocalo = socket;
 

@@ -2,6 +2,8 @@
 var colors = require('colors');
 var express = require('express');
 var http = require('http');
+var ejs = require('ejs');
+var ip = require('ip');
 
 var app = express();
 var server = http.createServer(app);

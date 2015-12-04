@@ -94,9 +94,6 @@ app.service('cargar_registros', function ($http) {
 
 
 
-
-
-
 });
 
 
@@ -126,7 +123,11 @@ app.controller('controlador_billar', function ($scope, $log, $route, $http, carg
 
       socket.zocalo.on('actualizar', function (username, data) {
         console.debug(username, data);
-        $scope.recargar();
+        if (data.actualizar_billar) {
+          notificaciones_chrome("Actualizando Registros", "assets/images/logos/icono.png", "se ha actualizado la lista");
+          navigator.vibrate(500);
+          $scope.recargar();
+        }
       });
 
     } catch (err) {
@@ -134,228 +135,6 @@ app.controller('controlador_billar', function ($scope, $log, $route, $http, carg
     }
 
   });
-
-
-
-
-  $scope.recargar = function () {
-
-    console.debug("se recargo la tabla seleccionar_actual");
-
-    cargar_registros.tabla_estado().success(function (data) {
-      $scope.registros_estado = data;
-    });
-    
-  };
-
-
-  $scope.actualizar = function (data) {
-    notificaciones_chrome("Actualizando Registros", "img/icono.png", "se ha actualizado la lista");
-    socket.zocalo.emit('EnviarMensaje', data);
-    navigator.vibrate(500);
-  };
-
-
-
-  cargar_registros.tabla_servicio()
-          .success(function (data) {
-            $scope.registros_servicio = data;
-          });
-
-  cargar_registros.tabla_ubicacion()
-          .success(function (data) {
-            $scope.registros_ubicacion = data;
-          });
-
-  cargar_registros.tabla_estado()
-          .success(function (data) {
-            $scope.registros_estado = data;
-          });
-
-  cargar_registros.mesas_disponibles()
-          .success(function (data) {
-            $scope.registros_mesas_disponibles = data;
-          });
-
-
-  $scope.guardar_pago = function (valor_id) {
-
-    var valor_url = "proyect/billar/script_php/guardar_pago.php";
-    var valor_metodo = "POST";
-    var datos = $.param({'id': valor_id});
-
-    cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
-
-            .success(function (data) {
-
-              $scope.actualizar(data);
-
-
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-            });
-
-  };
-
-  $scope.eliminar_consumo = function (valor_id) {
-
-    var valor_url = "proyect/billar/script_php/eliminar_consumo.php";
-    var valor_metodo = "POST";
-    var datos = $.param({'id': valor_id});
-
-    cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
-
-            .success(function (data) {
-
-
-              $scope.actualizar(data);
-
-
-
-              $('#modal1').closeModal();
-
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-            });
-
-  };
-
-  $scope.valor_consumos = function (valor_id) {
-
-    var valor_url = "proyect/billar/script_php/seleccionar_consumo.php";
-    var valor_metodo = "POST";
-    var datos = $.param({'id': valor_id});
-
-    cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
-
-            .success(function (data) {
-              $scope.registros_consumos = data;
-              $('#modal1').openModal();
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-            });
-
-  };
-
-  $scope.guardar_consumos = function () {
-
-    var valor_url = "proyect/billar/script_php/guardar_consumo.php";
-    var valor_metodo = "POST";
-    var valor_datos = $('#enviar_consumo').serialize();
-
-    cargar_registros.respuesta_registros(valor_url, valor_metodo, valor_datos)
-
-            .success(function (data) {
-
-              $('#enviar_consumo').trigger("reset");
-
-
-              if (data.success)
-              {
-
-                new Messi(data.suceso, {
-                  center: true,
-                  width: '250px',
-                  title: 'exitoso',
-                  titleClass: 'success',
-                  center: true,
-                          autoclose: 2000,
-                  closeButton: true
-                });
-
-
-                // multiple envio de datos
-                $scope.actualizar(data);
-
-
-              } else {
-
-                new Messi("ocurrio una advertencia: " + data.suceso, {
-                  center: true,
-                  width: '250px',
-                  title: 'ocurrio un problema',
-                  titleClass: 'anim warning',
-                  closeButton: true,
-                  center: true,
-                          autoclose: 3000
-
-                });
-
-
-                //$route.reload();
-
-              }
-
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-            });
-
-  };
-  
-  $scope.guardar_ubicacion = function () {
-
-    var valor_url = "proyect/billar/script_php/guardar_tiempo.php";
-    var valor_metodo = "POST";
-    var valor_datos = $('#enviar_ubicacion').serialize();
-
-    cargar_registros.respuesta_registros(valor_url, valor_metodo, valor_datos)
-
-            .success(function (data) {
-
-              $('#enviar_consumo').trigger("reset");
-
-
-              if (data.success)
-              {
-
-                new Messi(data.suceso, {
-                  center: true,
-                  width: '250px',
-                  title: 'exitoso',
-                  titleClass: 'success',
-                  center: true,
-                          autoclose: 2000,
-                  closeButton: true
-                });
-
-
-                // multiple envio de datos
-                $scope.actualizar(data);
-
-
-              } else {
-
-                new Messi("ocurrio una advertencia: " + data.suceso, {
-                  center: true,
-                  width: '250px',
-                  title: 'ocurrio un problema',
-                  titleClass: 'anim warning',
-                  closeButton: true,
-                  center: true,
-                          autoclose: 3000
-
-                });
-
-
-                //$route.reload();
-
-              }
-
-            })
-
-            .error(function (data, status, headers, config) {
-              console.error(data);
-            });
-
-  };
 
 
   $scope.enviar_formulario = function (id_formulario, url_formulario, metodo_formulario) {
@@ -386,7 +165,7 @@ app.controller('controlador_billar', function ($scope, $log, $route, $http, carg
 
 
                 // multiple envio de datos
-                $scope.actualizar(data);
+                // $scope.actualizar(data);
 
 
               } else {
@@ -424,6 +203,307 @@ app.controller('controlador_billar', function ($scope, $log, $route, $http, carg
 
 
   };
+
+  $scope.recargar = function () {
+    cargar_registros.tabla_estado()
+            .success(function (data) {
+              $scope.registros_estado = data;
+            });
+  };
+
+
+
+  $scope.recargar();
+
+  $scope.guardar_pago = function (valor_id) {
+
+    var valor_url = "proyect/billar/script_php/guardar_pago.php";
+    var valor_metodo = "POST";
+    var datos = $.param({'id': valor_id});
+
+    cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
+
+            .success(function (data) {
+
+              //   $scope.actualizar(data);
+              data['actualizar_consumo'] = true;
+              socket.zocalo.emit('EnviarMensaje', data);
+              $scope.recargar();
+
+            })
+
+            .error(function (data, status, headers, config) {
+              console.error(data);
+            });
+
+  };
+
+  $scope.eliminar_consumo = function (valor_id) {
+
+    var valor_url = "proyect/billar/script_php/eliminar_consumo.php";
+    var valor_metodo = "POST";
+    var datos = $.param({'id': valor_id});
+
+    cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
+
+            .success(function (data) {
+
+              //$scope.actualizar(data);
+
+              $scope.recargar();
+
+              $('#modal1').closeModal();
+
+            })
+
+            .error(function (data, status, headers, config) {
+              console.error(data);
+            });
+
+  };
+
+  $scope.valor_consumos = function (valor_id) {
+
+    var valor_url = "proyect/billar/script_php/seleccionar_consumo.php";
+    var valor_metodo = "POST";
+    var datos = $.param({'id': valor_id});
+
+    cargar_registros.respuesta_registros(valor_url, valor_metodo, datos)
+
+            .success(function (data) {
+              $scope.registros_consumos = data;
+              $('#modal1').openModal();
+            })
+
+            .error(function (data, status, headers, config) {
+              console.error(data);
+            });
+
+  };
+
+
+
+});
+
+/*
+ ###############################################
+ INICIA EL CONTROLADOR CONSUMOS
+ ###############################################
+ */
+
+app.controller('controlador_consumo', function ($scope, $log, $route, $http, cargar_registros, cargar_servicios, socket) {
+
+  cargar_servicios.session_usuario().success(function (data) {
+    try {
+
+      socket.zocalo.on('connect', function () {
+      });
+
+      socket.zocalo.emit('agregar', data.usuario);
+
+      socket.zocalo.emit('CambiarSala', 'billar');
+
+      socket.zocalo.on('sala', function (rooms, current_room) {
+        console.debug('salta', rooms + ' acual: ' + current_room);
+      });
+
+      socket.zocalo.on('actualizar', function (username, data) {
+        console.debug(username, data);
+        if (data.actualizar_consumo) {
+          $scope.recargar();
+        }
+      });
+
+    } catch (err) {
+      console.error(err.message);
+    }
+
+  });
+
+
+
+  $scope.recargar = function () {
+
+    cargar_registros.mesas_disponibles()
+            .success(function (data) {
+              $scope.registros_mesas_disponibles = data;
+            });
+
+    cargar_registros.tabla_servicio()
+            .success(function (data) {
+              $scope.registros_servicio = data;
+            });
+
+
+  };
+
+  $scope.recargar();
+
+
+
+  $scope.guardar_consumos = function () {
+
+    var valor_url = "proyect/billar/script_php/guardar_consumo.php";
+    var valor_metodo = "POST";
+    var valor_datos = $('#enviar_consumo').serialize();
+
+    cargar_registros.respuesta_registros(valor_url, valor_metodo, valor_datos)
+
+            .success(function (data) {
+
+              $('#enviar_consumo').trigger("reset");
+
+
+              if (data.success)
+              {
+
+                new Messi(data.suceso, {
+                  center: true,
+                  width: '250px',
+                  title: 'exitoso',
+                  titleClass: 'success',
+                  center: true,
+                          autoclose: 2000,
+                  closeButton: true
+                });
+
+                // multiple envio de datos
+                //$scope.actualizar(data);
+                data['actualizar_billar'] = true;
+                socket.zocalo.emit('EnviarMensaje', data);
+
+
+              } else {
+
+                new Messi("ocurrio una advertencia: " + data.suceso, {
+                  center: true,
+                  width: '250px',
+                  title: 'ocurrio un problema',
+                  titleClass: 'anim warning',
+                  closeButton: true,
+                  center: true,
+                          autoclose: 3000
+
+                });
+
+
+                //$route.reload();
+
+              }
+
+            })
+
+            .error(function (data, status, headers, config) {
+              console.error(data);
+            });
+
+  };
+
+
+
+});
+
+/*
+ ###############################################
+ INICIA EL CONTROLADOR UBICACION
+ ###############################################
+ */
+
+app.controller('controlador_ubicacion', function ($scope, $log, $route, $http, cargar_registros, cargar_servicios, socket) {
+
+  cargar_servicios.session_usuario().success(function (data) {
+    try {
+
+      socket.zocalo.on('connect', function () {
+      });
+
+      socket.zocalo.emit('agregar', data.usuario);
+
+      socket.zocalo.emit('CambiarSala', 'billar');
+
+      socket.zocalo.on('sala', function (rooms, current_room) {
+        console.debug('salta', rooms + ' acual: ' + current_room);
+      });
+
+
+
+    } catch (err) {
+      console.error(err.message);
+    }
+
+  });
+
+  $scope.recargar = function () {
+    cargar_registros.tabla_ubicacion().success(function (data) {
+      $scope.registros_ubicacion = data;
+    });
+  };
+
+
+  $scope.recargar();
+
+  $scope.guardar_ubicacion = function () {
+
+    var valor_url = "proyect/billar/script_php/guardar_tiempo.php";
+    var valor_metodo = "POST";
+    var valor_datos = $('#enviar_ubicacion').serialize();
+
+    cargar_registros.respuesta_registros(valor_url, valor_metodo, valor_datos)
+
+            .success(function (data) {
+
+              $('#enviar_consumo').trigger("reset");
+
+
+              if (data.success)
+              {
+
+                new Messi(data.suceso, {
+                  center: true,
+                  width: '250px',
+                  title: 'exitoso',
+                  titleClass: 'success',
+                  center: true,
+                          autoclose: 2000,
+                  closeButton: true
+                });
+
+
+                // multiple envio de datos
+                //$scope.actualizar(data);
+
+                data['actualizar_billar'] = true;
+                socket.zocalo.emit('EnviarMensaje', data);
+
+
+
+              } else {
+
+                new Messi("ocurrio una advertencia: " + data.suceso, {
+                  center: true,
+                  width: '250px',
+                  title: 'ocurrio un problema',
+                  titleClass: 'anim warning',
+                  closeButton: true,
+                  center: true,
+                          autoclose: 3000
+
+                });
+
+
+                //$route.reload();
+
+              }
+
+            })
+
+            .error(function (data, status, headers, config) {
+              console.error(data);
+            });
+
+  };
+
+
 
 
 });
