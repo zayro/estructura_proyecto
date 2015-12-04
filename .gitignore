@@ -4,6 +4,7 @@ phpmyadmin/
 db/
 logs/
 doc/
+node_modules/
 
 
 # -- Symfony2 -----------------------------------------
